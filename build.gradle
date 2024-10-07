@@ -10,12 +10,12 @@ buildscript {
 }
 
 apply plugin: "agency.highlysuspect.voldeloom"
-// make sure SKD is set to 11
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(11) //Last version able to set a --release as low as 6
 compileJava.options.release.set(6) //Forge doesn't understand classes compiled to versions of the class-file format newer than Java 6's
 
-String minecraftVersion = project.minecraft
-String forgeVersion = project.minecraft_forge
+String minecraftVersion = "1.4.7"
+String forgeVersion = "1.4.7-6.6.2.534"
 archivesBaseName = project.modid
 version = project.mod_version
 
@@ -23,7 +23,7 @@ volde {
 	forgeCapabilities {
 		srgsAsFallback = true
 	}
-
+	
 	runs {
 		client {
 			programArg "quaternary"
@@ -32,32 +32,18 @@ volde {
 }
 
 dependencies {
-	implementation 'net.jcip:jcip-annotations:1.0'
-    implementation 'org.jetbrains:annotations-java5:23.0.0'
-    minecraft "com.mojang:minecraft:${minecraftVersion}"
+	minecraft "com.mojang:minecraft:${minecraftVersion}"
 	forge "net.minecraftforge:forge:${forgeVersion}:universal@zip"
-
+	
 	mappings volde.layered {
 		baseZip "net.minecraftforge:forge:${forgeVersion}:src@zip"
 		unmapClass(["bar", "bas"])
 	}
-
-	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
-	coremodImplementation files("libs/CodeChickenCore 0.8.1.6.jar")
-	coremodImplementation files("libs/NotEnoughItems 1.4.7.4.jar")
+	
+	//accessTransformers files("./src/main/resources/good_cool_ats.cfg")
+	
+	//coremodImplementation files("libs/name.jar")
+	//coremodImplementation files("libs/name.zip")
+	//modImplementation files("libs/name.jar")
+	//modImplementation files("libs/name.zip")
 }
-
-sourceSets {
-	main {
-		resources {
-			srcDirs 'src/main/java'
-		}
-	}
-}
-
-jar {
-	exclude ("**/com/**")
-}
-
-
-
