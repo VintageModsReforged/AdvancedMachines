@@ -1,6 +1,3 @@
-Version 4.7c
-	added Redstone Inverter Upgrade
-
 Version 4.7b
 	fixed "pick block" on Advanced Machines
 
