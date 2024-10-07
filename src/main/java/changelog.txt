@@ -1,3 +1,6 @@
+Version 5.2a
+    ported to 1.5.2
+
 Version 4.7b
 	fixed "pick block" on Advanced Machines
 
