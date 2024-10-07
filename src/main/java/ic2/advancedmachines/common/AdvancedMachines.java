@@ -23,10 +23,9 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7b", dependencies = "required-after:IC2")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7c", dependencies = "required-after:IC2")
+@NetworkMod(clientSideRequired = true)
 public class AdvancedMachines implements IGuiHandler, IProxy {
     public static AdvancedMachines instance;
 
