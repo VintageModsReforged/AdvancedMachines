@@ -1,5 +1,16 @@
-Version 5.2a
-    ported to 1.5.2
+Version 5.0
+    added Induction Furnace MKII (has upgrade slots)
+    added redstone inverter upgrade
+
+Version 4.9 (still, no IC2 release yet)
+	update to MC 1.5.2
+
+Version 4.9
+	update to MC 1.5.1
+	implemented ISidedInventory, needs testing.
+
+Version 4.8
+	update to MC 1.5
 
 Version 4.7b
 	fixed "pick block" on Advanced Machines
