@@ -1,8 +1,8 @@
 package ic2.advancedmachines.common;
 
-import java.lang.reflect.Method;
-
 import net.minecraft.tileentity.TileEntity;
+
+import java.lang.reflect.Method;
 
 public class IC2AudioSource {
     private static boolean initFailed = false;

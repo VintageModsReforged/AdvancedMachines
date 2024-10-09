@@ -1,26 +1,18 @@
 package ic2.advancedmachines.common;
 
 import ic2.api.Ic2Recipes;
-
-import java.util.List;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super("Centrifuge Extractor", "%5d M/S", 1, new int[]{1}, new int[]{2, 3, 4});
+        super("Centrifuge Extractor", 1, new int[]{1}, new int[]{2, 3, 4});
     }
 
     @Override
     public Container getGuiContainer(InventoryPlayer var1) {
         return new ContainerCentrifugeExtractor(var1, this);
-    }
-
-    @Override
-    protected List getResultMap() {
-        return Ic2Recipes.getExtractorRecipes();
     }
 
     @Override

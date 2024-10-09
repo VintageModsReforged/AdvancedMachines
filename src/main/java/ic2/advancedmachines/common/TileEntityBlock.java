@@ -4,14 +4,13 @@ import ic2.api.IWrenchable;
 import ic2.api.network.INetworkDataProvider;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class TileEntityBlock extends TileEntity implements IWrenchable, INetworkDataProvider, INetworkTileEntityEventListener {
     protected boolean created = false;

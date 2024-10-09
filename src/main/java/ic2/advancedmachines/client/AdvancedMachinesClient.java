@@ -1,9 +1,6 @@
 package ic2.advancedmachines.client;
 
-import ic2.advancedmachines.common.IProxy;
-import ic2.advancedmachines.common.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.common.TileEntityRotaryMacerator;
-import ic2.advancedmachines.common.TileEntitySingularityCompressor;
+import ic2.advancedmachines.common.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -18,7 +15,7 @@ public class AdvancedMachinesClient implements IProxy {
         MinecraftForgeClient.preloadTexture("/ic2/advancedmachines/client/sprites/GUICenterfuge.png");
         MinecraftForgeClient.preloadTexture("/ic2/advancedmachines/client/sprites/GUIRotary.png");
         MinecraftForgeClient.preloadTexture("/ic2/advancedmachines/client/sprites/GUISingularity.png");
-
+        MinecraftForgeClient.preloadTexture("/ic2/advancedmachines/client/sprites/GUIInduction.png");
         try {
             sideAndFacingToSpriteOffset = (int[][]) Class.forName("ic2.common.BlockMultiID").getField("sideAndFacingToSpriteOffset").get(null);
         } catch (Exception e) {
@@ -44,6 +41,8 @@ public class AdvancedMachinesClient implements IProxy {
                 return new GuiCentrifugeExtractor(player.inventory, (TileEntityCentrifugeExtractor) te);
             } else if (te instanceof TileEntitySingularityCompressor) {
                 return new GuiSingularityCompressor(player.inventory, (TileEntitySingularityCompressor) te);
+            } else if (te instanceof TileEntityAdvancedInduction) {
+                return new GuiAdvInduction(player.inventory, (TileEntityAdvancedInduction) te);
             }
         }
 

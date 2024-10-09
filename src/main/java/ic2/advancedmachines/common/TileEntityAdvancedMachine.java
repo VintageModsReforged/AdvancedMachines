@@ -2,9 +2,6 @@ package ic2.advancedmachines.common;
 
 import ic2.api.Direction;
 import ic2.api.network.NetworkHelper;
-
-import java.util.List;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -12,17 +9,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine implements ISidedInventory {
     private static final int MAX_PROGRESS = 4000;
     private static final int MAX_ENERGY = 5000;
-    private static final int MAX_SPEED = 7500;
+    private static final int MAX_SPEED = 10000;
     private static final int MAX_INPUT = 32;
     private String inventoryName;
     private int[] inputs;
     private int[] outputs;
     short speed;
     short progress;
-    private String dataFormat;
+    private String dataFormat = "%s%%";
     private int dataScaling;
 
     private IC2AudioSource audioSource;
@@ -34,10 +35,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     private int acceleration = 1;
     private int maxSpeed;
 
-    public TileEntityAdvancedMachine(String invName, String dataForm, int dataScale, int[] inputSlots, int[] outputSlots) {
+    public TileEntityAdvancedMachine(String invName, int dataScale, int[] inputSlots, int[] outputSlots) {
         super(inputSlots.length + outputSlots.length + 6, MAX_ENERGY, MAX_INPUT);
         this.inventoryName = invName;
-        this.dataFormat = dataForm;
         this.dataScaling = dataScale;
         this.inputs = inputSlots;
         this.outputs = outputSlots;
@@ -152,7 +152,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
         return super.injectEnergy(var1, var2);
     }
 
-    private void operate() {
+    protected void operate() {
         if (canOperate()) {
             ItemStack resultStack = getResultFor(inventory[inputs[0]], true).copy();
             int[] stackSizeSpaceAvailableInOutput = new int[outputs.length];
@@ -194,7 +194,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
 
     }
 
-    private boolean canOperate() {
+    protected boolean canOperate() {
         if (inventory[inputs[0]] == null) {
             return false;
         } else {
@@ -228,8 +228,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
      */
     public abstract ItemStack getResultFor(ItemStack input, boolean adjustOutput);
 
-    protected abstract List getResultMap();
-
     public abstract Container getGuiContainer(InventoryPlayer var1);
 
     @Override
@@ -257,7 +255,8 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     }
 
     public String printFormattedData() {
-        return String.format(this.dataFormat, new Object[]{Integer.valueOf(this.speed * this.dataScaling)});
+        DecimalFormat format = new DecimalFormat("##.##", new DecimalFormatSymbols(Locale.ROOT));
+        return String.format(this.dataFormat, format.format(((double) this.speed / (double) MAX_SPEED) * 100));
     }
 
     @Override

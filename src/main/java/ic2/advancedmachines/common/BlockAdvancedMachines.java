@@ -3,11 +3,7 @@ package ic2.advancedmachines.common;
 import ic2.advancedmachines.client.AdvancedMachinesClient;
 import ic2.api.Items;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
+import ic2.core.IC2;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
@@ -21,13 +17,17 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+
 public class BlockAdvancedMachines extends BlockContainer {
     public int[][] sprites;
     private final int idWrench;
     private final int idEWrench;
 
-    public BlockAdvancedMachines(int var1) {
-        super(var1, Material.iron);
+    public BlockAdvancedMachines(int id) {
+        super(id, Material.iron);
         this.setHardness(2.0F);
         this.setStepSound(soundMetalFootstep);
         this.sprites = new int[][]{{86, 20, 86, 19, 86, 21, 86, 19}, {86, 26, 86, 27, 86, 26, 86, 28}, {86, 86, 24, 22, 86, 86, 25, 23}};
@@ -35,18 +35,15 @@ public class BlockAdvancedMachines extends BlockContainer {
 
         idWrench = Items.getItem("wrench").itemID;
         idEWrench = Items.getItem("electricWrench").itemID;
+        this.setCreativeTab(IC2.tabIC2);
     }
 
     @Override
     public int getBlockTexture(IBlockAccess world, int x, int y, int z, int blockSide) {
         int blockMeta = world.getBlockMetadata(x, y, z);
-
         TileEntity te = world.getBlockTileEntity(x, y, z);
         int facing = (te instanceof TileEntityBlock) ? ((int) (((TileEntityBlock) te).getFacing())) : 0;
-        if (isActive(world, x, y, z))
-            return blockMeta + (AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] + 6) * 16;
-        else
-            return blockMeta + AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] * 16;
+        return isActive(world, x, y, z) ? blockMeta + (AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] + 6) * 16 : blockMeta + AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] * 16;
     }
 
     @Override
@@ -67,27 +64,25 @@ public class BlockAdvancedMachines extends BlockContainer {
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
         super.onBlockAdded(world, x, y, z);
-        //TileEntityAdvancedMachine te = this.getBlockEntity(world.getBlockMetadata(x, y, z));
-        //world.setBlockTileEntity(x, y, z, te);
     }
 
     @Override
-    public ArrayList getBlockDropped(World var1, int var2, int var3, int var4, int var5, int var6) {
-        ArrayList var7 = super.getBlockDropped(var1, var2, var3, var4, var5, var6);
-        TileEntity var8 = var1.getBlockTileEntity(var2, var3, var4);
+    public ArrayList getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList drops = super.getBlockDropped(world, x, y, z, metadata, fortune);
+        TileEntity var8 = world.getBlockTileEntity(x, y, z);
         if (var8 instanceof IInventory) {
             IInventory var9 = (IInventory) var8;
 
-            for (int var10 = 0; var10 < var9.getSizeInventory(); ++var10) {
-                ItemStack var11 = var9.getStackInSlot(var10);
+            for (int i = 0; i < var9.getSizeInventory(); ++i) {
+                ItemStack var11 = var9.getStackInSlot(i);
                 if (var11 != null) {
-                    var7.add(var11);
-                    var9.setInventorySlotContents(var10, (ItemStack) null);
+                    drops.add(var11);
+                    var9.setInventorySlotContents(i, null);
                 }
             }
         }
 
-        return var7;
+        return drops;
     }
 
     @Override
@@ -130,19 +125,6 @@ public class BlockAdvancedMachines extends BlockContainer {
         return "/ic2/advancedmachines/client/sprites/block_advmachine.png";
     }
 
-    public int getGui(World var1, int var2, int var3, int var4, EntityPlayer var5) {
-        switch (var1.getBlockMetadata(var2, var3, var4)) {
-            case 0:
-                return AdvancedMachines.guiIdRotary;
-            case 1:
-                return AdvancedMachines.guiIdSingularity;
-            case 2:
-                return AdvancedMachines.guiIdCentrifuge;
-            default:
-                return 0;
-        }
-    }
-
     public TileEntityAdvancedMachine getBlockEntity(int var1) {
         switch (var1) {
             case 0:
@@ -151,6 +133,8 @@ public class BlockAdvancedMachines extends BlockContainer {
                 return new TileEntitySingularityCompressor();
             case 2:
                 return new TileEntityCentrifugeExtractor();
+            case 3:
+                return new TileEntityAdvancedInduction();
             default:
                 return null;
         }
@@ -187,7 +171,6 @@ public class BlockAdvancedMachines extends BlockContainer {
                 && (entityPlayer.getCurrentEquippedItem().itemID == idWrench || entityPlayer.getCurrentEquippedItem().itemID == idEWrench)) {
             TileEntityAdvancedMachine team = (TileEntityAdvancedMachine) world.getBlockTileEntity(x, y, z);
             if (team != null) {
-                //EnergyNet.getForWorld(world).removeTileEntity(team);
                 MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(team));
                 team.invalidate();
                 team.setActive(false);
@@ -202,14 +185,6 @@ public class BlockAdvancedMachines extends BlockContainer {
 
     public static boolean isActive(IBlockAccess var0, int var1, int var2, int var3) {
         return ((TileEntityAdvancedMachine) var0.getBlockTileEntity(var1, var2, var3)).getActive();
-    }
-
-    public static int getFacing(IBlockAccess var0, int var1, int var2, int var3) {
-        return ((TileEntityAdvancedMachine) var0.getBlockTileEntity(var1, var2, var3)).getFacing();
-    }
-
-    public static float getWrenchRate(IBlockAccess var0, int var1, int var2, int var3) {
-        return ((TileEntityAdvancedMachine) var0.getBlockTileEntity(var1, var2, var3)).getWrenchDropRate();
     }
 
     @Override

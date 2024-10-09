@@ -1,15 +1,5 @@
 package ic2.advancedmachines.common;
 
-import ic2.api.Ic2Recipes;
-import ic2.api.Items;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -23,8 +13,19 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import ic2.api.Ic2Recipes;
+import ic2.api.Items;
+import ic2.core.IC2;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.Property;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7c", dependencies = "required-after:IC2")
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7d", dependencies = "required-after:IC2")
 @NetworkMod(clientSideRequired = true)
 public class AdvancedMachines implements IGuiHandler, IProxy {
     public static AdvancedMachines instance;
@@ -35,7 +36,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
     public static ItemStack stackRotaryMacerator;
     public static ItemStack stackSingularityCompressor;
     public static ItemStack stackCentrifugeExtractor;
-
+    public static ItemStack stackAdvancedInduction;
 
     private int refIronID;
     private int redstoneUpgradeID;
@@ -45,10 +46,12 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
     public static int guiIdRotary;
     public static int guiIdSingularity;
     public static int guiIdCentrifuge;
+    public static int guiIdAdvInduction;
 
     public static String advMaceName = "Rotary Macerator";
     public static String advCompName = "Singularity Compressor";
     public static String advExtcName = "Centrifuge Extractor";
+    public static String advIndName = "Induction Furnace MKII";
     public static String refIronDustName = "Refined Iron dust";
     public static String redstoneUpgradeName = "Redstone Inverter Upgrade";
 
@@ -87,6 +90,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
         guiIdRotary = config.get("IDs", "guiIdRotary", 40).getInt();
         guiIdSingularity = config.get("IDs", "guiIdSingularity", 41).getInt();
         guiIdCentrifuge = config.get("IDs", "guiIdCentrifuge", 42).getInt();
+        guiIdAdvInduction = config.get("IDs", "guiIdAdvInduction", 43).getInt();
 
         Property prop = config.get("Sounds", "advCompressorSound", advCompSound);
         prop.comment = "Sound files to use on operation. Remember to use '/' instead of backslashes and the Sound directory starts on ic2/sounds. Set empty to disable.";
@@ -103,6 +107,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
         advCompName = prop.value;
         advExtcName = config.get("translation", "nameAdvExtractor", advExtcName).value;
         advMaceName = config.get("translation", "nameAdvMacerator", advMaceName).value;
+        advIndName = config.get("translation", "nameAdvInduction", advIndName).value;
         refIronDustName = config.get("translation", "nameAdvRefIronDust", refIronDustName).value;
         redstoneUpgradeName = config.get("translation", "nameRedstoneUpgrade", redstoneUpgradeName).value;
 
@@ -141,6 +146,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
         GameRegistry.registerTileEntity(TileEntityRotaryMacerator.class, "Rotary Macerator");
         GameRegistry.registerTileEntity(TileEntitySingularityCompressor.class, "Singularity Compressor");
         GameRegistry.registerTileEntity(TileEntityCentrifugeExtractor.class, "Centrifuge Extractor");
+        GameRegistry.registerTileEntity(TileEntityAdvancedInduction.class, "Advanced Induction");
 
         NetworkRegistry.instance().registerGuiHandler(this, this);
     }
@@ -171,6 +177,14 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
                 'A', Items.getItem("advancedMachine"));
         LanguageRegistry.addName(stackCentrifugeExtractor, advExtcName);
 
+        stackAdvancedInduction = new ItemStack(blockAdvancedMachine, 1, 3);
+        Ic2Recipes.addCraftingRecipe(stackAdvancedInduction,
+                " C ", "RMR",
+                'R', Item.redstone,
+                'M', Items.getItem("inductionFurnace"),
+                'C', Items.getItem("advancedCircuit"));
+        LanguageRegistry.addName(stackAdvancedInduction, advIndName);
+
         overClockerStack = Items.getItem("overclockerUpgrade");
         transformerStack = Items.getItem("transformerUpgrade");
         energyStorageUpgradeStack = Items.getItem("energyStorageUpgrade");
@@ -179,7 +193,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
         LanguageRegistry.addName(refinedIronDust, refIronDustName);
         GameRegistry.addSmelting(refinedIronDust.itemID, Items.getItem("refinedIronIngot"), 1.0f);
 
-        redstoneUpgrade = new Item(redstoneUpgradeID).setItemName("redstoneUpgrade").setTextureFile("ic2/advancedmachines/client/sprites/block_advmachine.png").setIconIndex(4);
+        redstoneUpgrade = new Item(redstoneUpgradeID).setItemName("redstoneUpgrade").setTextureFile("ic2/advancedmachines/client/sprites/block_advmachine.png").setIconIndex(5).setCreativeTab(IC2.tabIC2);
         LanguageRegistry.addName(redstoneUpgrade, redstoneUpgradeName);
         Ic2Recipes.addCraftingRecipe(new ItemStack(redstoneUpgrade),
                 "T T", " R ", "T T",
@@ -208,6 +222,8 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
                 return ((TileEntityCentrifugeExtractor) te).getGuiContainer(player.inventory);
             } else if (te instanceof TileEntitySingularityCompressor) {
                 return ((TileEntitySingularityCompressor) te).getGuiContainer(player.inventory);
+            } else if (te instanceof TileEntityAdvancedInduction) {
+                return ((TileEntityAdvancedInduction) te).getGuiContainer(player.inventory);
             }
         }
 

@@ -1,5 +1,6 @@
 package ic2.advancedmachines.common;
 
+import ic2.advancedmachines.common.slot.SlotUpgrade;
 import ic2.api.IElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -21,10 +22,10 @@ public class ContainerRotaryMacerator extends Container {
         this.addSlotToContainer(new Slot(var2, 1, 56, 17));
         this.addSlotToContainer(new SlotFurnace(var1.player, var2, 2, 115, 25)); // left Result Slot
         this.addSlotToContainer(new SlotFurnace(var1.player, var2, 3, 115, 46)); // right Result Slot
-        this.addSlotToContainer(new Slot(var2, 4, 152, 6)); // Upgrade Slots
-        this.addSlotToContainer(new Slot(var2, 5, 152, 24));
-        this.addSlotToContainer(new Slot(var2, 6, 152, 42));
-        this.addSlotToContainer(new Slot(var2, 7, 152, 60));
+        this.addSlotToContainer(new SlotUpgrade(var2, 4, 152, 6)); // Upgrade Slots
+        this.addSlotToContainer(new SlotUpgrade(var2, 5, 152, 24));
+        this.addSlotToContainer(new SlotUpgrade(var2, 6, 152, 42));
+        this.addSlotToContainer(new SlotUpgrade(var2, 7, 152, 60));
 
         this.addSlotToContainer(new Slot(var2, 8, 75, 17)); // Maceration Supplement Slot
 

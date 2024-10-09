@@ -1,5 +1,6 @@
 package ic2.advancedmachines.common;
 
+import ic2.advancedmachines.common.slot.SlotUpgrade;
 import ic2.api.IElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -20,10 +21,10 @@ public class ContainerSingularityCompressor extends Container {
         this.addSlotToContainer(new Slot(var2, 0, 56, 53));
         this.addSlotToContainer(new Slot(var2, 1, 56, 17));
         this.addSlotToContainer(new SlotFurnace(var1.player, var2, 2, 115, 35));
-        this.addSlotToContainer(new Slot(var2, 3, 152, 6));
-        this.addSlotToContainer(new Slot(var2, 4, 152, 24));
-        this.addSlotToContainer(new Slot(var2, 5, 152, 42));
-        this.addSlotToContainer(new Slot(var2, 6, 152, 60));
+        this.addSlotToContainer(new SlotUpgrade(var2, 3, 152, 6));
+        this.addSlotToContainer(new SlotUpgrade(var2, 4, 152, 24));
+        this.addSlotToContainer(new SlotUpgrade(var2, 5, 152, 42));
+        this.addSlotToContainer(new SlotUpgrade(var2, 6, 152, 60));
 
         int var3;
         for (var3 = 0; var3 < 3; ++var3) {

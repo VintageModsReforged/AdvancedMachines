@@ -5,7 +5,6 @@ import ic2.advancedmachines.common.ContainerRotaryMacerator;
 import ic2.advancedmachines.common.TileEntityRotaryMacerator;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-
 import org.lwjgl.opengl.GL11;
 
 public class GuiRotaryMacerator extends GuiContainer {
@@ -18,9 +17,9 @@ public class GuiRotaryMacerator extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(AdvancedMachines.advMaceName, 49, 6, 4210752);
+        this.fontRenderer.drawString(AdvancedMachines.advMaceName, this.xSize / 2 - this.fontRenderer.getStringWidth(AdvancedMachines.advMaceName) / 2, 6, 4210752);
         this.fontRenderer.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
-        this.fontRenderer.drawString("Speed:", 10, 36, 4210752);
+        this.fontRenderer.drawString("Rotation:", 6, 36, 4210752);
         this.fontRenderer.drawString(this.tileentity.printFormattedData(), 10, 44, 4210752);
     }
 

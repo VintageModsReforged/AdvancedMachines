@@ -1,5 +1,6 @@
 package ic2.advancedmachines.common;
 
+import ic2.advancedmachines.common.slot.SlotUpgrade;
 import ic2.api.IElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -22,10 +23,10 @@ public class ContainerCentrifugeExtractor extends Container {
         this.addSlotToContainer(new SlotFurnace(inv.player, tE, 2, 115, 17));
         this.addSlotToContainer(new SlotFurnace(inv.player, tE, 3, 115, 35));
         this.addSlotToContainer(new SlotFurnace(inv.player, tE, 4, 115, 53)); //Re-added the third slot.
-        this.addSlotToContainer(new Slot(tE, 5, 152, 6));
-        this.addSlotToContainer(new Slot(tE, 6, 152, 24));
-        this.addSlotToContainer(new Slot(tE, 7, 152, 42));
-        this.addSlotToContainer(new Slot(tE, 8, 152, 60));
+        this.addSlotToContainer(new SlotUpgrade(tE, 5, 152, 6));
+        this.addSlotToContainer(new SlotUpgrade(tE, 6, 152, 24));
+        this.addSlotToContainer(new SlotUpgrade(tE, 7, 152, 42));
+        this.addSlotToContainer(new SlotUpgrade(tE, 8, 152, 60));
 
         int i;
         for (i = 0; i < 3; ++i) {

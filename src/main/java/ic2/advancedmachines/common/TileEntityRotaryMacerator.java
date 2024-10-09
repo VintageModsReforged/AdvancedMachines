@@ -2,9 +2,6 @@ package ic2.advancedmachines.common;
 
 import ic2.api.Ic2Recipes;
 import ic2.api.Items;
-
-import java.util.List;
-
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -23,7 +20,7 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
     private ItemStack hydratedCoalDust;
 
     public TileEntityRotaryMacerator() {
-        super("Rotary Macerator", "%5d RPM", 1, new int[]{1}, new int[]{2, 3});
+        super("Rotary Macerator", 1, new int[]{1}, new int[]{2, 3});
 
         idIronDust = Items.getItem("ironDust").itemID;
         idCopperDust = Items.getItem("copperDust").itemID;
@@ -37,10 +34,6 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
     @Override
     public Container getGuiContainer(InventoryPlayer var1) {
         return new ContainerRotaryMacerator(var1, this);
-    }
-
-    protected List getResultMap() {
-        return Ic2Recipes.getMaceratorRecipes();
     }
 
     @Override
