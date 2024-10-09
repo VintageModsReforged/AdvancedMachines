@@ -17,7 +17,7 @@ public class ItemAdvancedMachine extends ItemBlock {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        tooltip.add("2 EU/t @ Tier 2");
+        tooltip.add(AdvancedMachines.defaultEnergyConsume + " EU/t @ Tier 2");
     }
 
     @Override

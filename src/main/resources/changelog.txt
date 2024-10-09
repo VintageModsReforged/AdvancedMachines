@@ -1,3 +1,10 @@
+Version 5.2b // updated index to match MC version
+    fixed: Induction Furnace MKII operate process
+    fixed: Tooltip information about energy usage
+    fixed: Gui title using fixed position values for title, now the title is centered properly
+	changed: Speed value for machines has been increased from 7500 to 10000 to match IC2 advanced machines
+	changed: Speed value is now displayed as percentage instead of flat values
+
 Version 5.0a
     added Induction Furnace MKII (has upgrade slots)
     added redstone inverter upgrade
