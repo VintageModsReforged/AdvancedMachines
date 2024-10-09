@@ -16,7 +16,7 @@ import java.util.Locale;
 public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine implements ISidedInventory {
     public static final int MAX_PROGRESS = 4000;
     public static final int MAX_ENERGY = 5000;
-    public static final int MAX_SPEED = 7500;
+    public static final int MAX_SPEED = 10000;
     public static final int MAX_INPUT = 128;
     public String inventoryName;
     public int[] inputs;
