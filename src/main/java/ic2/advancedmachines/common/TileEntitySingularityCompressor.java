@@ -1,15 +1,13 @@
 package ic2.advancedmachines.common;
 
 import ic2.api.recipe.Recipes;
-import ic2.core.block.machine.tileentity.TileEntityElectricFurnace;
-import ic2.core.block.machine.tileentity.TileEntityInduction;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super("Singularity Compressor", "%6d PSI", 10, new int[]{1}, new int[]{2});
+        super("Singularity Compressor", new int[]{1}, new int[]{2});
         this.upgradeSlots = new int[] {3, 4, 5, 6};
     }
 

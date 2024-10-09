@@ -18,7 +18,7 @@ public class GuiSingularityCompressor extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(AdvancedMachines.advCompName, 32, 6, 4210752);
+        this.fontRenderer.drawString(AdvancedMachines.advCompName, this.xSize / 2 - this.fontRenderer.getStringWidth(AdvancedMachines.advCompName) / 2, 6, 4210752);
         this.fontRenderer.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
         this.fontRenderer.drawString("Pressure:", 6, 36, 4210752);
         this.fontRenderer.drawString(this.tileentity.printFormattedData(), 10, 44, 4210752);

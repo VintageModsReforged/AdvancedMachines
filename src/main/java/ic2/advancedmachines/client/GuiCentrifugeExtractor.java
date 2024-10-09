@@ -18,9 +18,9 @@ public class GuiCentrifugeExtractor extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        this.fontRenderer.drawString(AdvancedMachines.advExtcName, 39, 4, 4210752);
+        this.fontRenderer.drawString(AdvancedMachines.advExtcName, this.xSize / 2 - this.fontRenderer.getStringWidth(AdvancedMachines.advExtcName) / 2, 4, 4210752);
         this.fontRenderer.drawString("Inventory", 8, this.ySize - 96 + 2, 4210752);
-        this.fontRenderer.drawString("Speed:", 10, 36, 4210752);
+        this.fontRenderer.drawString("Speed:", 6, 36, 4210752);
         this.fontRenderer.drawString(this.tileentity.printFormattedData(), 10, 44, 4210752);
     }
 

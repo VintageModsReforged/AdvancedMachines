@@ -13,7 +13,6 @@ public class ItemAdvancedMachine extends ItemBlock {
         super(var1);
         setMaxDamage(0);
         setHasSubtypes(true);
-        setCreativeTab(CreativeTabs.tabBlock);
     }
 
     @Override

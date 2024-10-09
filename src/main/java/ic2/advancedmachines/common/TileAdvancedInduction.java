@@ -14,7 +14,7 @@ public class TileAdvancedInduction extends TileEntityAdvancedMachine {
     public int outputBIndex = 4;
 
     public TileAdvancedInduction() {
-        super("Induction Furnace", "%2d HU", 10, new int[] {1, 2}, new int[] {3, 4});
+        super("Induction Furnace", new int[] {1, 2}, new int[] {3, 4});
         this.upgradeSlots = new int[] {5, 6, 7, 8};
     }
 
@@ -47,17 +47,16 @@ public class TileAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public void operate() {
-        if (this.inventory[this.inputAIndex] == null) {
-            this.operate(this.inputBIndex, this.outputAIndex);
+        if (this.inventory[this.inputAIndex] == null && this.inventory[this.inputBIndex] != null) {
             this.operate(this.inputBIndex, this.outputBIndex);
-        } else if (this.inventory[this.inputBIndex] == null) {
+            this.operate(this.inputBIndex, this.outputBIndex);
+        } else if (this.inventory[this.inputAIndex] != null && this.inventory[this.inputBIndex] == null) {
             this.operate(this.inputAIndex, this.outputAIndex);
-            this.operate(this.inputAIndex, this.outputBIndex);
+            this.operate(this.inputAIndex, this.outputAIndex);
         } else {
             this.operate(this.inputAIndex, this.outputAIndex);
             this.operate(this.inputBIndex, this.outputBIndex);
         }
-
     }
 
     public void operate(int inputSlot, int outputSlot) {

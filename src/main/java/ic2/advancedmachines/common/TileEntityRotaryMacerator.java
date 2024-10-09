@@ -20,7 +20,7 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
     private ItemStack hydratedCoalDust;
 
     public TileEntityRotaryMacerator() {
-        super("Rotary Macerator", "%5d RPM", 1, new int[]{1}, new int[]{2, 3});
+        super("Rotary Macerator", new int[]{1}, new int[]{2, 3});
 
         idIronDust = Items.getItem("ironDust").itemID;
         idCopperDust = Items.getItem("copperDust").itemID;

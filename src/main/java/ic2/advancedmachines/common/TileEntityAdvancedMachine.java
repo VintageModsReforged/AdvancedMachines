@@ -9,6 +9,10 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine implements ISidedInventory {
     public static final int MAX_PROGRESS = 4000;
     public static final int MAX_ENERGY = 5000;
@@ -19,8 +23,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     public int[] outputs;
     public short speed;
     public short progress;
-    public String dataFormat;
-    public int dataScaling;
+    private String dataFormat = "%s%%";
 
     public IC2AudioSource audioSource;
     public final int EventStart = 0;
@@ -31,11 +34,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     public int acceleration = 1;
     public int maxSpeed;
 
-    public TileEntityAdvancedMachine(String invName, String dataForm, int dataScale, int[] inputSlots, int[] outputSlots) {
+    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots) {
         super(inputSlots.length + outputSlots.length + 6, MAX_ENERGY, MAX_INPUT);
         this.inventoryName = invName;
-        this.dataFormat = dataForm;
-        this.dataScaling = dataScale;
         this.inputs = inputSlots;
         this.outputs = outputSlots;
         this.speed = 0;
@@ -258,7 +259,8 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     }
 
     public String printFormattedData() {
-        return String.format(this.dataFormat, new Object[]{Integer.valueOf(this.speed * this.dataScaling)});
+        DecimalFormat format = new DecimalFormat("##.##", new DecimalFormatSymbols(Locale.ROOT));
+        return String.format(this.dataFormat, format.format(((double) this.speed / (double) MAX_SPEED) * 100));
     }
 
     @Override
