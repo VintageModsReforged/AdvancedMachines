@@ -17,14 +17,13 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     private static final int MAX_PROGRESS = 4000;
     private static final int MAX_ENERGY = 5000;
     private static final int MAX_SPEED = 10000;
-    private static final int MAX_INPUT = 32;
+    private static final int MAX_INPUT = 128;
     private String inventoryName;
     private int[] inputs;
     private int[] outputs;
     short speed;
     short progress;
     private String dataFormat = "%s%%";
-    private int dataScaling;
 
     private IC2AudioSource audioSource;
     private static final int EventStart = 0;
@@ -35,10 +34,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     private int acceleration = 1;
     private int maxSpeed;
 
-    public TileEntityAdvancedMachine(String invName, int dataScale, int[] inputSlots, int[] outputSlots) {
+    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots) {
         super(inputSlots.length + outputSlots.length + 6, MAX_ENERGY, MAX_INPUT);
         this.inventoryName = invName;
-        this.dataScaling = dataScale;
         this.inputs = inputSlots;
         this.outputs = outputSlots;
         this.speed = 0;

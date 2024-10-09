@@ -1,12 +1,13 @@
 Version 4.7d
 	added: Induction Furnace MKII, better version of Induction Furnace with upgrade support
+	added: Tooltip information about energy usage and max tier
 	fixed: Creative tab, now all content is located inside IC2 creative tab
 	fixed: Advanced Machines using regular slots for UpgradeSlots that allowed items to be inserted, now only Upgrade Modules can be inserted
 	fixed: Gui title using fixed position values for title, now the title is centered properly
+	fixed: MaxInput for advanced machines being 32 instead of 128
 	changed: Speed value for machines has been increased from 7500 to 10000 to match IC2 advanced machines
 	changed: Speed value is now displayed as percentage instead of flat values
 	removed: Useless use of NEI subsets
-
 
 Version 4.7c
 	added Redstone Inverter Upgrade

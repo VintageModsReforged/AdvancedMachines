@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super("Singularity Compressor", 10, new int[]{1}, new int[]{2});
+        super("Singularity Compressor", new int[]{1}, new int[]{2});
     }
 
     @Override

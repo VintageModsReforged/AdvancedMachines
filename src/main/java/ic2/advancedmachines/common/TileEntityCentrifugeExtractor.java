@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super("Centrifuge Extractor", 1, new int[]{1}, new int[]{2, 3, 4});
+        super("Centrifuge Extractor", new int[]{1}, new int[]{2, 3, 4});
     }
 
     @Override

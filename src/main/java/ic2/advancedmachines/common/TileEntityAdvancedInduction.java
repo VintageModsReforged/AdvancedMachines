@@ -14,7 +14,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
     public int outputBIndex = 4;
 
     public TileEntityAdvancedInduction() {
-        super("Induction Furnace", 1, new int[] {1, 2}, new int[] {3, 4});
+        super("Induction Furnace", new int[] {1, 2}, new int[] {3, 4});
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ic2.advancedmachines.common;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -11,6 +12,11 @@ public class ItemAdvancedMachine extends ItemBlock {
         super(var1);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
+        tooltip.add(AdvancedMachines.defaultEnergyConsume + " EU/t @ Tier 2");
     }
 
     @Override
