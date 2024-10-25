@@ -14,7 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7e", dependencies = "required-after:IC2")
+@Mod(modid = "AdvancedMachines", name = "IC2 Advanced Machines Addon", version = "4.7f", dependencies = "required-after:IC2")
 @NetworkMod(clientSideRequired = true)
 public class AdvancedMachines implements IGuiHandler, IProxy {
 
@@ -49,7 +49,7 @@ public class AdvancedMachines implements IGuiHandler, IProxy {
         TileEntity te = world.getBlockTileEntity(x, y, z);
         if (te instanceof TileEntityAdvancedMachine) {
             TileEntityAdvancedMachine advancedMachine = (TileEntityAdvancedMachine) te;
-            return advancedMachine.getGuiContainer(player.inventory);
+            return advancedMachine.getGuiContainer(player);
         }
 
         return null;

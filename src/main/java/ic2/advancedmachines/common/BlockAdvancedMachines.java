@@ -5,10 +5,10 @@ import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
 import ic2.advancedmachines.common.tiles.TileEntitySingularityCompressor;
 import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
-import ic2.advancedmachines.common.tiles.base.TileEntityBlock;
 import ic2.api.Items;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.core.IC2;
+import ic2.core.block.TileEntityBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
@@ -60,11 +60,11 @@ public class BlockAdvancedMachines extends BlockContainer {
     }
 
     @Override
-    public int getBlockTexture(IBlockAccess world, int x, int y, int z, int blockSide) {
-        int blockMeta = world.getBlockMetadata(x, y, z);
-        TileEntity te = world.getBlockTileEntity(x, y, z);
-        int facing = (te instanceof TileEntityBlock) ? ((int) (((TileEntityBlock) te).getFacing())) : 0;
-        return isActive(world, x, y, z) ? blockMeta + (sideAndFacingToSpriteOffset[blockSide][facing] + 6) * 16 : blockMeta + sideAndFacingToSpriteOffset[blockSide][facing] * 16;
+    public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
+        TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
+        int facing = te instanceof ic2.core.block.TileEntityBlock ? ((TileEntityBlock)te).getFacing() : 0;
+        int meta = iblockaccess.getBlockMetadata(i, j, k);
+        return isActive(iblockaccess, i, j, k) ? meta + (sideAndFacingToSpriteOffset[side][facing] + 6) * 16 : meta + sideAndFacingToSpriteOffset[side][facing] * 16;
     }
 
     @Override
@@ -163,22 +163,23 @@ public class BlockAdvancedMachines extends BlockContainer {
 
     @Override
     public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving player) {
-        super.onBlockPlacedBy(world, x, y, z, player);
-        int heading = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-        TileEntityAdvancedMachine te = (TileEntityAdvancedMachine) world.getBlockTileEntity(x, y, z);
-        switch (heading) {
-            case 0:
-                te.setFacing((short) 2);
-                break;
-            case 1:
-                te.setFacing((short) 5);
-                break;
-            case 2:
-                te.setFacing((short) 3);
-                break;
-            case 3:
-                te.setFacing((short) 4);
-                break;
+        if (IC2.platform.isSimulating()) {
+            int heading = MathHelper.floor_double((double) (player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+            TileEntityAdvancedMachine te = (TileEntityAdvancedMachine) world.getBlockTileEntity(x, y, z);
+            switch (heading) {
+                case 0:
+                    te.setFacing((short) 2);
+                    break;
+                case 1:
+                    te.setFacing((short) 5);
+                    break;
+                case 2:
+                    te.setFacing((short) 3);
+                    break;
+                case 3:
+                    te.setFacing((short) 4);
+                    break;
+            }
         }
     }
 

@@ -1,3 +1,6 @@
+Version 1.4.7-4.7f
+    changed: use IC2 internals as base for Advanced Machines
+
 Version 4.7e
     changed: energy usage now match energy usage of Induction Furnace (otherwise it's too cheap)
     changed: config is now generated using `new` format, more pleasant

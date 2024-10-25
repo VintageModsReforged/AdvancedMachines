@@ -1,12 +1,18 @@
 package ic2.advancedmachines.common.tiles.base;
 
 import ic2.advancedmachines.common.AdvancedMachinesConfig;
+import ic2.advancedmachines.common.BlocksItems;
 import ic2.advancedmachines.common.container.ContainerAdvancedMachine;
+import ic2.api.Direction;
+import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
+import ic2.core.ContainerIC2;
 import ic2.core.IC2;
+import ic2.core.IHasGui;
 import ic2.core.audio.AudioSource;
+import ic2.core.block.machine.tileentity.TileEntityElecMachine;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,12 +24,13 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 
-public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine implements ISidedInventory {
+public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine implements IHasGui, ISidedInventory, INetworkTileEntityEventListener {
 
     public static int maxProgress = 4000;
     public static int maxEnergy = 5000;
     public static int maxSpeed = 10000;
     public static int maxInput = 128;
+    public static int energyUsage = 15;
 
     public short speed;
     public String invName;
@@ -31,22 +38,20 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     public int[] outputs;
     public short progress;
     public String speedFormat = "%s%%";
-
+    public int soundTicker;
     public AudioSource audioSource;
-    public static final int eventStart = 0;
-    public static final int eventInterrupt = 1;
-    public static final int eventStop = 2;
-
-    public int energyUsage = 15;
+    private static final int eventStart = 0;
+    private static final int eventInterrupt = 1;
+    private static final int eventStop = 2;
 
     public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots) {
-        super(inputSlots.length + outputSlots.length + 4, maxEnergy, maxInput);
+        super(inputSlots.length + outputSlots.length + 4, 0, maxEnergy, maxInput);
         this.invName = invName;
         this.inputs = inputSlots;
         this.outputs = outputSlots;
         this.speed = 0;
         this.progress = 0;
-        System.out.println("Tile: " + this.invName + " with slot size: " + this.inventory.length);
+        this.soundTicker = IC2.random.nextInt(64);
     }
 
     @Override
@@ -69,12 +74,21 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
     }
 
     @Override
+    public void onUnloaded() {
+        super.onUnloaded();
+        if (IC2.platform.isRendering() && this.audioSource != null) {
+            IC2.audioManager.removeSources(this);
+            this.audioSource = null;
+        }
+
+    }
+
+    @Override
     public void updateEntity() {
         super.updateEntity();
-        if (IC2.platform.isRendering()) return;
         boolean needsInvUpdate = false;
-        if (energy <= maxEnergy) {
-            needsInvUpdate = getPowerFromFuelSlot();
+        if (this.energy <= maxEnergy) {
+            needsInvUpdate = this.provideEnergy();
         }
 
         boolean newActive = this.getActive();
@@ -87,10 +101,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
             needsInvUpdate = true;
             this.progress = 0;
             newActive = false;
-            NetworkHelper.initiateTileEntityEvent(this, eventStop, true);
+            IC2.network.initiateTileEntityEvent(this, eventStop, true);
         }
 
-        boolean canOperate = canOperate();
+        boolean canOperate = this.canOperate();
         if (energy > 0 && (canOperate || isRedstonePowered())) {
             if (speed < maxSpeed) {
                 ++this.speed;
@@ -123,11 +137,11 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
                 newActive = true;
             }
         } else {
-            progress = 0;
+            this.progress = 0;
         }
 
         if (newActive && canOperate) {
-            progress = (short) (progress + speed / 30);
+            this.progress = (short)(this.progress + this.speed / 30);
             this.energy -= energyUsage;
         }
 
@@ -137,7 +151,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
 
         if (newActive != this.getActive()) {
             this.setActive(newActive);
-            worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         }
     }
 
@@ -201,6 +214,34 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
         }
     }
 
+    @Override
+    public void onNetworkEvent(int event) {
+        if (this.audioSource == null && this.getStartSoundFile() != null) {
+            this.audioSource = IC2.audioManager.createSource(this, this.getStartSoundFile());
+        }
+
+        switch (event) {
+            case 0:
+                if (this.audioSource != null) {
+                    this.audioSource.play();
+                }
+                break;
+            case 1:
+                if (this.audioSource != null) {
+                    this.audioSource.stop();
+                    if (this.getInterruptSoundFile() != null) {
+                        IC2.audioManager.playOnce(this, this.getInterruptSoundFile());
+                    }
+                }
+                break;
+            case 2:
+                if (this.audioSource != null) {
+                    this.audioSource.stop();
+                }
+        }
+
+    }
+
     /**
      * Returns the ItemStack that results from processing whatever is in the Input, or null
      *
@@ -210,10 +251,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
      * @return ItemStack that results from processing the Input, or null if no processing is possible
      */
     public abstract ItemStack getResultFor(ItemStack input, boolean adjustOutput);
-
-    public Container getGuiContainer(InventoryPlayer player) {
-        return new ContainerAdvancedMachine(player, this);
-    }
 
     public abstract String getStartSoundFile();
 
@@ -225,46 +262,41 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
 
     public abstract List<Slot> getSlots(InventoryPlayer playerInv);
 
+    public abstract int[] getUpgradeSlots();
+
     public String printFormattedData() {
         DecimalFormat format = new DecimalFormat("##.##", new DecimalFormatSymbols(Locale.ROOT));
         return String.format(this.speedFormat, format.format(((double) this.speed / (double) maxSpeed) * 100));
     }
 
     @Override
-    public void invalidate() {
-        if (this.audioSource != null) {
-            IC2.audioManager.removeSources(this);
-            this.audioSource = null;
+    public int injectEnergy(Direction directionFrom, int amount) {
+        if (amount > 128) {
+            IC2.explodeMachineAt(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+            return 0;
+        } else {
+            this.energy += amount;
+            int re = 0;
+            if (this.energy > maxEnergy) {
+                re = this.energy - maxEnergy;
+                this.energy = maxEnergy;
+            }
+            return re;
         }
-        super.invalidate();
     }
 
     @Override
-    public void onNetworkEvent(int event) {
-        if (this.audioSource == null && this.getStartSoundFile() != null) {
-            this.audioSource = IC2.audioManager.createSource(this, this.getStartSoundFile());
-        }
-
-        switch (event) {
-            case eventStart:
-                if (this.audioSource != null) {
-                    this.audioSource.play();
-                }
-                break;
-            case eventInterrupt:
-                if (this.audioSource != null) {
-                    this.audioSource.stop();
-                    if (this.getInterruptSoundFile() != null) {
-                        IC2.audioManager.playOnce(this, this.getInterruptSoundFile());
-                    }
-                }
-                break;
-            case eventStop:
-                if (this.audioSource != null) {
-                    this.audioSource.stop();
-                }
-        }
+    public ContainerIC2 getGuiContainer(EntityPlayer player) {
+        return new ContainerAdvancedMachine(player.inventory, this);
     }
+
+    @Override
+    public String getGuiClassName(EntityPlayer entityPlayer) {
+        return "";
+    }
+
+    @Override
+    public void onGuiClosed(EntityPlayer entityPlayer) {}
 
     @Override
     public int getStartInventorySide(ForgeDirection side) {
@@ -288,6 +320,25 @@ public abstract class TileEntityAdvancedMachine extends TileEntityBaseMachine im
             default:
                 return this.outputs.length;
         }
+    }
+
+    @Override
+    public boolean isRedstonePowered() {
+        return this.worldObj.isBlockIndirectlyGettingPowered(this.xCoord, this.yCoord, this.zCoord) || isRedstonePoweredFomUpgrade(getUpgradeSlots());
+    }
+
+    public boolean isRedstonePoweredFomUpgrade(int[] slots) {
+        boolean redstoneUpgrade = false;
+        for (int upgradeSlot : slots) {
+            ItemStack upgrade = this.inventory[upgradeSlot];
+            if (upgrade != null) {
+                if (upgrade.isItemEqual(new ItemStack(BlocksItems.REDSTONE_UPGRADE))) {
+                    redstoneUpgrade = true;
+                    break;
+                }
+            }
+        }
+        return redstoneUpgrade;
     }
 
     public int gaugeProgressScaled(int factor) {

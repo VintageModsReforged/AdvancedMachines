@@ -2,21 +2,20 @@ package ic2.advancedmachines.common.container;
 
 import ic2.advancedmachines.common.slot.SlotFiltered;
 import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
+import ic2.core.ContainerIC2;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class ContainerAdvancedMachine extends Container {
+public class ContainerAdvancedMachine extends ContainerIC2 {
 
-    TileEntityAdvancedMachine TILE;
-    public int PROGRESS = 0;
-    public int ENERGY = 0;
-    public int SPEED = 0;
+    public TileEntityAdvancedMachine TILE;
+    public short progress = -1;
+    public int energy = -1;
+    public short speed = -1;
 
     public ContainerAdvancedMachine(InventoryPlayer playerInv, TileEntityAdvancedMachine tile) {
         this.TILE = tile;
@@ -48,23 +47,37 @@ public class ContainerAdvancedMachine extends Container {
 
         for(int i = 0; i < this.crafters.size(); ++i) {
             ICrafting icrafting = (ICrafting)this.crafters.get(i);
-            if (this.PROGRESS != this.TILE.progress) {
+            if (this.progress != this.TILE.progress) {
                 icrafting.sendProgressBarUpdate(this, 0, this.TILE.progress);
             }
 
-            if (this.ENERGY != this.TILE.energy) {
+            if (this.energy != this.TILE.energy) {
                 icrafting.sendProgressBarUpdate(this, 1, this.TILE.energy & '\uffff');
                 icrafting.sendProgressBarUpdate(this, 2, this.TILE.energy >>> 16);
             }
 
-            if (this.SPEED != this.TILE.speed) {
+            if (this.speed != this.TILE.speed) {
                 icrafting.sendProgressBarUpdate(this, 3, this.TILE.speed);
             }
         }
 
-        this.PROGRESS = this.TILE.progress;
-        this.ENERGY = this.TILE.energy;
-        this.SPEED = this.TILE.speed;
+        this.progress = this.TILE.progress;
+        this.energy = this.TILE.energy;
+        this.speed = this.TILE.speed;
+    }
+
+    @Override
+    public int guiInventorySize() {
+        return this.TILE.getSizeInventory();
+    }
+
+    @Override
+    public int getInput() {
+        if (this.TILE.inputs.length > 1) {
+            return this.TILE.getStackInSlot(this.TILE.inputs[1]) != null ? this.TILE.inputs[1] : this.TILE.inputs[0];
+        } else {
+            return this.TILE.inputs[0];
+        }
     }
 
     @Override
@@ -87,36 +100,5 @@ public class ContainerAdvancedMachine extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer) {
         return this.TILE.isUseableByPlayer(entityPlayer);
-    }
-
-    @Override
-    public final ItemStack transferStackInSlot(EntityPlayer player, int i) {
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(i);
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-            if (i < this.TILE.getSizeInventory()) {
-                this.mergeItemStack(itemstack1, this.TILE.getSizeInventory(), this.inventorySlots.size(), false);
-            } else if (i >= this.TILE.getSizeInventory() && i < this.inventorySlots.size()) {
-                for(int j = 0; j < this.TILE.getSizeInventory(); ++j) {
-                    Slot slot2 = this.getSlot(j);
-                    if (slot2 != null && slot2.isItemValid(itemstack1) && this.mergeItemStack(itemstack1, j, j + 1, false)) {
-                        break;
-                    }
-                }
-            }
-
-            if (itemstack1.stackSize == 0) {
-                slot.putStack(null);
-            } else {
-                slot.onSlotChanged();
-            }
-            if (itemstack1.stackSize == itemstack.stackSize) {
-                return null;
-            }
-            slot.onPickupFromSlot(player, itemstack1);
-        }
-        return itemstack;
     }
 }
