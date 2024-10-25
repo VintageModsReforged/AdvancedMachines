@@ -1,0 +1,30 @@
+package ic2.advancedmachines.common;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import ic2.advancedmachines.common.items.ItemAdvancedMachine;
+import ic2.advancedmachines.common.tiles.TileEntityAdvancedInduction;
+import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
+import ic2.advancedmachines.common.tiles.TileEntitySingularityCompressor;
+import ic2.core.IC2;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+
+public class BlocksItems {
+
+    public static Block ADVANCED_MACHINE_BLOCK;
+    public static Item REDSTONE_UPGRADE;
+
+    public static void init() {
+        REDSTONE_UPGRADE = new Item(AdvancedMachinesConfig.REDSTONE_UPGRADE_ID).setItemName("redstone.inverter").setTextureFile(Refs.ITEMS).setIconIndex(0).setCreativeTab(IC2.tabIC2);
+        ADVANCED_MACHINE_BLOCK = new BlockAdvancedMachines(AdvancedMachinesConfig.ADV_MACHINE_ID);
+
+        GameRegistry.registerItem(REDSTONE_UPGRADE, "redstone.inverter");
+        GameRegistry.registerBlock(ADVANCED_MACHINE_BLOCK, ItemAdvancedMachine.class, "blockAdvMachine");
+
+        GameRegistry.registerTileEntity(TileEntityRotaryMacerator.class, "Rotary Macerator");
+        GameRegistry.registerTileEntity(TileEntitySingularityCompressor.class, "Singularity Compressor");
+        GameRegistry.registerTileEntity(TileEntityCentrifugeExtractor.class, "Centrifuge Extractor");
+        GameRegistry.registerTileEntity(TileEntityAdvancedInduction.class, "Advanced Induction");
+    }
+}

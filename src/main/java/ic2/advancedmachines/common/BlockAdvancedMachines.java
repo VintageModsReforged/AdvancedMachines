@@ -1,6 +1,12 @@
 package ic2.advancedmachines.common;
 
 import ic2.advancedmachines.client.AdvancedMachinesClient;
+import ic2.advancedmachines.common.tiles.TileEntityAdvancedInduction;
+import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
+import ic2.advancedmachines.common.tiles.TileEntitySingularityCompressor;
+import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.common.tiles.base.TileEntityBlock;
 import ic2.api.Items;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.core.IC2;
@@ -22,17 +28,33 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class BlockAdvancedMachines extends BlockContainer {
+
+    public static final int[][] sideAndFacingToSpriteOffset = new int[][]{{3, 2, 0, 0, 0, 0}, {2, 3, 1, 1, 1, 1}, {1, 1, 3, 2, 5, 4}, {0, 0, 2, 3, 4, 5}, {4, 5, 4, 5, 3, 2}, {5, 4, 5, 4, 2, 3}};
+
+    public enum AdvMachines{
+        MACERATOR(0),
+        COMPRESSOR(1),
+        EXTRACTOR(2),
+        INDUCTION(3);
+
+        public ItemStack STACK;
+
+        AdvMachines(int meta) {
+            this.STACK = new ItemStack(BlocksItems.ADVANCED_MACHINE_BLOCK, 1, meta);
+        }
+    }
+
     public int[][] sprites;
     private final int idWrench;
     private final int idEWrench;
 
     public BlockAdvancedMachines(int id) {
         super(id, Material.iron);
+        this.setBlockName("blockAdvMachine");
         this.setHardness(2.0F);
         this.setStepSound(soundMetalFootstep);
         this.sprites = new int[][]{{86, 20, 86, 19, 86, 21, 86, 19}, {86, 26, 86, 27, 86, 26, 86, 28}, {86, 86, 24, 22, 86, 86, 25, 23}};
         this.blockIndexInTexture = this.sprites[0][0];
-
         idWrench = Items.getItem("wrench").itemID;
         idEWrench = Items.getItem("electricWrench").itemID;
         this.setCreativeTab(IC2.tabIC2);
@@ -43,12 +65,12 @@ public class BlockAdvancedMachines extends BlockContainer {
         int blockMeta = world.getBlockMetadata(x, y, z);
         TileEntity te = world.getBlockTileEntity(x, y, z);
         int facing = (te instanceof TileEntityBlock) ? ((int) (((TileEntityBlock) te).getFacing())) : 0;
-        return isActive(world, x, y, z) ? blockMeta + (AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] + 6) * 16 : blockMeta + AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][facing] * 16;
+        return isActive(world, x, y, z) ? blockMeta + (sideAndFacingToSpriteOffset[blockSide][facing] + 6) * 16 : blockMeta + sideAndFacingToSpriteOffset[blockSide][facing] * 16;
     }
 
     @Override
     public int getBlockTextureFromSideAndMetadata(int blockSide, int metaData) {
-        return metaData + AdvancedMachinesClient.sideAndFacingToSpriteOffset[blockSide][3] * 16;
+        return metaData + sideAndFacingToSpriteOffset[blockSide][3] * 16;
     }
 
     @Override
@@ -67,8 +89,8 @@ public class BlockAdvancedMachines extends BlockContainer {
     }
 
     @Override
-    public ArrayList getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
-        ArrayList drops = super.getBlockDropped(world, x, y, z, metadata, fortune);
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> drops = super.getBlockDropped(world, x, y, z, metadata, fortune);
         TileEntity var8 = world.getBlockTileEntity(x, y, z);
         if (var8 instanceof IInventory) {
             IInventory var9 = (IInventory) var8;
@@ -87,28 +109,28 @@ public class BlockAdvancedMachines extends BlockContainer {
 
     @Override
     public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-        boolean var5 = true;
-        for (Iterator iter = this.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0).iterator(); iter.hasNext(); var5 = false) {
-            ItemStack var7 = (ItemStack) iter.next();
-            if (!var5) {
-                if (var7 == null) {
+        boolean firstItem = true;
+        for (Iterator<ItemStack> stackIterator = this.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0).iterator(); stackIterator.hasNext(); firstItem = false) {
+            ItemStack stack = stackIterator.next();
+            if (!firstItem) {
+                if (stack == null) {
                     return;
                 }
 
-                double var8 = 0.7D;
-                double var10 = (double) world.rand.nextFloat() * var8 + (1.0D - var8) * 0.5D;
-                double var12 = (double) world.rand.nextFloat() * var8 + (1.0D - var8) * 0.5D;
-                double var14 = (double) world.rand.nextFloat() * var8 + (1.0D - var8) * 0.5D;
-                EntityItem var16 = new EntityItem(world, (double) x + var10, (double) y + var12, (double) z + var14, var7);
-                var16.delayBeforeCanPickup = 10;
-                world.spawnEntityInWorld(var16);
+                double offset = 0.7D;
+                double xOffset = (double) world.rand.nextFloat() * offset + (1.0D - offset) * 0.5D;
+                double yOffset = (double) world.rand.nextFloat() * offset + (1.0D - offset) * 0.5D;
+                double zOffset = (double) world.rand.nextFloat() * offset + (1.0D - offset) * 0.5D;
+                EntityItem drop = new EntityItem(world, (double) x + xOffset, (double) y + yOffset, (double) z + zOffset, stack);
+                drop.delayBeforeCanPickup = 10;
+                world.spawnEntityInWorld(drop);
                 return;
             }
         }
     }
 
     @Override
-    public int idDropped(int var1, Random var2, int var3) {
+    public int idDropped(int meta, Random random, int amount) {
         return Items.getItem("advancedMachine").itemID;
     }
 
@@ -122,11 +144,11 @@ public class BlockAdvancedMachines extends BlockContainer {
 
     @Override
     public String getTextureFile() {
-        return "/ic2/advancedmachines/client/sprites/block_advmachine.png";
+        return Refs.BLOCKS;
     }
 
-    public TileEntityAdvancedMachine getBlockEntity(int var1) {
-        switch (var1) {
+    public TileEntityAdvancedMachine getBlockEntity(int meta) {
+        switch (meta) {
             case 0:
                 return new TileEntityRotaryMacerator();
             case 1:
@@ -177,29 +199,28 @@ public class BlockAdvancedMachines extends BlockContainer {
                 return true;
             }
         } else {
-            entityPlayer.openGui(AdvancedMachines.instance, 0, world, x, y, z);
+            entityPlayer.openGui(AdvancedMachines.INSTANCE, 0, world, x, y, z);
             return true;
         }
         return false;
     }
 
-    public static boolean isActive(IBlockAccess var0, int var1, int var2, int var3) {
-        return ((TileEntityAdvancedMachine) var0.getBlockTileEntity(var1, var2, var3)).getActive();
+    public static boolean isActive(IBlockAccess world, int x, int y, int z) {
+        return ((TileEntityAdvancedMachine) world.getBlockTileEntity(x, y, z)).getActive();
     }
 
     @Override
-    public void randomDisplayTick(World var1, int var2, int var3, int var4, Random var5) {
-        int var6 = var1.getBlockMetadata(var2, var3, var4);
-        if ((var6 == 0 || var6 == 1) && isActive(var1, var2, var3, var4)) {
-            float var7 = (float) var2 + 1.0F;
-            float var8 = (float) var3 + 1.0F;
-            float var9 = (float) var4 + 1.0F;
-
-            for (int var10 = 0; var10 < 4; ++var10) {
-                float var11 = -0.2F - var5.nextFloat() * 0.6F;
-                float var12 = -0.1F + var5.nextFloat() * 0.2F;
-                float var13 = -0.2F - var5.nextFloat() * 0.6F;
-                var1.spawnParticle("smoke", (double) (var7 + var11), (double) (var8 + var12), (double) (var9 + var13), 0.0D, 0.0D, 0.0D);
+    public void randomDisplayTick(World world, int x, int y, int z, Random random) {
+        int blockMetadata = world.getBlockMetadata(x, y, z);
+        if ((blockMetadata == 0 || blockMetadata == 1) && isActive(world, x, y, z)) {
+            float xPos = (float) x + 1.0F;
+            float yPos = (float) y + 1.0F;
+            float zPos = (float) z + 1.0F;
+            for (int i = 0; i < 4; ++i) {
+                float xOffset = -0.2F - random.nextFloat() * 0.6F;
+                float yOffset = -0.1F + random.nextFloat() * 0.2F;
+                float zOffset = -0.2F - random.nextFloat() * 0.6F;
+                world.spawnParticle("smoke", xPos + xOffset, yPos + yOffset, zPos + zOffset, 0.0D, 0.0D, 0.0D);
             }
         }
     }
