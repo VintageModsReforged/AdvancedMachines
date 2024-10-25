@@ -1,6 +1,6 @@
-package ic2.advancedmachines.common.slot;
+package ic2.advancedmachines.utils;
 
-import ic2.advancedmachines.common.BlocksItems;
+import ic2.advancedmachines.BlocksItems;
 import ic2.api.IElectricItem;
 import ic2.api.Ic2Recipes;
 import ic2.core.item.ItemBatterySU;

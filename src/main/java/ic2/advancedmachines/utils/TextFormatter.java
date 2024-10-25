@@ -1,4 +1,4 @@
-package ic2.advancedmachines.lang;
+package ic2.advancedmachines.utils;
 
 public enum TextFormatter {
     BLACK("0"),

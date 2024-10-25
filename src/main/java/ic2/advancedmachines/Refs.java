@@ -1,12 +1,21 @@
-package ic2.advancedmachines.common;
+package ic2.advancedmachines;
 
-import ic2.advancedmachines.common.tiles.TileEntityAdvancedInduction;
-import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
-import ic2.advancedmachines.common.tiles.TileEntitySingularityCompressor;
-import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
+import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;
+import ic2.advancedmachines.blocks.tiles.TileEntitySingularityCompressor;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 
 public class Refs {
+
+    public static final String ID = "AdvancedMachines";
+    public static final String NAME = "IC2 Advanced Machines Addon";
+    public static final String VERSION = "4.7f";
+    public static final String MC_VERSION = "[1.4.7]";
+    public static final String DEPS = "required-after:IC2";
+
+    public static final String PROXY_COMMON = "ic2.advancedmachines.proxy.CommonProxy";
+    public static final String PROXY_CLIENT = "ic2.advancedmachines.proxy.ClientProxy";
 
     public static final String GUI_EXTRACTOR = "/mods/advancedmachines/textures/gui/extractor.png";
     public static final String GUI_INDUCTION = "/mods/advancedmachines/textures/gui/induction.png";

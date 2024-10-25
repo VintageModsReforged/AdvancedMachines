@@ -1,4 +1,4 @@
-package ic2.advancedmachines.common.slot;
+package ic2.advancedmachines.utils;
 
 import net.minecraft.item.ItemStack;
 

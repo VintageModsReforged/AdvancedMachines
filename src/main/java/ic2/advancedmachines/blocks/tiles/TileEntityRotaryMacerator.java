@@ -1,9 +1,9 @@
-package ic2.advancedmachines.common.tiles;
+package ic2.advancedmachines.blocks.tiles;
 
-import ic2.advancedmachines.common.AdvancedMachinesConfig;
-import ic2.advancedmachines.common.slot.SlotFiltered;
-import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
-import ic2.advancedmachines.lang.LangHelper;
+import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.LangHelper;
 import ic2.api.Ic2Recipes;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;

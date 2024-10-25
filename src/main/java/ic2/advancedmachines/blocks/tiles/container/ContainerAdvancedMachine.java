@@ -1,7 +1,7 @@
-package ic2.advancedmachines.common.container;
+package ic2.advancedmachines.blocks.tiles.container;
 
-import ic2.advancedmachines.common.slot.SlotFiltered;
-import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.core.ContainerIC2;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

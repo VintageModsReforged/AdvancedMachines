@@ -1,8 +1,8 @@
-package ic2.advancedmachines.common.items;
+package ic2.advancedmachines.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.lang.TextFormatter;
+import ic2.advancedmachines.utils.TextFormatter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

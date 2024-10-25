@@ -1,4 +1,4 @@
-package ic2.advancedmachines.common;
+package ic2.advancedmachines;
 
 import cpw.mods.fml.relauncher.FMLInjectionData;
 import net.minecraftforge.common.Configuration;

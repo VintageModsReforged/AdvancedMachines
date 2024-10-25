@@ -1,12 +1,12 @@
-package ic2.advancedmachines.client;
+package ic2.advancedmachines.blocks.tiles.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.common.Refs;
-import ic2.advancedmachines.common.container.ContainerAdvancedMachine;
-import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
-import ic2.advancedmachines.lang.LangHelper;
+import ic2.advancedmachines.Refs;
+import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
+import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.LangHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;

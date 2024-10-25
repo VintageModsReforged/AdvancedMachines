@@ -1,5 +1,6 @@
-package ic2.advancedmachines.common;
+package ic2.advancedmachines;
 
+import ic2.advancedmachines.blocks.BlockAdvancedMachines;
 import ic2.api.Ic2Recipes;
 import ic2.api.Items;
 import net.minecraft.block.Block;

@@ -1,13 +1,17 @@
-package ic2.advancedmachines.common;
+package ic2.advancedmachines.blocks;
 
-import ic2.advancedmachines.common.tiles.TileEntityAdvancedInduction;
-import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
-import ic2.advancedmachines.common.tiles.TileEntitySingularityCompressor;
-import ic2.advancedmachines.common.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.AdvancedMachines;
+import ic2.advancedmachines.BlocksItems;
+import ic2.advancedmachines.Refs;
+import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
+import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;
+import ic2.advancedmachines.blocks.tiles.TileEntitySingularityCompressor;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.api.Items;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.core.IC2;
+import ic2.core.block.BlockMultiID;
 import ic2.core.block.TileEntityBlock;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -28,7 +32,7 @@ import java.util.Random;
 
 public class BlockAdvancedMachines extends BlockContainer {
 
-    public static final int[][] sideAndFacingToSpriteOffset = new int[][]{{3, 2, 0, 0, 0, 0}, {2, 3, 1, 1, 1, 1}, {1, 1, 3, 2, 5, 4}, {0, 0, 2, 3, 4, 5}, {4, 5, 4, 5, 3, 2}, {5, 4, 5, 4, 2, 3}};
+    public static final int[][] sideAndFacingToSpriteOffset = BlockMultiID.sideAndFacingToSpriteOffset;
 
     public enum AdvMachines{
         MACERATOR(0),
@@ -43,7 +47,6 @@ public class BlockAdvancedMachines extends BlockContainer {
         }
     }
 
-    public int[][] sprites;
     private final int idWrench;
     private final int idEWrench;
 
@@ -52,8 +55,6 @@ public class BlockAdvancedMachines extends BlockContainer {
         this.setBlockName("blockAdvMachine");
         this.setHardness(2.0F);
         this.setStepSound(soundMetalFootstep);
-        this.sprites = new int[][]{{86, 20, 86, 19, 86, 21, 86, 19}, {86, 26, 86, 27, 86, 26, 86, 28}, {86, 86, 24, 22, 86, 86, 25, 23}};
-        this.blockIndexInTexture = this.sprites[0][0];
         idWrench = Items.getItem("wrench").itemID;
         idEWrench = Items.getItem("electricWrench").itemID;
         this.setCreativeTab(IC2.tabIC2);

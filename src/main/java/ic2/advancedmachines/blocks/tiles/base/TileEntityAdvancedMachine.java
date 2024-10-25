@@ -1,8 +1,8 @@
-package ic2.advancedmachines.common.tiles.base;
+package ic2.advancedmachines.blocks.tiles.base;
 
-import ic2.advancedmachines.common.AdvancedMachinesConfig;
-import ic2.advancedmachines.common.BlocksItems;
-import ic2.advancedmachines.common.container.ContainerAdvancedMachine;
+import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.BlocksItems;
+import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import ic2.api.Direction;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;

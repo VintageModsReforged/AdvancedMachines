@@ -1,7 +1,7 @@
-package ic2.advancedmachines.lang;
+package ic2.advancedmachines.utils;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import ic2.advancedmachines.common.AdvancedMachinesConfig;
+import ic2.advancedmachines.AdvancedMachinesConfig;
 import net.minecraft.util.StatCollector;
 
 import java.io.IOException;
