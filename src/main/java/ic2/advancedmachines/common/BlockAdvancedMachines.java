@@ -1,6 +1,5 @@
 package ic2.advancedmachines.common;
 
-import ic2.advancedmachines.client.AdvancedMachinesClient;
 import ic2.advancedmachines.common.tiles.TileEntityAdvancedInduction;
 import ic2.advancedmachines.common.tiles.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.common.tiles.TileEntityRotaryMacerator;
