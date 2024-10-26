@@ -41,5 +41,8 @@ dependencies {
 	forge "net.minecraftforge:forge:${forgeVersion}:universal@zip"
 	mappings "net.minecraftforge:forge:${forgeVersion}:src@zip"
 
+	implementation 'net.jcip:jcip-annotations:1.0'
+	implementation 'org.jetbrains:annotations-java5:23.0.0'
+
 	modImplementation files("libs/industrialcraft-2_1.117.385-lf.jar")
 }

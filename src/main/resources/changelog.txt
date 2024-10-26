@@ -1,3 +1,14 @@
+Version 5.2g
+    changed: use IC2 internals as base for Advanced Machines
+    changed: energy usage now match energy usage of Induction Furnace (otherwise it's too cheap)
+    changed: config is now generated using `new` format, more pleasant
+    fixed: machine slots accepting everything from everywhere
+    added: tooltips about tier, energy usage
+    added: localization support, with russian language included
+    internal: unified similar classes such as classes for GUI and containers
+    internal: removed a lot of old code that isn't needed anymore, thanks to how things work nowadays
+    breaking: changed: organized the mod internals, at this point any compat done using `x.y.z.class` path won't work with this mod, since the class paths changed
+
 Version 5.2b // updated index to match MC version
     fixed: Induction Furnace MKII operate process
     fixed: Tooltip information about energy usage
