@@ -61,30 +61,18 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public void operate() {
-        if (this.inventory[this.inputAIndex] == null && this.inventory[this.inputBIndex] != null) {
-            if (!canOperate(inputBIndex, outputBIndex) && canOperate(inputBIndex, outputAIndex)) {
-                operate(inputBIndex, outputAIndex);
-                operate(inputBIndex, outputAIndex);
-            } else {
-                this.operate(this.inputBIndex, this.outputBIndex);
-                this.operate(this.inputBIndex, this.outputBIndex);
-            }
-        } else if (this.inventory[this.inputAIndex] != null && this.inventory[this.inputBIndex] == null) {
-            if (!canOperate(inputAIndex, outputAIndex) && canOperate(inputAIndex, outputBIndex)) {
-                operate(inputAIndex, outputBIndex);
-                operate(inputAIndex, outputBIndex);
-            } else {
-                this.operate(this.inputAIndex, this.outputAIndex);
-                this.operate(this.inputAIndex, this.outputAIndex);
-            }
-        } else {
-            if (canOperate(this.inputAIndex, this.outputAIndex) && canOperate(this.inputBIndex, this.outputBIndex)) {
-                this.operate(this.inputAIndex, this.outputAIndex);
-                this.operate(this.inputBIndex, this.outputBIndex);
-            } else if (canOperate(this.inputAIndex, this.outputBIndex) && canOperate(this.inputBIndex, this.outputAIndex)) {
-                this.operate(this.inputAIndex, this.outputBIndex);
-                this.operate(this.inputBIndex, this.outputAIndex);
-            }
+        int inputIndex = this.inventory[this.inputAIndex] == null ? this.inputBIndex : this.inputAIndex;
+        int outputIndex = canOperate(inputIndex, outputAIndex) ? outputAIndex : outputBIndex;
+
+        if (this.inventory[this.inputAIndex] == null || this.inventory[this.inputBIndex] == null) {
+            this.operate(inputIndex, outputIndex);
+            this.operate(inputIndex, outputIndex);
+        } else if (canOperate(this.inputAIndex, outputAIndex) && canOperate(this.inputBIndex, outputBIndex)) {
+            this.operate(this.inputAIndex, outputAIndex);
+            this.operate(this.inputBIndex, outputBIndex);
+        } else if (canOperate(this.inputAIndex, outputBIndex) && canOperate(this.inputBIndex, outputAIndex)) {
+            this.operate(this.inputAIndex, outputBIndex);
+            this.operate(this.inputBIndex, outputAIndex);
         }
     }
 
