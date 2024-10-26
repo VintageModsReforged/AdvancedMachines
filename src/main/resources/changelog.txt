@@ -1,3 +1,7 @@
+Version 4.7g
+    changed: fixed Induction furnace processing
+    changed: organized the mod internals, at this point any compat done using `x.y.z.class` path won't work with this mod, since the class paths changed
+
 Version 1.4.7-4.7f
     changed: use IC2 internals as base for Advanced Machines
 

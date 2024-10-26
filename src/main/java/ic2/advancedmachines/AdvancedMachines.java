@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import ic2.advancedmachines.proxy.CommonProxy;
+import ic2.advancedmachines.utils.Refs;
 
 @Mod(modid = Refs.ID, name = Refs.NAME, version = Refs.VERSION, acceptedMinecraftVersions = Refs.MC_VERSION, dependencies = Refs.DEPS)
 @NetworkMod(clientSideRequired = true)
@@ -15,13 +16,10 @@ public class AdvancedMachines {
     @SidedProxy(clientSide = Refs.PROXY_CLIENT, serverSide = Refs.PROXY_COMMON)
     public static CommonProxy proxy;
 
-    public static AdvancedMachines INSTANCE;
-
     public AdvancedMachines() {}
 
     @Mod.PreInit
     public void preInit(FMLPreInitializationEvent e) {
-        INSTANCE = this;
         proxy.preInit(e);
     }
 

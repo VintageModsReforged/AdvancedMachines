@@ -1,4 +1,4 @@
-package ic2.advancedmachines;
+package ic2.advancedmachines.utils;
 
 import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
 import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
@@ -10,7 +10,7 @@ public class Refs {
 
     public static final String ID = "AdvancedMachines";
     public static final String NAME = "IC2 Advanced Machines Addon";
-    public static final String VERSION = "4.7f";
+    public static final String VERSION = "4.7g";
     public static final String MC_VERSION = "[1.4.7]";
     public static final String DEPS = "required-after:IC2";
 

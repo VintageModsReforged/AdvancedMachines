@@ -1,7 +1,7 @@
 package ic2.advancedmachines.blocks;
 
 import ic2.advancedmachines.BlocksItems;
-import ic2.advancedmachines.Refs;
+import ic2.advancedmachines.utils.Refs;
 import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
 import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;

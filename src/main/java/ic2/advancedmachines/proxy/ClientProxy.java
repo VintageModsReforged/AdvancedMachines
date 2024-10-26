@@ -3,7 +3,7 @@ package ic2.advancedmachines.proxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import ic2.advancedmachines.Refs;
+import ic2.advancedmachines.utils.Refs;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {

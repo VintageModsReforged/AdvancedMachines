@@ -7,6 +7,7 @@ import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;
 import ic2.advancedmachines.blocks.tiles.TileEntitySingularityCompressor;
 import ic2.advancedmachines.items.ItemAdvancedMachine;
+import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
