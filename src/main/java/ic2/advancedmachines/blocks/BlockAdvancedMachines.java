@@ -1,6 +1,5 @@
 package ic2.advancedmachines.blocks;
 
-import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.Refs;
 import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
@@ -9,8 +8,8 @@ import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;
 import ic2.advancedmachines.blocks.tiles.TileEntitySingularityCompressor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.api.Items;
-import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.core.IC2;
+import ic2.core.IHasGui;
 import ic2.core.block.BlockMultiID;
 import ic2.core.block.TileEntityBlock;
 import net.minecraft.block.BlockContainer;
@@ -24,7 +23,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,16 +45,11 @@ public class BlockAdvancedMachines extends BlockContainer {
         }
     }
 
-    private final int idWrench;
-    private final int idEWrench;
-
     public BlockAdvancedMachines(int id) {
         super(id, Material.iron);
         this.setBlockName("blockAdvMachine");
         this.setHardness(2.0F);
         this.setStepSound(soundMetalFootstep);
-        idWrench = Items.getItem("wrench").itemID;
-        idEWrench = Items.getItem("electricWrench").itemID;
         this.setCreativeTab(IC2.tabIC2);
     }
 
@@ -91,15 +84,15 @@ public class BlockAdvancedMachines extends BlockContainer {
     @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
         ArrayList<ItemStack> drops = super.getBlockDropped(world, x, y, z, metadata, fortune);
-        TileEntity var8 = world.getBlockTileEntity(x, y, z);
-        if (var8 instanceof IInventory) {
-            IInventory var9 = (IInventory) var8;
+        TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+        if (tileEntity instanceof IInventory) {
+            IInventory inventory = (IInventory) tileEntity;
 
-            for (int i = 0; i < var9.getSizeInventory(); ++i) {
-                ItemStack var11 = var9.getStackInSlot(i);
-                if (var11 != null) {
-                    drops.add(var11);
-                    var9.setInventorySlotContents(i, null);
+            for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if (stack != null) {
+                    drops.add(stack);
+                    inventory.setInventorySlotContents(i, null);
                 }
             }
         }
@@ -185,25 +178,17 @@ public class BlockAdvancedMachines extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float a, float b, float c) {
         if (entityPlayer.isSneaking()) {
             return false;
-        }
-
-        if (entityPlayer.getCurrentEquippedItem() != null
-                && (entityPlayer.getCurrentEquippedItem().itemID == idWrench || entityPlayer.getCurrentEquippedItem().itemID == idEWrench)) {
-            TileEntityAdvancedMachine team = (TileEntityAdvancedMachine) world.getBlockTileEntity(x, y, z);
-            if (team != null) {
-                MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(team));
-                team.invalidate();
-                team.setActive(false);
-                return true;
-            }
         } else {
-            entityPlayer.openGui(AdvancedMachines.INSTANCE, 0, world, x, y, z);
-            return true;
+            TileEntity te = world.getBlockTileEntity(x, y, z);
+            if (te instanceof IHasGui) {
+                return IC2.platform.isSimulating() ? IC2.platform.launchGui(entityPlayer, (IHasGui)te) : true;
+            } else {
+                return false;
+            }
         }
-        return false;
     }
 
     public static boolean isActive(IBlockAccess world, int x, int y, int z) {

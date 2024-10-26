@@ -1,14 +1,13 @@
-package ic2.advancedmachines.blocks.tiles.gui;
+package ic2.core.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.Refs;
-import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.utils.LangHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -16,9 +15,9 @@ public class GuiAdvancedMachine extends GuiContainer {
 
     TileEntityAdvancedMachine TILE;
 
-    public GuiAdvancedMachine(InventoryPlayer playerInv, TileEntityAdvancedMachine tile) {
-        super(new ContainerAdvancedMachine(playerInv, tile));
-        this.TILE = tile;
+    public GuiAdvancedMachine(ContainerAdvancedMachine container) {
+        super(container);
+        this.TILE = container.TILE;
     }
 
     @Override

@@ -7,8 +7,6 @@ import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.utils.LangHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class CommonProxy {
 
@@ -26,9 +24,5 @@ public class CommonProxy {
     public void postInit(FMLPostInitializationEvent e) {
         // recipes
         AdvancedMachinesRecipes.init();
-    }
-
-    public Object getGuiElementClient(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        return null;
     }
 }

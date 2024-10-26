@@ -14,18 +14,12 @@ public class AdvancedMachinesConfig {
     public static final String SOUND_CAT_DESC = "Sound files to use on operation. Remember to use '/' instead of backslashes and the Sound directory starts on ic2/sounds. Set empty to disable.";
     public static final String ITEM_IDS_CAT = "Item IDs";
     public static final String BLOCK_IDS_CAT = "Block IDs";
-    public static final String BLOCK_GUI_IDS_CAT = "Gui IDs";
 
     public static Configuration MAIN_CONFIG;
     public static String[] LANGS;
 
     public static int REDSTONE_UPGRADE_ID;
     public static int ADV_MACHINE_ID;
-
-    public static int ROTARY_GUI_ID;
-    public static int SINGULARITY_GUI_ID;
-    public static int CENTRIFUGAL_GUI_ID;
-    public static int INDUCTION_GUI_ID;
 
     public static String MACERATOR_WORK_SOUND;
     public static String COMPRESSOR_WORK_SOUND;
@@ -46,11 +40,6 @@ public class AdvancedMachinesConfig {
 
         REDSTONE_UPGRADE_ID = getId(ITEM_IDS_CAT, null, "redsstoneUpgradeId", 29776, "Redstone Upgrade ID");
         ADV_MACHINE_ID = getId(BLOCK_IDS_CAT, null, "advancedMachineBlockId", 188, "Advanced Machine Block ID");
-
-        ROTARY_GUI_ID = getId(BLOCK_GUI_IDS_CAT, null, "rotaryGuiId", 40, "Rotary Macerator GUI ID");
-        SINGULARITY_GUI_ID = getId(BLOCK_GUI_IDS_CAT, null, "singularityGuiId", 41, "Singularity Compressor GUI ID");
-        CENTRIFUGAL_GUI_ID = getId(BLOCK_GUI_IDS_CAT, null, "centrifugalGuiId", 42, "Centrifugal Extractor GUI ID");
-        INDUCTION_GUI_ID = getId(BLOCK_GUI_IDS_CAT, null, "inductionGuiId", 43, "Induction Furnace MKII GUI ID");
 
         if (MAIN_CONFIG != null) {
             MAIN_CONFIG.save();

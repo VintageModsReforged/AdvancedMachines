@@ -1,9 +1,9 @@
 package ic2.advancedmachines.blocks.tiles;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
-import ic2.advancedmachines.utils.SlotFiltered;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.LangHelper;
+import ic2.advancedmachines.utils.SlotFiltered;
 import ic2.core.util.StackUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -62,11 +62,21 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
     @Override
     public void operate() {
         if (this.inventory[this.inputAIndex] == null && this.inventory[this.inputBIndex] != null) {
-            this.operate(this.inputBIndex, this.outputBIndex);
-            this.operate(this.inputBIndex, this.outputBIndex);
+            if (!canOperate(inputBIndex, outputBIndex) && canOperate(inputBIndex, outputAIndex)) {
+                operate(inputBIndex, outputAIndex);
+                operate(inputBIndex, outputAIndex);
+            } else {
+                this.operate(this.inputBIndex, this.outputBIndex);
+                this.operate(this.inputBIndex, this.outputBIndex);
+            }
         } else if (this.inventory[this.inputAIndex] != null && this.inventory[this.inputBIndex] == null) {
-            this.operate(this.inputAIndex, this.outputAIndex);
-            this.operate(this.inputAIndex, this.outputAIndex);
+            if (!canOperate(inputAIndex, outputAIndex) && canOperate(inputAIndex, outputBIndex)) {
+                operate(inputAIndex, outputBIndex);
+                operate(inputAIndex, outputBIndex);
+            } else {
+                this.operate(this.inputAIndex, this.outputAIndex);
+                this.operate(this.inputAIndex, this.outputAIndex);
+            }
         } else {
             this.operate(this.inputAIndex, this.outputAIndex);
             this.operate(this.inputBIndex, this.outputBIndex);
@@ -81,7 +91,8 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public boolean canOperate() {
-        return canOperate(inputAIndex, outputAIndex) || canOperate(inputBIndex, outputBIndex);
+        return canOperate(inputAIndex, outputAIndex) || canOperate(inputBIndex, outputBIndex) ||
+                canOperate(inputAIndex, outputBIndex) || canOperate(inputBIndex, outputAIndex);
     }
 
     public boolean canOperate(int inputSlot, int outputSlot) {

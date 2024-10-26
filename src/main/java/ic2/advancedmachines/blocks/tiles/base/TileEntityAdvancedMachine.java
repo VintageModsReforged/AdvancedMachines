@@ -80,7 +80,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
             IC2.audioManager.removeSources(this);
             this.audioSource = null;
         }
-
     }
 
     @Override
@@ -221,12 +220,12 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         }
 
         switch (event) {
-            case 0:
+            case eventStart:
                 if (this.audioSource != null) {
                     this.audioSource.play();
                 }
                 break;
-            case 1:
+            case eventInterrupt:
                 if (this.audioSource != null) {
                     this.audioSource.stop();
                     if (this.getInterruptSoundFile() != null) {
@@ -234,7 +233,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
                     }
                 }
                 break;
-            case 2:
+            case eventStop:
                 if (this.audioSource != null) {
                     this.audioSource.stop();
                 }
@@ -292,7 +291,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
     @Override
     public String getGuiClassName(EntityPlayer entityPlayer) {
-        return "";
+        return "gui.GuiAdvancedMachine";
     }
 
     @Override

@@ -12,12 +12,13 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public class ItemAdvancedMachine extends ItemBlock {
-    public ItemAdvancedMachine(int var1) {
-        super(var1);
+    public ItemAdvancedMachine(int id) {
+        super(id);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
         tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
@@ -51,6 +52,7 @@ public class ItemAdvancedMachine extends ItemBlock {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(int id, CreativeTabs tabs, List list) {
         list.add(new ItemStack(this.itemID, 1, 0));
