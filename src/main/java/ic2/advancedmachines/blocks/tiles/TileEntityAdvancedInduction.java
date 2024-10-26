@@ -62,23 +62,15 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public void operate() {
-        if (this.inputs.get(0).isEmpty() && !this.inputs.get(1).isEmpty()) {
-            if (!canOperate(this.inputs.get(1), this.outputs.get(1)) && canOperate(this.inputs.get(1), this.outputs.get(0))) {
-                this.operate(this.inputs.get(1), this.outputs.get(0));
-                this.operate(this.inputs.get(1), this.outputs.get(0));
-            } else {
-                this.operate(this.inputs.get(1), this.outputs.get(1));
-                this.operate(this.inputs.get(1), this.outputs.get(1));
-            }
-        } else if (!this.inputs.get(0).isEmpty() && this.inputs.get(1).isEmpty()) {
-            if (!canOperate(this.inputs.get(0), this.outputs.get(0)) && canOperate(this.inputs.get(0), this.outputs.get(1))) {
-                this.operate(this.inputs.get(0), this.outputs.get(1));
-                this.operate(this.inputs.get(0), this.outputs.get(1));
-            } else {
-                this.operate(this.inputs.get(0), this.outputs.get(0));
-                this.operate(this.inputs.get(0), this.outputs.get(0));
-            }
+        InvSlotProcessable input = this.inputs.get(0).isEmpty() ? this.inputs.get(1) : this.inputs.get(0);
+        InvSlotOutput output = canOperate(input, this.outputs.get(0)) ? outputs.get(0) : this.outputs.get(1);
+
+        // Handle cases where one of the inputs is empty
+        if (this.inputs.get(0).isEmpty() || this.inputs.get(1).isEmpty()) {
+            this.operate(input, output);
+            this.operate(input, output);
         } else {
+            // Both inputs are not empty
             if (canOperate(this.inputs.get(0), this.outputs.get(0)) && canOperate(this.inputs.get(1), this.outputs.get(1))) {
                 this.operate(this.inputs.get(0), this.outputs.get(0));
                 this.operate(this.inputs.get(1), this.outputs.get(1));
@@ -87,7 +79,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
                 this.operate(this.inputs.get(1), this.outputs.get(0));
             }
         }
-    }
+     }
 
     public void operate(InvSlotProcessable inputSlot, InvSlotOutput outputSlot) {
         if (this.canOperate(inputSlot, outputSlot)) {
