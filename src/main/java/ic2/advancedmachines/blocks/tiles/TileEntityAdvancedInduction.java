@@ -78,8 +78,13 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
                 this.operate(this.inputAIndex, this.outputAIndex);
             }
         } else {
-            this.operate(this.inputAIndex, this.outputAIndex);
-            this.operate(this.inputBIndex, this.outputBIndex);
+            if (canOperate(this.inputAIndex, this.outputAIndex) && canOperate(this.inputBIndex, this.outputBIndex)) {
+                this.operate(this.inputAIndex, this.outputAIndex);
+                this.operate(this.inputBIndex, this.outputBIndex);
+            } else if (canOperate(this.inputAIndex, this.outputBIndex) && canOperate(this.inputBIndex, this.outputAIndex)) {
+                this.operate(this.inputAIndex, this.outputBIndex);
+                this.operate(this.inputBIndex, this.outputAIndex);
+            }
         }
     }
 
