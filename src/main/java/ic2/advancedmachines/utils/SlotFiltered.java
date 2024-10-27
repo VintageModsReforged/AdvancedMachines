@@ -41,6 +41,10 @@ public class SlotFiltered extends Slot {
         return new SlotFiltered(inventory, slotIndex, xDisplayPosition, yDisplayPosition, EXTRACTOR_FILTER);
     }
 
+    public static SlotFiltered recyclerSlot(IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) {
+        return new SlotFiltered(inventory, slotIndex, xDisplayPosition, yDisplayPosition, RECYCLER_FILTER);
+    }
+
     public static SlotFiltered upgradeSlot(IInventory inventory, int slotIndex, int xDisplayPosition, int yDisplayPosition) {
         return new SlotFiltered(inventory, slotIndex, xDisplayPosition, yDisplayPosition, UPGRADE_FILTER);
     }
@@ -74,6 +78,13 @@ public class SlotFiltered extends Slot {
         @Override
         public boolean match(ItemStack stack) {
             return stack != null && Ic2Recipes.getExtractorOutputFor(stack, false) != null;
+        }
+    };
+
+    public static final IStackFilter RECYCLER_FILTER = new IStackFilter() {
+        @Override
+        public boolean match(ItemStack stack) {
+            return !UPGRADE_FILTER.match(stack); // all, but upgrades
         }
     };
 

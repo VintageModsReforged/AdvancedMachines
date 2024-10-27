@@ -25,6 +25,7 @@ public class AdvancedMachinesConfig {
     public static String COMPRESSOR_WORK_SOUND;
     public static String EXTRACTOR_WORK_SOUND;
     public static String INDUCTION_WORK_SOUND;
+    public static String RECYCLER_WORK_SOUND;
     public static String INTERRUPT_SOUND;
 
     public static void init() {
@@ -36,6 +37,7 @@ public class AdvancedMachinesConfig {
         COMPRESSOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "compressorWorkSound", "Machines/CompressorOp.ogg", "Compressor Work Sound");
         EXTRACTOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "extractorWorkSound", "Machines/ExtractorOp.ogg", "Extractor Work Sound");
         INDUCTION_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "inductionWorkSound", "Machines/Induction Furnace/InductionLoop.ogg", "Induction Work Sound");
+        RECYCLER_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "recyclerWorkSound", "Machines/RecyclerOp.ogg", "Recycler Work Sound");
         INTERRUPT_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "interruptSound", "Machines/InterruptOne.ogg", "Interrupt Work Sound");
 
         REDSTONE_UPGRADE_ID = getId(ITEM_IDS_CAT, null, "redsstoneUpgradeId", 29776, "Redstone Upgrade ID");

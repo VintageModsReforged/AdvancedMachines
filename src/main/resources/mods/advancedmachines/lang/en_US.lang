@@ -2,6 +2,7 @@ inv.speed.induction=Heat:
 inv.speed.extractor=Speed:
 inv.speed.macerator=Rotation:
 inv.speed.compressor=Pressure:
+inv.speed.recycler=Speed:
 tooltips.usage.info=Uses 15 EU/t. Max Input: 128EU [MV]
 
 item.redstone.inverter.name=Redstone Inverter Upgrade
@@ -9,3 +10,4 @@ block.advanced.induction.name=Induction Furnace MKII
 block.advanced.extractor.name=Centrifugal Extractor
 block.advanced.macerator.name=Rotary Macerator
 block.advanced.compressor.name=Singularity Compressor
+block.advanced.recycler.name=Compacting Recycler
