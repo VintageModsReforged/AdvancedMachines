@@ -1,3 +1,6 @@
+Version 5.2h
+    fixed: energy usage being too high
+
 Version 5.2g
     changed: use IC2 internals as base for Advanced Machines
     changed: energy usage now match energy usage of Induction Furnace (otherwise it's too cheap)
