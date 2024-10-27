@@ -105,13 +105,13 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
         boolean canOperate = this.canOperate();
         if (energy > 0 && (canOperate || isRedstonePowered())) {
+            int energyConsume = canOperate ? 15 : 1;
             if (speed < maxSpeed) {
                 ++this.speed;
-                --energy;
             } else {
                 speed = (short) maxSpeed;
-                energy -= energyUsage;
             }
+            energy -= energyConsume;
 
             newActive = true;
             NetworkHelper.initiateTileEntityEvent(this, eventStart, true);
@@ -141,7 +141,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
         if (newActive && canOperate) {
             this.progress = (short)(this.progress + this.speed / 30);
-            this.energy -= energyUsage;
         }
 
         if (needsInvUpdate) {
