@@ -65,6 +65,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
     }
 
     public int lastFilledSlot = 0; // Tracks the last filled input slot
+
     /**
      * Generates cobblestone and fills the input slots one at a time.
      *
@@ -80,7 +81,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
 
             if (canProcessCobblestone) {
                 for (int i = 0; i < inputs.length; i++) {
-                    int inputIndex = inputs[lastFilledSlot];
+                    int inputIndex = inputs[i];
 
                     // Fill the input slot with cobblestone
                     if (machine.inventory[inputIndex] == null) {
@@ -89,12 +90,13 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
                         machine.inventory[inputIndex].stackSize += Math.min(cobblestone.getMaxStackSize() - machine.inventory[inputIndex].stackSize, cobblestoneUpgrade.stackSize);
                     }
 
-                    // Alternate between the input slots
-                    lastFilledSlot = (lastFilledSlot + 1) % inputs.length;
+                    // If the current slot is not yet full, stop here
+                    if (machine.inventory[inputIndex].stackSize < cobblestone.getMaxStackSize()) {
+                        break;
+                    }
                 }
+                return true;
             }
-
-            return canProcessCobblestone;
         }
         return false;
     }
