@@ -80,19 +80,26 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
             boolean canProcessCobblestone = machine.inputFilter.match(cobblestone);
 
             if (canProcessCobblestone) {
+                int cobblestoneLeft = cobblestoneUpgrade.stackSize;
                 for (int i = 0; i < inputs.length; i++) {
                     int inputIndex = inputs[i];
 
+                    if (cobblestoneLeft <= 0) {
+                        break;
+                    }
                     // Fill the input slot with cobblestone
                     if (machine.inventory[inputIndex] == null) {
-                        machine.inventory[inputIndex] = new ItemStack(Block.cobblestone, cobblestoneUpgrade.stackSize);
+                        machine.inventory[inputIndex] = new ItemStack(Block.cobblestone, Math.min(cobblestoneLeft, cobblestone.getMaxStackSize()));
+                        cobblestoneLeft -= machine.inventory[inputIndex].stackSize;
                     } else if (machine.inventory[inputIndex].stackSize < cobblestone.getMaxStackSize()) {
-                        machine.inventory[inputIndex].stackSize += Math.min(cobblestone.getMaxStackSize() - machine.inventory[inputIndex].stackSize, cobblestoneUpgrade.stackSize);
+                        int spaceLeft = cobblestone.getMaxStackSize() - machine.inventory[inputIndex].stackSize;
+                        int amountToAdd = Math.min(spaceLeft, cobblestoneLeft);
+                        machine.inventory[inputIndex].stackSize += amountToAdd;
+                        cobblestoneLeft -= amountToAdd;
                     }
-
-                    // If the current slot is not yet full, stop here
-                    if (machine.inventory[inputIndex].stackSize < cobblestone.getMaxStackSize()) {
-                        break;
+                    // If the current slot is full, move to the next slot
+                    if (machine.inventory[inputIndex].stackSize >= cobblestone.getMaxStackSize()) {
+                        lastFilledSlot = (lastFilledSlot + 1) % inputs.length;
                     }
                 }
                 return true;
