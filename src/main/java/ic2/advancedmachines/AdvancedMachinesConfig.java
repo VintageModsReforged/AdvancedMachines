@@ -18,7 +18,7 @@ public class AdvancedMachinesConfig {
     public static Configuration MAIN_CONFIG;
     public static String[] LANGS;
 
-    public static int REDSTONE_UPGRADE_ID;
+    public static int ADV_UPGRADE_ID;
     public static int ADV_MACHINE_ID;
 
     public static String MACERATOR_WORK_SOUND;
@@ -40,7 +40,7 @@ public class AdvancedMachinesConfig {
         RECYCLER_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "recyclerWorkSound", "Machines/RecyclerOp.ogg", "Recycler Work Sound");
         INTERRUPT_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "interruptSound", "Machines/InterruptOne.ogg", "Interrupt Work Sound");
 
-        REDSTONE_UPGRADE_ID = getId(ITEM_IDS_CAT, null, "redsstoneUpgradeId", 29776, "Redstone Upgrade ID");
+        ADV_UPGRADE_ID = getId(ITEM_IDS_CAT, null, "advancedUpgradeId", 29776, "Advanced Upgrade ID");
         ADV_MACHINE_ID = getId(BLOCK_IDS_CAT, null, "advancedMachineBlockId", 188, "Advanced Machine Block ID");
 
         if (MAIN_CONFIG != null) {

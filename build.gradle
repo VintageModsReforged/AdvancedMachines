@@ -44,6 +44,7 @@ dependencies {
 	implementation("it.unimi.dsi:fastutil:8.2.1")
 	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
 	modImplementation files("libs/gregtechmod290h.zip")
+	modImplementation files("libs/craftguide.zip")
 //	coremodImplementation files("libs/CodeChickenCore 0.8.1.6.jar")
 //	coremodImplementation files("libs/NotEnoughItems 1.4.7.4.jar")
 }

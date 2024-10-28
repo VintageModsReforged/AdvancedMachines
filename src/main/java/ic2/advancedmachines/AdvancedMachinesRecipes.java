@@ -5,7 +5,6 @@ import ic2.api.Ic2Recipes;
 import ic2.api.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
 public class AdvancedMachinesRecipes {
 
@@ -40,9 +39,17 @@ public class AdvancedMachinesRecipes {
                 'M', Items.getItem("recycler"),
                 'A', Items.getItem("advancedMachine"));
 
-        Ic2Recipes.addCraftingRecipe(new ItemStack(BlocksItems.REDSTONE_UPGRADE),
+        Ic2Recipes.addCraftingRecipe(BlocksItems.REDSTONE_INVERTER,
                 "T T", " R ", "T T",
                 'T', "ingotTin",
                 'R', Block.torchRedstoneActive);
+
+        Ic2Recipes.addCraftingRecipe(BlocksItems.COBBLESTONE_GENERATOR,
+                "GPG", "L W", "G#G",
+                'G', "blockGlass",
+                'P', Item.pickaxeGold,
+                'L', "lava",
+                'W', "water",
+                '#', Items.getItem("electronicCircuit"));
     }
 }

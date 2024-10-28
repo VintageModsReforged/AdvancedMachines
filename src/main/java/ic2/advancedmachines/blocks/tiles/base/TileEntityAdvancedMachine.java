@@ -3,6 +3,8 @@ package ic2.advancedmachines.blocks.tiles.base;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
+import ic2.advancedmachines.items.IUpgradeItem;
+import ic2.advancedmachines.utils.IStackFilter;
 import ic2.api.Direction;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
@@ -43,8 +45,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     private static final int eventStart = 0;
     private static final int eventInterrupt = 1;
     private static final int eventStop = 2;
+    public IStackFilter inputFilter;
 
-    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots) {
+    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots, IStackFilter inputFilter) {
         super(inputSlots.length + outputSlots.length + 4, 0, maxEnergy, maxInput);
         this.invName = invName;
         this.inputs = inputSlots;
@@ -52,6 +55,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         this.speed = 0;
         this.progress = 0;
         this.soundTicker = IC2.random.nextInt(64);
+        this.inputFilter = inputFilter;
     }
 
     @Override
@@ -141,6 +145,16 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
         if (newActive && canOperate) {
             this.progress = (short)(this.progress + this.speed / 30);
+        }
+
+        for(int i = 0; i < 2; ++i) {
+            ItemStack upgradeStack = this.inventory[this.getUpgradeSlots()[i]];
+            if (upgradeStack != null && upgradeStack.getItem() instanceof IUpgradeItem) {
+                IUpgradeItem upgrade = (IUpgradeItem) upgradeStack.getItem();
+                if (upgrade.canTick(upgradeStack) && upgrade.onTick(this, upgradeStack)) {
+                    needsInvUpdate = true;
+                }
+            }
         }
 
         if (needsInvUpdate) {
@@ -330,7 +344,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         for (int upgradeSlot : slots) {
             ItemStack upgrade = this.inventory[upgradeSlot];
             if (upgrade != null) {
-                if (upgrade.isItemEqual(new ItemStack(BlocksItems.REDSTONE_UPGRADE))) {
+                if (upgrade.isItemEqual(BlocksItems.REDSTONE_INVERTER)) {
                     redstoneUpgrade = true;
                     break;
                 }

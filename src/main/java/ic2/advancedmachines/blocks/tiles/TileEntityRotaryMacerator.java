@@ -2,8 +2,9 @@ package ic2.advancedmachines.blocks.tiles;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
-import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.Ic2Recipes;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -14,10 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
-    public int supplementedItemsLeft = 0;
 
     public TileEntityRotaryMacerator() {
-        super(LangHelper.format("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3});
+        super(LangHelper.format("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3}, StackFilters.MACERATOR_FILTER);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
     @Override
     public List<Slot> getSlots(InventoryPlayer playerInv) {
         List<Slot> slots = new ArrayList<Slot>();
-        slots.add(SlotFiltered.maceratorSlot(this, 1, 56, 17));
+        slots.add(AdvSlot.filtered(this, 1, 56, 17));
         slots.add(new SlotFurnace(playerInv.player, this, 2, 115, 25)); // left Result Slot
         slots.add(new SlotFurnace(playerInv.player, this, 3, 115, 46)); // right Result Slot
         return slots;

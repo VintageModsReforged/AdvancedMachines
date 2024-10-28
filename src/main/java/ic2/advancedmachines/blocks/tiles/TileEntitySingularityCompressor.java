@@ -2,8 +2,9 @@ package ic2.advancedmachines.blocks.tiles;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
-import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.Ic2Recipes;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super(LangHelper.format("block.advanced.compressor.name"), new int[]{1}, new int[]{1});
+        super(LangHelper.format("block.advanced.compressor.name"), new int[]{1}, new int[]{1}, StackFilters.COMPRESSOR_FILTER);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     @Override
     public List<Slot> getSlots(InventoryPlayer playerInv) {
         List<Slot> slots = new ArrayList<Slot>();
-        slots.add(SlotFiltered.compressorSlot(this, 1, 56, 17));
+        slots.add(AdvSlot.filtered(this, 1, 56, 17));
         slots.add(new SlotFurnace(playerInv.player, this, 2, 115, 35));
         return slots;
     }

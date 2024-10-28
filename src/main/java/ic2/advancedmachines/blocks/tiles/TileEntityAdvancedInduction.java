@@ -2,8 +2,9 @@ package ic2.advancedmachines.blocks.tiles;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
-import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.util.StackUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -22,14 +23,14 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
     public int outputBIndex = 4;
 
     public TileEntityAdvancedInduction() {
-        super(LangHelper.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4});
+        super(LangHelper.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4}, StackFilters.FURNACE_FILTER);
     }
 
     @Override
     public List<Slot> getSlots(InventoryPlayer playerInv) {
         List<Slot> slots = new ArrayList<Slot>();
-        slots.add(SlotFiltered.furnaceSlot(this, this.inputAIndex, 47, 17)); // input 1
-        slots.add(SlotFiltered.furnaceSlot(this, this.inputBIndex, 63, 17)); // input 2
+        slots.add(AdvSlot.filtered(this, this.inputAIndex, 47, 17)); // input 1
+        slots.add(AdvSlot.filtered(this, this.inputBIndex, 63, 17)); // input 2
         slots.add(new SlotFurnace(playerInv.player, this, this.outputAIndex, 113, 35)); // output
         slots.add(new SlotFurnace(playerInv.player, this, this.outputBIndex, 131, 35)); // output
         return slots;

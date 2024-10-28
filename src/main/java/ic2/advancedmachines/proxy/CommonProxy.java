@@ -7,6 +7,10 @@ import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.utils.LangHelper;
+import ic2.api.Items;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy {
 
@@ -23,6 +27,12 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent e) {
         // recipes
+        OreDictionary.registerOre("lava", Item.bucketLava);
+        OreDictionary.registerOre("lava", Items.getItem("lavaCell"));
+        OreDictionary.registerOre("water", Item.bucketWater);
+        OreDictionary.registerOre("water", Items.getItem("waterCell"));
+        OreDictionary.registerOre("blockGlass", Block.glass);
+        OreDictionary.registerOre("blockGlass", Items.getItem("reinforcedGlass"));
         AdvancedMachinesRecipes.init();
     }
 }

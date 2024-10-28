@@ -6,6 +6,8 @@ inv.speed.recycler=Скорость:
 tooltips.usage.info=Потребляет 15 EU/т. Макс. напряжение: 128EU [Т2]
 
 item.redstone.inverter.name=Инвертор красного сигнала
+item.cobblestone.generator.name=Генератор булыжника
+
 block.advanced.induction.name=Индукционная печь MKII
 block.advanced.extractor.name=Центробежный экстрактор
 block.advanced.macerator.name=Роторный дробитель

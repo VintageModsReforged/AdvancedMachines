@@ -1,7 +1,8 @@
 package ic2.advancedmachines.blocks.tiles.container;
 
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
-import ic2.advancedmachines.utils.SlotFiltered;
+import ic2.advancedmachines.utils.AdvSlot;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.ContainerIC2;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,10 +20,10 @@ public class ContainerAdvancedMachine extends ContainerIC2 {
 
     public ContainerAdvancedMachine(InventoryPlayer playerInv, TileEntityAdvancedMachine tile) {
         this.TILE = tile;
-        this.addSlotToContainer(SlotFiltered.batterySlot(tile, 0, 56, 53)); // energy
+        this.addSlotToContainer(AdvSlot.filtered(tile, 0, 56, 53, StackFilters.BATTERY_FILTER)); // energy
         int[] upgradeSlots = tile.getUpgradeSlots();
         for (int i = 0; i < upgradeSlots.length; i++) { // add upgrade slots
-            this.addSlotToContainer(SlotFiltered.upgradeSlot(tile, upgradeSlots[i], 152, 6 + 18 * i));
+            this.addSlotToContainer(AdvSlot.filtered(tile, upgradeSlots[i], 152, 6 + 18 * i, StackFilters.UPGRADE_FILTER));
         }
         List<Slot> slots = tile.getSlots(playerInv);
         for (Slot slot: slots) { // main slots
