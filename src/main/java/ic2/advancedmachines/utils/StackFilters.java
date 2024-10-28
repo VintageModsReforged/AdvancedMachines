@@ -3,8 +3,10 @@ package ic2.advancedmachines.utils;
 import ic2.advancedmachines.items.IUpgradeItem;
 import ic2.api.IElectricItem;
 import ic2.api.Ic2Recipes;
+import ic2.api.Items;
 import ic2.core.item.ItemBatterySU;
 import ic2.core.item.ItemUpgradeModule;
+import ic2.core.util.StackUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -57,6 +59,20 @@ public class StackFilters {
         @Override
         public boolean match(ItemStack stack) {
             return stack != null && (stack.getItem() instanceof ItemUpgradeModule || stack.getItem() instanceof IUpgradeItem);
+        }
+    };
+
+    public static final IStackFilter ELECTROLYZER_IN = new IStackFilter() {
+        @Override
+        public boolean match(ItemStack stack) {
+            return StackUtil.isStackEqual(stack, Items.getItem("waterCell"));
+        }
+    };
+
+    public static final IStackFilter ELECTROLYZER_OUT = new IStackFilter() {
+        @Override
+        public boolean match(ItemStack stack) {
+            return StackUtil.isStackEqual(stack, Items.getItem("electrolyzedWaterCell"));
         }
     };
 

@@ -30,7 +30,7 @@ public class Refs {
             return getGuiPathFor("macerator");
         } else if (tile instanceof TileEntitySingularityCompressor){
             return getGuiPathFor("compressor");
-        } else  if (tile instanceof TileEntityCompactedRecycler) {
+        } else  if (tile instanceof TileEntityCompactingRecycler) {
             return getGuiPathFor("recycler");
         } else return "";
     }

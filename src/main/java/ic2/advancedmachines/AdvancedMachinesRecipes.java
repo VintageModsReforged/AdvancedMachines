@@ -39,6 +39,12 @@ public class AdvancedMachinesRecipes {
                 'M', Items.getItem("recycler"),
                 'A', Items.getItem("advancedMachine"));
 
+        Ic2Recipes.addCraftingRecipe(AdvMachines.ELECTROLYZER.STACK,
+                "RRR", "RMR", "RAR",
+                'R', Items.getItem("lvTransformer"),
+                'M', Items.getItem("electrolyzer"),
+                'A', Items.getItem("advancedMachine"));
+
         Ic2Recipes.addCraftingRecipe(BlocksItems.REDSTONE_INVERTER,
                 "T T", " R ", "T T",
                 'T', "ingotTin",

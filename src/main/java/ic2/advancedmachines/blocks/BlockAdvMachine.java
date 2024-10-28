@@ -1,7 +1,7 @@
 package ic2.advancedmachines.blocks;
 
 import ic2.advancedmachines.blocks.tiles.*;
-import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.core.block.machine.tileentity.TileEntityMachine;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -27,20 +27,15 @@ public class BlockAdvMachine extends BlockAdvancedBlock {
         return getBlockEntity(metadata);
     }
 
-    public TileEntityAdvancedMachine getBlockEntity(int meta) {
+    public TileEntityMachine getBlockEntity(int meta) {
         switch (meta) {
-            case MACERATOR:
-                return new TileEntityRotaryMacerator();
-            case COMPRESSOR:
-                return new TileEntitySingularityCompressor();
-            case EXTRACTOR:
-                return new TileEntityCentrifugeExtractor();
-            case INDUCTION:
-                return new TileEntityAdvancedInduction();
-            case RECYCLER:
-                return new TileEntityCompactedRecycler();
-            default:
-                return null;
+            case MACERATOR: return new TileEntityRotaryMacerator();
+            case COMPRESSOR: return new TileEntitySingularityCompressor();
+            case EXTRACTOR: return new TileEntityCentrifugeExtractor();
+            case INDUCTION: return new TileEntityAdvancedInduction();
+            case RECYCLER: return new TileEntityCompactingRecycler();
+            case ELECTROLYZER: return new TileEntityChargedElectrolyzer();
+            default: return null;
         }
     }
 

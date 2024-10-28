@@ -8,7 +8,8 @@ public enum AdvMachines{
     COMPRESSOR(1),
     EXTRACTOR(2),
     INDUCTION(3),
-    RECYCLER(4);
+    RECYCLER(4),
+    ELECTROLYZER(5);
 
     public ItemStack STACK;
 

@@ -29,7 +29,8 @@ public class BlocksItems {
         GameRegistry.registerTileEntity(TileEntitySingularityCompressor.class, "Singularity Compressor");
         GameRegistry.registerTileEntity(TileEntityCentrifugeExtractor.class, "Centrifuge Extractor");
         GameRegistry.registerTileEntity(TileEntityAdvancedInduction.class, "Advanced Induction");
-        GameRegistry.registerTileEntity(TileEntityCompactedRecycler.class, "Compacting Recycler");
+        GameRegistry.registerTileEntity(TileEntityCompactingRecycler.class, "Compacting Recycler");
+        GameRegistry.registerTileEntity(TileEntityChargedElectrolyzer.class, "Charged Electrolyzer");
     }
 
     public static  <T extends Item> T registerItem(T item, String regName) {

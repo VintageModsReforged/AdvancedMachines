@@ -15,9 +15,9 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityCompactedRecycler extends TileEntityAdvancedMachine {
+public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
-    public TileEntityCompactedRecycler() {
+    public TileEntityCompactingRecycler() {
         super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{1}, StackFilters.RECYCLER_FILTER);
     }
 

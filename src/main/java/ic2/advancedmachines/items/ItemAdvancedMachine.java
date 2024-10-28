@@ -28,13 +28,17 @@ public class ItemAdvancedMachine extends ItemBlock {
         META_NAMES.put(2, "extractor");
         META_NAMES.put(3, "induction");
         META_NAMES.put(4, "recycler");
+        META_NAMES.put(5, "electrolyzer");
     }
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
+        int itemDamage = stack.getItemDamage();
+        if (itemDamage == 5) {
+            tooltip.add(TextFormatter.AQUA.format("tooltips.transfer.info"));
+        } else tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
     }
 
     @Override
