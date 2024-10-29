@@ -16,7 +16,6 @@ public class BlockAdvMachine extends BlockAdvancedBlock {
     public static final int INDUCTION = 3;
     public static final int RECYCLER = 4;
     public static final int ELECTROLYZER = 5;
-    public static final int RARE_EARTH = 6;
 
     public BlockAdvMachine(int id) {
         super(id);

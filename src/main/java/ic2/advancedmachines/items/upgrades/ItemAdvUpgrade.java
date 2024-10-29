@@ -83,7 +83,6 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
                 int cobblestoneLeft = cobblestoneUpgrade.stackSize;
                 for (int i = 0; i < inputs.length; i++) {
                     int inputIndex = inputs[i];
-
                     if (cobblestoneLeft <= 0) {
                         break;
                     }
@@ -91,7 +90,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
                     if (machine.inventory[inputIndex] == null) {
                         machine.inventory[inputIndex] = new ItemStack(Block.cobblestone, Math.min(cobblestoneLeft, cobblestone.getMaxStackSize()));
                         cobblestoneLeft -= machine.inventory[inputIndex].stackSize;
-                    } else if (machine.inventory[inputIndex].stackSize < cobblestone.getMaxStackSize()) {
+                    } else if (machine.inventory[inputIndex].stackSize < cobblestone.getMaxStackSize() && machine.inventory[inputIndex].isItemEqual(cobblestone)) {
                         int spaceLeft = cobblestone.getMaxStackSize() - machine.inventory[inputIndex].stackSize;
                         int amountToAdd = Math.min(spaceLeft, cobblestoneLeft);
                         machine.inventory[inputIndex].stackSize += amountToAdd;
