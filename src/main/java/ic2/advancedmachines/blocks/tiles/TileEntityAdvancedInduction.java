@@ -5,7 +5,6 @@ import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.StackFilters;
-import ic2.core.util.StackUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -62,24 +61,58 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public void operate() {
-        int inputIndex = this.inventory[this.inputAIndex] == null ? this.inputBIndex : this.inputAIndex;
-        int outputIndex = canOperate(inputIndex, outputAIndex) ? outputAIndex : outputBIndex;
+        boolean inputAEmpty = this.inventory[this.inputAIndex] == null;
+        boolean inputBEmpty = this.inventory[this.inputBIndex] == null;
 
-        if (this.inventory[this.inputAIndex] == null || this.inventory[this.inputBIndex] == null) {
-            this.operate(inputIndex, outputIndex);
-            this.operate(inputIndex, outputIndex);
-        } else if (canOperate(this.inputAIndex, outputAIndex) && canOperate(this.inputBIndex, outputBIndex)) {
-            this.operate(this.inputAIndex, outputAIndex);
-            this.operate(this.inputBIndex, outputBIndex);
-        } else if (canOperate(this.inputAIndex, outputBIndex) && canOperate(this.inputBIndex, outputAIndex)) {
-            this.operate(this.inputAIndex, outputBIndex);
-            this.operate(this.inputBIndex, outputAIndex);
+        boolean canProcessAA = canOperate(inputAIndex, outputAIndex); // if we can process A-A
+        boolean canProcessAB = canOperate(inputAIndex, outputBIndex); // if we can process A-B
+        boolean canProcessBB = canOperate(inputBIndex, outputBIndex); // if we can process B-B
+        boolean canProcessBA = canOperate(inputBIndex, outputAIndex); // if we can process B-A
+
+        // inputA
+        if (!inputAEmpty) { // if input A isn't empty
+            boolean inputBNotProcessable = inputBEmpty || (!canProcessBB && !canProcessBA); // if input B is empty OR we can't process it into either one of the outputs
+            if (inputBNotProcessable) {
+                if (canProcessAA) {
+                    operate(inputAIndex, outputAIndex); // process input A into output A
+                    operate(inputAIndex, outputAIndex); // process input A into output A
+                } else if (canProcessAB) {
+                    operate(inputAIndex, outputBIndex); // process input A into output B
+                    operate(inputAIndex, outputBIndex); // process input A into output B
+                }
+            }
         }
-    }
 
-    public void operate(int inputSlot, int outputSlot) {
-        if (this.canOperate(inputSlot, outputSlot)) {
-            add(process(inputSlot, false), outputSlot, false);
+        if (!inputBEmpty) { // if input B isn't empty
+            boolean inputANotProcessable = inputAEmpty || (!canProcessAA && !canProcessAB); // if input A is empty OR we can't process it into either one of the outputs
+            if (inputANotProcessable) {
+                if (canProcessBB) {
+                    operate(inputBIndex, outputBIndex); // process input B into output B
+                    operate(inputBIndex, outputBIndex); // process input B into output B
+                } else if (canProcessBA) {
+                    operate(inputBIndex, outputAIndex); // process input B into output A
+                    operate(inputBIndex, outputAIndex); // process input B into output A
+                }
+            }
+        }
+
+        if (!inputAEmpty && !inputBEmpty) { // if both inputs aren't empty
+            if (canProcessAA && canProcessBB) { // if we can process A-A and B-B
+                operate(inputAIndex, outputAIndex); // process input A into output A
+                operate(inputBIndex, outputBIndex); // process input B into output B
+
+            } else if (canProcessAB && canProcessBA) { // if we can process A-B and B-A
+                operate(inputAIndex, outputBIndex); // process input A into output B
+                operate(inputBIndex, outputAIndex); // process input B into output A
+
+            } else if (canProcessAA && canProcessBA) { // if we can process A-A and B-A
+                operate(inputAIndex, outputAIndex); // process input A into output A
+                operate(inputBIndex, outputAIndex); // process input B into output A
+
+            } else if (canProcessAB && canProcessBB) { // if we can process A-B and B-B
+                operate(inputAIndex, outputBIndex); // process input A into output B
+                operate(inputBIndex, outputBIndex); // process input B into output B
+            }
         }
     }
 
@@ -93,79 +126,30 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
         if (this.inventory[inputSlot] == null) {
             return false;
         } else {
-            ItemStack processResult = process(inputSlot, true);
-            return add(processResult, outputSlot, true) == 0;
+            ItemStack result = this.getResultFor(this.inventory[inputSlot], false);
+            if (result == null) {
+                return false;
+            } else return this.inventory[outputSlot] == null || this.inventory[outputSlot].isItemEqual(result) && this.inventory[outputSlot].stackSize + result.stackSize <= result.getMaxStackSize();
         }
     }
 
-    public void put(int index, ItemStack content) {
-        this.inventory[index] = content;
-    }
-
-    private int add(ItemStack itemStack, int outputIndex, boolean simulate) {
-        if (itemStack == null) {
-            return 0;
-        } else {
-            int amount = itemStack.stackSize;
-            ItemStack existingItemStack = this.inventory[outputIndex];
-            if (existingItemStack == null) {
-                if (!simulate) {
-                    this.put(outputIndex, itemStack);
-                }
-
-                return 0;
+    public void operate(int inSlot, int outSlot) {
+        if (this.canOperate(inSlot, outSlot)) {
+            ItemStack result = this.getResultFor(this.inventory[inSlot], false);
+            if (this.inventory[outSlot] == null) {
+                this.inventory[outSlot] = result.copy();
+            } else {
+                ItemStack outputStack = this.inventory[outSlot];
+                outputStack.stackSize += result.stackSize;
             }
-
-            int space = existingItemStack.getMaxStackSize() - existingItemStack.stackSize;
-            if (space > 0 && StackUtil.isStackEqual(itemStack, existingItemStack)) {
-                if (space >= amount) {
-                    if (!simulate) {
-                        existingItemStack.stackSize += amount;
-                    }
-
-                    return 0;
-                }
-
-                amount -= space;
-                if (!simulate) {
-                    existingItemStack.stackSize += space;
-                }
+            if (this.inventory[inSlot].getItem().hasContainerItem()) {
+                this.inventory[inSlot] = this.inventory[inSlot].getItem().getContainerItemStack(this.inventory[inSlot]);
+            } else {
+                --this.inventory[inSlot].stackSize;
             }
-
-            return amount;
-        }
-    }
-
-    public ItemStack process(int slotIndex, boolean simulate) {
-        ItemStack input = this.consume(slotIndex, 1, simulate, true);
-        return input == null ? null : FurnaceRecipes.smelting().getSmeltingResult(input).copy();
-    }
-
-    public ItemStack consume(int slotIndex, int amount, boolean simulate, boolean consumeContainers) {
-        ItemStack ret = null;
-        if(amount != 0) {
-            ItemStack itemStack = this.inventory[slotIndex];
-            if (itemStack != null && FurnaceRecipes.smelting().getSmeltingResult(itemStack) != null && (ret == null || StackUtil.isStackEqual(itemStack, ret))) {
-                int currentAmount = Math.min(amount, itemStack.stackSize);
-                if (!simulate) {
-                    if (itemStack.stackSize == currentAmount) {
-                        if (!consumeContainers && itemStack.getItem().hasContainerItem()) {
-                            this.put(slotIndex, itemStack.getItem().getContainerItemStack(itemStack));
-                        } else {
-                            this.put(slotIndex, null);
-                        }
-                    } else {
-                        itemStack.stackSize -= currentAmount;
-                    }
-                }
-
-                if (ret == null) {
-                    ret = StackUtil.copyWithSize(itemStack, currentAmount);
-                } else {
-                    ret.stackSize += currentAmount;
-                }
+            if (this.inventory[inSlot].stackSize <= 0) {
+                this.inventory[inSlot] = null;
             }
         }
-        return ret;
     }
 }
