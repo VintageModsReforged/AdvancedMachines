@@ -3,9 +3,7 @@ package ic2.advancedmachines;
 import cpw.mods.fml.common.registry.GameRegistry;
 import ic2.advancedmachines.blocks.BlockAdvEnergyBlock;
 import ic2.advancedmachines.blocks.BlockAdvMachine;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityESU;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityISU;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityPESU;
+import ic2.advancedmachines.blocks.tiles.energy.*;
 import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.advancedmachines.items.ItemAdvancedEnergyBlock;
 import ic2.advancedmachines.items.ItemAdvancedMachine;
@@ -72,6 +70,8 @@ public class BlocksItems {
         GameRegistry.registerTileEntity(TileEntityESU.class, "ESU");
         GameRegistry.registerTileEntity(TileEntityISU.class, "ISU");
         GameRegistry.registerTileEntity(TileEntityPESU.class, "PESU");
+        GameRegistry.registerTileEntity(TileEntityTranformerEV.class, "EV Transformer");
+        GameRegistry.registerTileEntity(TileEntityTranformerIV.class, "IV Transformer");
     }
 
     public static  <T extends Item> T registerItem(T item, int iconIndex, String regName) {

@@ -2,13 +2,10 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityESU;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityISU;
-import ic2.advancedmachines.blocks.tiles.energy.TileEntityPESU;
+import ic2.advancedmachines.blocks.tiles.energy.*;
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
 import ic2.core.block.TileEntityBlock;
-import ic2.core.block.machine.tileentity.TileEntityMachine;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
@@ -30,7 +27,6 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
     public static final int PESU = 2;
     public static final int EV = 3;
     public static final int IV = 4;
-    public static final int ADJ = 5;
 
     public BlockAdvEnergyBlock(int id) {
         super(id);
@@ -46,11 +42,13 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
         return getBlockEntity(metadata);
     }
 
-    public TileEntityMachine getBlockEntity(int meta) {
+    public TileEntityBlock getBlockEntity(int meta) {
         switch (meta) {
             case ESU: return new TileEntityESU();
             case ISU: return new TileEntityISU();
             case PESU: return new TileEntityPESU();
+            case EV: return new TileEntityTranformerEV();
+            case IV: return new TileEntityTranformerIV();
             default: return null;
         }
     }

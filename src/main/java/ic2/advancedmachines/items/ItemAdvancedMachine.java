@@ -6,28 +6,26 @@ import ic2.advancedmachines.utils.TextFormatter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ItemAdvancedMachine extends ItemBlock {
 
-    public static Map<Integer, String> META_NAMES = new HashMap<Integer, String>();
+    public String[] names = new String[] {
+            "macerator",
+            "compressor",
+            "extractor",
+            "induction",
+            "recycler",
+            "electrolyzer"
+    };
 
     public ItemAdvancedMachine(int id) {
         super(id);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-        META_NAMES.put(0, "macerator");
-        META_NAMES.put(1, "compressor");
-        META_NAMES.put(2, "extractor");
-        META_NAMES.put(3, "induction");
-        META_NAMES.put(4, "recycler");
-        META_NAMES.put(5, "electrolyzer");
     }
 
     @SuppressWarnings("unchecked")
@@ -54,20 +52,16 @@ public class ItemAdvancedMachine extends ItemBlock {
     @Override
     public String getItemNameIS(ItemStack stack) {
         int itemDamage = stack.getItemDamage();
-        if (META_NAMES.containsKey(itemDamage)) {
-            return "block.advanced." + META_NAMES.get(itemDamage);
-        } else return null;
+        return "block.advanced." + names[itemDamage];
     }
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(int id, CreativeTabs tabs, List itemList) {
-        for(int i = 0; i < 16; ++i) {
+        for(int i = 0; i < names.length; ++i) {
             ItemStack is = new ItemStack(this, 1, i);
-            if (Item.itemsList[this.itemID].getItemNameIS(is) != null) {
-                itemList.add(is);
-            }
+            itemList.add(is);
         }
     }
 }

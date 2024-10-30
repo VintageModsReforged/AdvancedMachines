@@ -27,6 +27,8 @@ block.advanced.electrolyzer.name=Charged Electrolyzer
 block.advanced.esu.name=GESU
 block.advanced.isu.name=UESU
 block.advanced.pesu.name=PESU
+block.advanced.transformer.ev.name=EV Transformer
+block.advanced.transformer.iv.name=IV Transformer
 
 tooltips.energy.storage.info=%s / %s EU
 tooltips.energy.tier.info=Tier: %s [%s]

@@ -27,6 +27,8 @@ block.advanced.electrolyzer.name=Заряженный электролизёр
 block.advanced.esu.name=ГСУ
 block.advanced.isu.name=УСУ
 block.advanced.pesu.name=ПСУ
+block.advanced.transformer.ev.name=Трансформатор СВН
+block.advanced.transformer.iv.name=Трансформатор ЭН
 
 tooltips.energy.storage.info=%s / %s еЭ
 tooltips.energy.tier.info=Напряжение: %s [%s]
