@@ -3,11 +3,19 @@ inv.speed.extractor=Speed:
 inv.speed.macerator=Rotation:
 inv.speed.compressor=Pressure:
 inv.speed.recycler=Speed:
-tooltips.usage.info=Uses 15 EU/t. Max Input: 128EU [MV]
-tooltips.transfer.info=Various transfer rate. The higher energy storage block tier, the better!
+inv.electric.level=Power Level:
+inv.electric.output=Out: %s EU/t
 
 item.redstone.inverter.name=Redstone Inverter Upgrad
 item.cobblestone.generator.name=Cobblestone Generator Upgrade
+item.glowtronic_crystal.name=Glowtronic Energy Crystal
+item.universal_crystal.name=Universal Energy Crystal
+item.plasma_crystal.name=Plasma Energy Crystal
+item.magnet.chunk.name=Magnet Chunk
+item.magnet.dead.name=Dead Magnet
+item.magnet.component.name=Magnet
+item.circuit.complex.name=Complex Electronic Circuit
+item.iridium.core.name=Iridium Core
 
 block.advanced.induction.name=Induction Furnace MKII
 block.advanced.extractor.name=Centrifugal Extractor
@@ -15,3 +23,18 @@ block.advanced.macerator.name=Rotary Macerator
 block.advanced.compressor.name=Singularity Compressor
 block.advanced.recycler.name=Compacting Recycler
 block.advanced.electrolyzer.name=Charged Electrolyzer
+
+block.advanced.esu.name=GESU
+block.advanced.isu.name=UESU
+block.advanced.pesu.name=PESU
+
+tooltips.energy.storage.info=%s / %s EU
+tooltips.energy.tier.info=Tier: %s [%s]
+tooltips.usage.info=Uses 15 EU/t. Max Input: 128EU [MV]
+tooltips.transfer.info=Various transfer rate. The higher energy storage block tier, the better!
+tooltip.block.energy.nothing=Redstone Behavior: Nothing
+tooltip.block.energy.full=Redstone Behavior: Emit if full
+tooltip.block.energy.part=Redstone Behavior: Emit if partially filled
+tooltip.block.energy.empty=Redstone Behavior: Emit if empty
+tooltip.block.energy.no_output=Redstone Behavior: Do not output energy
+tooltip.block.energy.no_output_unless_full=Redstone Behavior: Do not output energy unless full

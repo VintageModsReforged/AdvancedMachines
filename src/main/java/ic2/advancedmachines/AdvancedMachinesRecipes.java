@@ -1,5 +1,6 @@
 package ic2.advancedmachines;
 
+import ic2.advancedmachines.blocks.AdvEnergyBlocks;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
 import ic2.api.Ic2Recipes;
@@ -13,8 +14,8 @@ public class AdvancedMachinesRecipes {
     public static void init() {
 
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
-        AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
+        AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
 
         Ic2Recipes.addCraftingRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
@@ -70,10 +71,62 @@ public class AdvancedMachinesRecipes {
                 'C', Items.getItem("clayDust"),
                 'R', Items.getItem("refinedIronIngot"));
 
+        Ic2Recipes.addCraftingRecipe(BlocksItems.CIRCUIT_COMPLEX,
+                "CCC", "M#M", "CCC",
+                'C', Items.getItem("doubleInsulatedGoldCableItem"),
+                'M', BlocksItems.MAGNET_COMPONENT,
+                '#', Items.getItem("advancedCircuit"));
+
+        Ic2Recipes.addCraftingRecipe(BlocksItems.CIRCUIT_COMPLEX,
+                "CMC", "C#C", "CMC",
+                'C', Items.getItem("doubleInsulatedGoldCableItem"),
+                'M', BlocksItems.MAGNET_COMPONENT,
+                '#', Items.getItem("advancedCircuit"));
+
+        Ic2Recipes.addCraftingRecipe(BlocksItems.IRIDIUM_CORE,
+                "MCM", "CIC", "MCM",
+                'C', Items.getItem("carbonPlate"),
+                'M', BlocksItems.MAGNET_COMPONENT,
+                'I', Items.getItem("iridiumOre"));
+
         Ic2Recipes.addCraftingRecipe(new ItemStack(BlocksItems.GLOWTRONIC_CRYSTAL),
                 "G#G", "GCG", "G#G",
                 'G', Item.lightStoneDust,
                 '#', Items.getItem("advancedCircuit"),
                 'C', Items.getItem("lapotronCrystal"));
+
+        Ic2Recipes.addCraftingRecipe(new ItemStack(BlocksItems.UNIVERSAL_CRYSTAL),
+                "G#G", "GCG", "G#G",
+                'G', Items.getItem("carbonPlate"),
+                '#', BlocksItems.CIRCUIT_COMPLEX,
+                'C', BlocksItems.GLOWTRONIC_CRYSTAL);
+
+        Ic2Recipes.addCraftingRecipe(new ItemStack(BlocksItems.PLASMA_CRYSTAL),
+                "G#G", "GCG", "G#G",
+                'G', Items.getItem("carbonPlate"),
+                '#', Items.getItem("iridiumPlate"),
+                'C', BlocksItems.UNIVERSAL_CRYSTAL);
+
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.ESU.STACK,
+                "C#C", "CSC", "CMC",
+                'C', BlocksItems.GLOWTRONIC_CRYSTAL,
+                '#', BlocksItems.CIRCUIT_COMPLEX,
+                'S', Items.getItem("mfsUnit"),
+                'M', Items.getItem("advancedMachine"));
+
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.ISU.STACK,
+                "C#C", "CSC", "CMC",
+                'C', BlocksItems.UNIVERSAL_CRYSTAL,
+                '#', BlocksItems.CIRCUIT_COMPLEX,
+                'S', AdvEnergyBlocks.ESU.STACK,
+                'M', Items.getItem("advancedMachine"));
+
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.PESU.STACK,
+                "C#C", "CSC", "CMC",
+                'C', BlocksItems.PLASMA_CRYSTAL,
+                '#', BlocksItems.IRIDIUM_CORE,
+                'S', AdvEnergyBlocks.ISU.STACK,
+                'M', Items.getItem("advancedMachine"));
+
     }
 }

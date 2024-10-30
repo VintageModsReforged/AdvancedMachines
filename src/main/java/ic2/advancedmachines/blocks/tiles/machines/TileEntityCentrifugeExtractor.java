@@ -1,4 +1,4 @@
-package ic2.advancedmachines.blocks.tiles;
+package ic2.advancedmachines.blocks.tiles.machines;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;

@@ -3,7 +3,7 @@ package ic2.core.gui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.utils.Refs;
-import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.utils.LangHelper;

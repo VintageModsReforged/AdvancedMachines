@@ -94,7 +94,7 @@ public class ContainerAdvancedMachine extends ContainerIC2 {
                 this.TILE.energy = this.TILE.energy & '\uffff' | j << 16;
                 break;
             case 3:
-                this.TILE.speed = (short)j;
+                this.TILE.speed = (short) j;
         }
     }
 

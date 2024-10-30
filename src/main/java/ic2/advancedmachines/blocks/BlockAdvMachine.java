@@ -1,10 +1,16 @@
 package ic2.advancedmachines.blocks;
 
-import ic2.advancedmachines.blocks.tiles.*;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.core.block.machine.tileentity.TileEntityMachine;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public class BlockAdvMachine extends BlockAdvancedBlock {
@@ -58,6 +64,18 @@ public class BlockAdvMachine extends BlockAdvancedBlock {
                 float yOffset = -0.1F + random.nextFloat() * 0.2F;
                 float zOffset = -0.2F - random.nextFloat() * 0.6F;
                 world.spawnParticle("smoke", xPos + xOffset, yPos + yOffset, zPos + zOffset, 0.0D, 0.0D, 0.0D);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void getSubBlocks(int id, CreativeTabs tabs, List itemList) {
+        for(int i = 0; i < 16; ++i) {
+            ItemStack is = new ItemStack(this, 1, i);
+            if (Item.itemsList[this.blockID].getItemNameIS(is) != null) {
+                itemList.add(is);
             }
         }
     }

@@ -2,9 +2,10 @@ package ic2.core.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.blocks.tiles.TileEntityChargedElectrolyzer;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.blocks.tiles.container.ContainerChargedElectrolyzer;
 import ic2.advancedmachines.utils.LangHelper;
+import ic2.advancedmachines.utils.Refs;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;
 
@@ -26,7 +27,7 @@ public class GuiAdvElectrolyzer extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int x, int y) {
-        int i = this.mc.renderEngine.getTexture("/ic2/sprites/GUIElectrolyzer.png");
+        int i = this.mc.renderEngine.getTexture(Refs.getGuiPath("charged"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(i);
         int j = (this.width - this.xSize) / 2;

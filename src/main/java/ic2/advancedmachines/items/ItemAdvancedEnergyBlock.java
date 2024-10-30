@@ -2,7 +2,6 @@ package ic2.advancedmachines.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.utils.TextFormatter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -14,30 +13,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ItemAdvancedMachine extends ItemBlock {
+public class ItemAdvancedEnergyBlock extends ItemBlock {
 
     public static Map<Integer, String> META_NAMES = new HashMap<Integer, String>();
 
-    public ItemAdvancedMachine(int id) {
+    public ItemAdvancedEnergyBlock(int id) {
         super(id);
         this.setMaxDamage(0);
         this.setHasSubtypes(true);
-        META_NAMES.put(0, "macerator");
-        META_NAMES.put(1, "compressor");
-        META_NAMES.put(2, "extractor");
-        META_NAMES.put(3, "induction");
-        META_NAMES.put(4, "recycler");
-        META_NAMES.put(5, "electrolyzer");
+
+        META_NAMES.put(0, "esu");
+        META_NAMES.put(1, "isu");
+        META_NAMES.put(2, "pesu");
+//        META_NAMES.put(3, "transformer.ev");
+//        META_NAMES.put(4, "transformer.iv");
+//        META_NAMES.put(5, "transformer.adj");
     }
 
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        int itemDamage = stack.getItemDamage();
-        if (itemDamage == 5) {
-            tooltip.add(TextFormatter.AQUA.format("tooltips.transfer.info"));
-        } else tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
+
     }
 
     @Override

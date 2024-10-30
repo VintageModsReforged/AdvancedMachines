@@ -1,7 +1,5 @@
 package ic2.advancedmachines.blocks;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.Items;
@@ -12,11 +10,9 @@ import ic2.core.block.TileEntityBlock;
 import ic2.core.util.StackUtil;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
@@ -145,18 +141,6 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
                 }
             }
 
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void getSubBlocks(int id, CreativeTabs tabs, List itemList) {
-        for(int i = 0; i < 16; ++i) {
-            ItemStack is = new ItemStack(this, 1, i);
-            if (Item.itemsList[this.blockID].getItemNameIS(is) != null) {
-                itemList.add(is);
-            }
         }
     }
 

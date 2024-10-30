@@ -3,23 +3,29 @@ package ic2.advancedmachines.proxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import ic2.advancedmachines.items.ItemAdvancedMachine;
 import ic2.advancedmachines.utils.Refs;
 import net.minecraftforge.client.MinecraftForgeClient;
 
-import java.util.Map;
-
 public class ClientProxy extends CommonProxy {
+
+    public String[] GUIS = new String[] {
+            "compressor",
+            "extractor",
+            "induction",
+            "macerator",
+            "recycler",
+            "electric",
+            "charged"
+    };
 
     @Override
     public void preInit(FMLPreInitializationEvent e) {
         super.preInit(e);
-        Map<Integer, String> metaNames = ItemAdvancedMachine.META_NAMES;
-        for (Integer gui : metaNames.keySet()) {
-            String guiTexture = Refs.getGuiPathFor(metaNames.get(gui));
-            MinecraftForgeClient.preloadTexture(guiTexture);
+        for (String gui : GUIS) {
+            MinecraftForgeClient.preloadTexture(Refs.getGuiPath(gui));
         }
-        MinecraftForgeClient.preloadTexture(Refs.BLOCKS);
+        MinecraftForgeClient.preloadTexture(Refs.BLOCK_MACHINES);
+        MinecraftForgeClient.preloadTexture(Refs.BLOCK_ELECTRIC);
         MinecraftForgeClient.preloadTexture(Refs.ITEMS);
     }
 

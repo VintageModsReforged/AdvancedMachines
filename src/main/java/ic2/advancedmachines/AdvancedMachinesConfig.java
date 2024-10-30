@@ -19,7 +19,14 @@ public class AdvancedMachinesConfig {
     public static String[] LANGS;
 
     public static int ADV_UPGRADE_ID;
+    public static int COMPONENT_ID;
+
+    public static int GLOWTRONIC_CRYSTAL_ID;
+    public static int UNIVERSAL_CRYSTAL_ID;
+    public static int PLASMA_CRYSTAL_ID;
+
     public static int ADV_MACHINE_ID;
+    public static int ADV_ENERGY_BLOCK_ID;
 
     public static String MACERATOR_WORK_SOUND;
     public static String COMPRESSOR_WORK_SOUND;
@@ -40,8 +47,14 @@ public class AdvancedMachinesConfig {
         RECYCLER_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "recyclerWorkSound", "Machines/RecyclerOp.ogg", "Recycler Work Sound");
         INTERRUPT_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "interruptSound", "Machines/InterruptOne.ogg", "Interrupt Work Sound");
 
-        ADV_UPGRADE_ID = getId(ITEM_IDS_CAT, null, "advancedUpgradeId", 29776, "Advanced Upgrade ID");
-        ADV_MACHINE_ID = getId(BLOCK_IDS_CAT, null, "advancedMachineBlockId", 188, "Advanced Machine Block ID");
+        ADV_UPGRADE_ID = getItemId("advancedUpgradeId", 29776, "");
+        GLOWTRONIC_CRYSTAL_ID = getItemId("glowtronicCrystalId", 29777, "");
+        UNIVERSAL_CRYSTAL_ID = getItemId("universalCrystalId", 29778, "");
+        PLASMA_CRYSTAL_ID = getItemId("plasmaCrystalId", 29779, "");
+        COMPONENT_ID = getItemId("componentId", 29780, "");
+
+        ADV_MACHINE_ID = getBlockId("advancedMachineBlockId", 188, "");
+        ADV_ENERGY_BLOCK_ID = getBlockId("advancedEnergyBlockId", 189, "");
 
         if (MAIN_CONFIG != null) {
             MAIN_CONFIG.save();
@@ -62,10 +75,19 @@ public class AdvancedMachinesConfig {
         return prop.value;
     }
 
-    private static int getId(String cat, @Nullable String tagComment, String tag, int defaultValue, String comment) {
+    private static int getBlockId(String tag, int defaultValue, String comment) {
         comment = comment.replace("{t}", tag) + "\n";
-        Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
-        prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + defaultValue;
+        Property prop = MAIN_CONFIG.get(BLOCK_IDS_CAT, tag, defaultValue);
+        prop.comment = comment + "Default: " + defaultValue;
+        int value = prop.getInt(defaultValue);
+        prop.value = Integer.toString(value);
+        return value;
+    }
+
+    private static int getItemId(String tag, int defaultValue, String comment) {
+        comment = comment.replace("{t}", tag) + "\n";
+        Property prop = MAIN_CONFIG.get(ITEM_IDS_CAT, tag, defaultValue);
+        prop.comment = comment + "Default: " + defaultValue;
         int value = prop.getInt(defaultValue);
         prop.value = Integer.toString(value);
         return value;

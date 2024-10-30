@@ -3,11 +3,19 @@ inv.speed.extractor=Скорость:
 inv.speed.macerator=Вращение:
 inv.speed.compressor=Давление:
 inv.speed.recycler=Скорость:
-tooltips.usage.info=Потребляет 15 EU/т. Макс. напряжение: 128EU [Т2]
-tooltips.transfer.info=Разная скорость передачи. Чем выше уровень блока хранения энергии, тем лучше!
+inv.electric.level=Уровень заряда:
+inv.electric.output=Выход: %s еЭ/т
 
 item.redstone.inverter.name=Инвертор красного сигнала
 item.cobblestone.generator.name=Генератор булыжника
+item.glowtronic_crystal.name=Глоутроновый энергетический кристалл
+item.universal_crystal.name=Универсальный энергетический кристалл
+item.plasma_crystal.name=Плазменный энергетический кристалл
+item.magnet.chunk.name=Кусок магнита
+item.magnet.dead.name=Мёртвый магнит
+item.magnet.component.name=Магнит
+item.circuit.complex.name=Комплексная микросхема
+item.iridium.core.name=Иридиевое ядро
 
 block.advanced.induction.name=Индукционная печь MKII
 block.advanced.extractor.name=Центробежный экстрактор
@@ -15,3 +23,18 @@ block.advanced.macerator.name=Роторный дробитель
 block.advanced.compressor.name=Сингулярный сжиматель
 block.advanced.recycler.name=Уплотняющий переработчик
 block.advanced.electrolyzer.name=Заряженный электролизёр
+
+block.advanced.esu.name=ГСУ
+block.advanced.isu.name=УСУ
+block.advanced.pesu.name=ПСУ
+
+tooltips.energy.storage.info=%s / %s еЭ
+tooltips.energy.tier.info=Напряжение: %s [%s]
+tooltips.usage.info=Потребляет 15 еЭ/т. Макс. напряжение: 128EU [Т2]
+tooltips.transfer.info=Разная скорость передачи. Чем выше уровень блока хранения энергии, тем лучше!
+tooltip.block.energy.nothing=Красный сигнал: Без действия
+tooltip.block.energy.full=Красный сигнал: Излучать, если заполнено
+tooltip.block.energy.part=Красный сигнал: Излучать, если частично заполнено
+tooltip.block.energy.empty=Красный сигнал: Излучать, если пусто
+tooltip.block.energy.no_output=Красный сигнал: Не подавать энергию
+tooltip.block.energy.no_output_unless_full=Красный сигнал: Не подавать энергию, если не заполнено
