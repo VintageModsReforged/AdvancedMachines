@@ -2,11 +2,11 @@ package ic2.advancedmachines.items.upgrades;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.items.IUpgradeItem;
 import ic2.advancedmachines.utils.Refs;
-import ic2.core.IC2;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -24,7 +24,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
     public ItemAdvUpgrade() {
         super(AdvancedMachinesConfig.ADV_UPGRADE_ID);
         this.setTextureFile(Refs.ITEMS);
-        this.setCreativeTab(IC2.tabIC2);
+        this.setCreativeTab(AdvancedMachines.ADV_TAB);
         this.setHasSubtypes(true);
         this.setItemName("advanced.upgrade");
     }

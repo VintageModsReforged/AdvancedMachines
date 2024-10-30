@@ -2,6 +2,7 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.Items;
 import ic2.core.IC2;
@@ -36,14 +37,14 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
         this.setBlockName("blockAdvanced");
         this.setHardness(2.0F);
         this.setStepSound(soundMetalFootstep);
-        this.setCreativeTab(IC2.tabIC2);
+        this.setCreativeTab(AdvancedMachines.ADV_TAB);
     }
 
     public abstract TileEntity createTileEntity(World world, int metadata);
 
     @Override
     public String getTextureFile() {
-        return Refs.BLOCKS;
+        return Refs.BLOCK_MACHINES;
     }
 
     @Override
