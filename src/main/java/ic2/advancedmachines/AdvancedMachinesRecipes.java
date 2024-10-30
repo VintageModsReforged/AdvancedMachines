@@ -1,14 +1,21 @@
 package ic2.advancedmachines;
 
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
 import ic2.api.Ic2Recipes;
 import ic2.api.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class AdvancedMachinesRecipes {
 
     public static void init() {
+
+        AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
+        AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
+        AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
+
         Ic2Recipes.addCraftingRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
                 'R', Items.getItem("refinedIronIngot"),
@@ -57,5 +64,16 @@ public class AdvancedMachinesRecipes {
                 'L', "lava",
                 'W', "water",
                 '#', Items.getItem("electronicCircuit"));
+
+        Ic2Recipes.addCraftingRecipe(BlocksItems.MAGNET_CHUNK,
+                "CCC", "CRC", "CCC",
+                'C', Items.getItem("clayDust"),
+                'R', Items.getItem("refinedIronIngot"));
+
+        Ic2Recipes.addCraftingRecipe(new ItemStack(BlocksItems.GLOWTRONIC_CRYSTAL),
+                "G#G", "GCG", "G#G",
+                'G', Item.lightStoneDust,
+                '#', Items.getItem("advancedCircuit"),
+                'C', Items.getItem("lapotronCrystal"));
     }
 }

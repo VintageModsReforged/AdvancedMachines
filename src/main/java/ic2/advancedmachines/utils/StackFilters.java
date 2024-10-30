@@ -1,5 +1,6 @@
 package ic2.advancedmachines.utils;
 
+import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.items.IUpgradeItem;
 import ic2.api.IElectricItem;
 import ic2.api.Ic2Recipes;
@@ -65,14 +66,14 @@ public class StackFilters {
     public static final IStackFilter ELECTROLYZER_IN = new IStackFilter() {
         @Override
         public boolean match(ItemStack stack) {
-            return StackUtil.isStackEqual(stack, Items.getItem("waterCell"));
+            return stack != null && (AdvMachinesRecipeManager.getPowerElectrolyzerOutputFor(stack, false) != null || AdvMachinesRecipeManager.getDrainElectrolyzerOutputFor(stack, false) != null);
         }
     };
 
     public static final IStackFilter ELECTROLYZER_OUT = new IStackFilter() {
         @Override
         public boolean match(ItemStack stack) {
-            return StackUtil.isStackEqual(stack, Items.getItem("electrolyzedWaterCell"));
+            return StackUtil.isStackEqual(stack, Items.getItem("electrolyzedWaterCell")) || StackUtil.isStackEqual(stack, BlocksItems.MAGNET_COMPONENT);
         }
     };
 

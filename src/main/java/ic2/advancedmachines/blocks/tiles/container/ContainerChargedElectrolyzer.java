@@ -1,6 +1,6 @@
 package ic2.advancedmachines.blocks.tiles.container;
 
-import ic2.advancedmachines.blocks.tiles.TileEntityChargedElectrolyzer;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.ContainerIC2;
@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 
 public class ContainerChargedElectrolyzer extends ContainerIC2 {
 
@@ -16,9 +17,10 @@ public class ContainerChargedElectrolyzer extends ContainerIC2 {
 
     public ContainerChargedElectrolyzer(InventoryPlayer playerInv, TileEntityChargedElectrolyzer tile) {
         this.TILE = tile;
+        this.addSlotToContainer(AdvSlot.filtered(tile, 0, 54, 35, StackFilters.ELECTROLYZER_IN));
+        this.addSlotToContainer(new SlotFurnace(playerInv.player, tile, 1, 112, 35));
+
         // player inventory
-        this.addSlotToContainer(AdvSlot.filtered(tile, 0, 53, 35, StackFilters.ELECTROLYZER_IN));
-        this.addSlotToContainer(AdvSlot.filtered(tile, 1, 112, 35, StackFilters.ELECTROLYZER_OUT));
         int i;
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
