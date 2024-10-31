@@ -59,9 +59,9 @@ public class AdvancedMachines {
     @Mod.PostInit
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
-        if (AdvancedMachinesConfig.DISABLE_SEASONAL_IC2 != IC2.seasonal) {
-            LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.DISABLE_SEASONAL_IC2, IC2.seasonal));
-            IC2.seasonal = AdvancedMachinesConfig.DISABLE_SEASONAL_IC2;
+        if (AdvancedMachinesConfig.SEASONAL_IC2 != IC2.seasonal) {
+            LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.SEASONAL_IC2, IC2.seasonal));
+            IC2.seasonal = AdvancedMachinesConfig.SEASONAL_IC2;
         }
     }
 }
