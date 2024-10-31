@@ -48,8 +48,6 @@ dependencies {
 	modImplementation files("libs/CoFHCore.zip")
 	modImplementation files("libs/hopper.jar")
 	modImplementation files("libs/AdvPowerMng.jar")
-//	coremodImplementation files("libs/CodeChickenCore 0.8.1.6.jar")
-//	coremodImplementation files("libs/NotEnoughItems 1.4.7.4.jar")
 }
 
 sourceSets {

@@ -35,6 +35,8 @@ public class AdvancedMachinesConfig {
     public static String RECYCLER_WORK_SOUND;
     public static String INTERRUPT_SOUND;
 
+    public static boolean DISABLE_SEASONAL_IC2; // this will prevent minecraft from crashing when it uses seasonal features
+
     public static void init() {
         MAIN_CONFIG = new Configuration(new File((File) FMLInjectionData.data()[6], "config/advMachines.cfg"));
         MAIN_CONFIG.load();
@@ -56,9 +58,18 @@ public class AdvancedMachinesConfig {
         ADV_MACHINE_ID = getBlockId("advancedMachineBlockId", 188, "");
         ADV_ENERGY_BLOCK_ID = getBlockId("advancedEnergyBlockId", 189, "");
 
+        DISABLE_SEASONAL_IC2 = getBoolean("general", "Enable this is your minecraft crashes when attempting to spawn seasonal mobs.", "disableSeasonalIC2", true, "Disable IC2 seasonal mobs?");
+
         if (MAIN_CONFIG != null) {
             MAIN_CONFIG.save();
         }
+    }
+
+    private static boolean getBoolean(String cat, @Nullable String tagComment, String tag, boolean defaultValue, String comment) {
+        comment = comment.replace("{t}", tag) + "\n";
+        Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
+        prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + defaultValue;
+        return prop.getBoolean(defaultValue);
     }
 
     private static String[] getStrings(String cat, @Nullable String tagComment, String tag, String[] defaultValue, String comment) {

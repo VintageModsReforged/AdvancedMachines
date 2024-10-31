@@ -13,6 +13,7 @@ import ic2.advancedmachines.network.AdvNetworkHandler;
 import ic2.advancedmachines.network.AdvNetworkHandlerClient;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
+import ic2.core.IC2;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -58,5 +59,9 @@ public class AdvancedMachines {
     @Mod.PostInit
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+        if (AdvancedMachinesConfig.DISABLE_SEASONAL_IC2 != IC2.seasonal) {
+            LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.DISABLE_SEASONAL_IC2, IC2.seasonal));
+            IC2.seasonal = AdvancedMachinesConfig.DISABLE_SEASONAL_IC2;
+        }
     }
 }

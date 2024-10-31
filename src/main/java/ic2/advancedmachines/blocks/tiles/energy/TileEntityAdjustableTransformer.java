@@ -93,11 +93,6 @@ public class TileEntityAdjustableTransformer extends TileEntityBlock implements 
     }
 
     @Override
-    public boolean canUpdate() {
-        return IC2.platform.isSimulating();
-    }
-
-    @Override
     public void onLoaded() {
         super.onLoaded();
         if (IC2.platform.isSimulating()) {
