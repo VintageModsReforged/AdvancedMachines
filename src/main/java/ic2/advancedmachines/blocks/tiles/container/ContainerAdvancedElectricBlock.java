@@ -14,7 +14,7 @@ public class ContainerAdvancedElectricBlock extends ContainerIC2 {
 
     public TileEntityAdvancedEnergyBlock TILE;
     public int energy = -1;
-    public int redstoneMode = -1;
+    public byte redstoneMode = -1;
 
     public ContainerAdvancedElectricBlock(InventoryPlayer playerInv, TileEntityAdvancedEnergyBlock tile) {
         this.TILE = tile;
@@ -48,7 +48,7 @@ public class ContainerAdvancedElectricBlock extends ContainerIC2 {
                 icrafting.sendProgressBarUpdate(this, 1, this.TILE.energy >>> 16);
             }
             if (this.redstoneMode != this.TILE.redstoneMode) {
-                icrafting.sendProgressBarUpdate(this, 3, this.TILE.redstoneMode);
+                icrafting.sendProgressBarUpdate(this, 2, this.TILE.redstoneMode);
             }
         }
 
@@ -65,7 +65,7 @@ public class ContainerAdvancedElectricBlock extends ContainerIC2 {
             case 1:
                 this.TILE.energy = this.TILE.energy & '\uffff' | j << 16;
                 break;
-            case 3:
+            case 2:
                 this.TILE.redstoneMode = (byte) j;
         }
     }
