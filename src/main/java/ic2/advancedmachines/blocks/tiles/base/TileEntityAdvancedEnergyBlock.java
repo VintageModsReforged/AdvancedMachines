@@ -63,12 +63,12 @@ public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock imple
     public void onNetworkEvent(EntityPlayer player, int event) {
         if (event == 0) {
             this.redstoneMode = (byte) (++this.redstoneMode % redstoneModes);
-            IC2.platform.messagePlayer(player, getMode(this.redstoneMode));
+            IC2.platform.messagePlayer(player, getMode());
         }
     }
 
-    public String getMode(byte mode) {
-        switch (mode) {
+    public String getMode() {
+        switch (this.redstoneMode) {
             case 0: return LangHelper.format("tooltip.block.energy.nothing");
             case 1: return LangHelper.format("tooltip.block.energy.full");
             case 2: return LangHelper.format("tooltip.block.energy.part");

@@ -23,6 +23,7 @@ public class GuiAdvEnergyBlock extends GuiContainer {
         this.container = container;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initGui() {
         super.initGui();
@@ -45,6 +46,9 @@ public class GuiAdvEnergyBlock extends GuiContainer {
         this.fontRenderer.drawString(" " + e, 110, 35, 4210752);
         this.fontRenderer.drawString("/" + this.container.TILE.maxStorage, 110, 45, 4210752);
         this.fontRenderer.drawString(LangHelper.format("inv.electric.output", this.container.TILE.output), 85, 60, 4210752);
+        if (this.isPointInRegion(152, 4, 20, 20, mouseX, mouseY)) {
+            this.drawCreativeTabHoveringText(this.container.TILE.getMode(), mouseX - x, mouseY - y);
+        }
     }
 
     @Override
