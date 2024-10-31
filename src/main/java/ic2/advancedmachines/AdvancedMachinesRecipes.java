@@ -16,6 +16,7 @@ public class AdvancedMachinesRecipes {
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
         AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
+        Ic2Recipes.addCompressorRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_COMPONENT);
 
         Ic2Recipes.addCraftingRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
@@ -128,5 +129,24 @@ public class AdvancedMachinesRecipes {
                 'S', AdvEnergyBlocks.ISU.STACK,
                 'M', Items.getItem("advancedMachine"));
 
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.TRANSFORMER_EV.STACK,
+                " C ", "#TX", " C ",
+                'C', Items.getItem("glassFiberCableItem"),
+                '#', Items.getItem("advancedCircuit"),
+                'T', Items.getItem("hvTransformer"),
+                'X', Items.getItem("lapotronCrystal"));
+
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.TRANSFORMER_IV.STACK,
+                " C ", "#TX", " C ",
+                'C', Items.getItem("trippleInsulatedIronCableItem"),
+                '#', BlocksItems.CIRCUIT_COMPLEX,
+                'T', AdvEnergyBlocks.TRANSFORMER_EV.STACK,
+                'X', BlocksItems.GLOWTRONIC_CRYSTAL);
+
+        Ic2Recipes.addCraftingRecipe(AdvEnergyBlocks.TRANSFORMER_ADJ.STACK,
+                "T", "#", "M",
+                'T', Items.getItem("lvTransformer"),
+                '#', BlocksItems.CIRCUIT_COMPLEX,
+                'M', AdvEnergyBlocks.TRANSFORMER_EV.STACK);
     }
 }

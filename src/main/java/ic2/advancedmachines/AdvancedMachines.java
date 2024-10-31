@@ -1,5 +1,6 @@
 package ic2.advancedmachines;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -8,29 +9,41 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.network.AdvNetworkHandler;
+import ic2.advancedmachines.network.AdvNetworkHandlerClient;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import java.util.logging.Logger;
+
 @Mod(modid = Refs.ID, name = Refs.NAME, version = Refs.VERSION, acceptedMinecraftVersions = Refs.MC_VERSION, dependencies = Refs.DEPS)
-@NetworkMod(clientSideRequired = true)
+@NetworkMod(clientSideRequired = true,
+        clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandlerClient.class),
+        serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandler.class))
 public class AdvancedMachines {
 
     @SidedProxy(clientSide = Refs.PROXY_CLIENT, serverSide = Refs.PROXY_COMMON)
     public static CommonProxy proxy;
 
+    @SidedProxy(clientSide = Refs.NETWORK_CLIENT, serverSide = Refs.NETWORK_COMMON)
+    public static AdvNetworkHandler network;
+
+    public static Logger LOGGER = Logger.getLogger(Refs.ID);
+
     public static CreativeTabs ADV_TAB = new CreativeTabs(Refs.ID) {{
             LanguageRegistry.instance().addStringLocalization("itemGroup." + Refs.ID, Refs.NAME);
         }
-
         @Override
         public ItemStack getIconItemStack() {
             return AdvMachines.MACERATOR.STACK;
         }
     };
 
-    public AdvancedMachines() {}
+    public AdvancedMachines() {
+        LOGGER.setParent(FMLLog.getLogger());
+    }
 
     @Mod.PreInit
     public void preInit(FMLPreInitializationEvent e) {

@@ -27,14 +27,38 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
     public static final int PESU = 2;
     public static final int EV = 3;
     public static final int IV = 4;
+    public static final int ADJUSTABLE = 5;
+
+    private final int textureIndexIN;
+    private final int textureIndexOUT;
 
     public BlockAdvEnergyBlock(int id) {
         super(id);
+
+        this.textureIndexIN = ADJUSTABLE;
+        this.textureIndexOUT = ADJUSTABLE + 16;
     }
 
     @Override
     public String getTextureFile() {
         return Refs.BLOCK_ELECTRIC;
+    }
+
+    @Override
+    public int getBlockTexture(IBlockAccess world, int x, int y, int z, int side) {
+        int meta = world.getBlockMetadata(x, y, z);
+        if (meta == ADJUSTABLE) {
+            TileEntity tile = world.getBlockTileEntity(x, y, z);
+            final byte flags = ((TileEntityAdjustableTransformer)tile).sideSettings[side];
+            return (flags & 1) == 0 ? this.textureIndexIN : this.textureIndexOUT;
+        } else return super.getBlockTexture(world, x, y, z, side);
+    }
+
+    @Override
+    public int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+        if (metadata == ADJUSTABLE) {
+            return this.textureIndexIN;
+        } else return super.getBlockTextureFromSideAndMetadata(side, metadata);
     }
 
     @Override
@@ -49,6 +73,7 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
             case PESU: return new TileEntityPESU();
             case EV: return new TileEntityTranformerEV();
             case IV: return new TileEntityTranformerIV();
+            case ADJUSTABLE: return new TileEntityAdjustableTransformer();
             default: return null;
         }
     }
@@ -83,31 +108,36 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
     }
 
     @Override
-    public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving entityliving) {
+        int meta = world.getBlockMetadata(x, y, z);
         if (IC2.platform.isSimulating()) {
-            TileEntityBlock te = (TileEntityBlock) world.getBlockTileEntity(i, j, k);
-            if (entityliving == null) {
-                te.setFacing((short) 1);
+            if (meta == ADJUSTABLE) {
+                super.onBlockPlacedBy(world, x, y, z, entityliving);
             } else {
-                int yaw = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5) & 3;
-                int pitch = Math.round(entityliving.rotationPitch);
-                if (pitch >= 65) {
+                TileEntityBlock te = (TileEntityBlock) world.getBlockTileEntity(x, y, z);
+                if (entityliving == null) {
                     te.setFacing((short) 1);
-                } else if (pitch <= -65) {
-                    te.setFacing((short) 0);
                 } else {
-                    switch (yaw) {
-                        case 0:
-                            te.setFacing((short) 2);
-                            break;
-                        case 1:
-                            te.setFacing((short) 5);
-                            break;
-                        case 2:
-                            te.setFacing((short) 3);
-                            break;
-                        case 3:
-                            te.setFacing((short) 4);
+                    int yaw = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5) & 3;
+                    int pitch = Math.round(entityliving.rotationPitch);
+                    if (pitch >= 65) {
+                        te.setFacing((short) 1);
+                    } else if (pitch <= -65) {
+                        te.setFacing((short) 0);
+                    } else {
+                        switch (yaw) {
+                            case 0:
+                                te.setFacing((short) 2);
+                                break;
+                            case 1:
+                                te.setFacing((short) 5);
+                                break;
+                            case 2:
+                                te.setFacing((short) 3);
+                                break;
+                            case 3:
+                                te.setFacing((short) 4);
+                        }
                     }
                 }
             }

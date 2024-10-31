@@ -15,7 +15,8 @@ public class ClientProxy extends CommonProxy {
             "macerator",
             "recycler",
             "electric",
-            "charged"
+            "charged",
+            "adjustable"
     };
 
     @Override

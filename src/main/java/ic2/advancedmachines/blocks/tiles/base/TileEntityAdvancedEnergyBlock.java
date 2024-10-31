@@ -39,9 +39,6 @@ public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock imple
     @Override
     public void updateEntity() {
         super.updateEntity();
-        if (worldObj.getTotalWorldTime() % 20 == 0) {
-            System.out.println(this.redstoneMode);
-        }
     }
 
     @Override

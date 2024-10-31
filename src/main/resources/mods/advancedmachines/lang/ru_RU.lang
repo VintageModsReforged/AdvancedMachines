@@ -5,6 +5,20 @@ inv.speed.compressor=Давление:
 inv.speed.recycler=Скорость:
 inv.electric.level=Уровень заряда:
 inv.electric.output=Выход: %s еЭ/т
+inv.electric.avg.eu=Ср. еЭ/т
+inv.electric.avg.packet.in=Ср. Вх. пакетов
+inv.electric.eu.bugger=Хранилище еЭ
+inv.electric.packet.size=Размер пакета (напряжение)
+inv.electric.transfer.max=Скорость передачи (Макс. 64 пакета)
+inv.eu=еЭ
+inv.in=IN
+inv.out=OUT
+inv.dir.down=ВНИЗ
+inv.dir.up=ВВЕРХ
+inv.dir.north=СЕВЕР
+inv.dir.south=ЮГ
+inv.dir.west=ЗАПАД
+inv.dir.east=ВОСТОК
 
 item.redstone.inverter.name=Инвертор красного сигнала
 item.cobblestone.generator.name=Генератор булыжника
@@ -24,11 +38,12 @@ block.advanced.compressor.name=Сингулярный сжиматель
 block.advanced.recycler.name=Уплотняющий переработчик
 block.advanced.electrolyzer.name=Заряженный электролизёр
 
-block.advanced.esu.name=ГСУ
-block.advanced.isu.name=УСУ
-block.advanced.pesu.name=ПСУ
+block.advanced.esu.name=ГЭХ
+block.advanced.isu.name=УЭХ
+block.advanced.pesu.name=ПЭХ
 block.advanced.transformer.ev.name=Трансформатор СВН
 block.advanced.transformer.iv.name=Трансформатор ЭН
+block.advanced.transformer.adjustable.name=Регулируемый трансформатор
 
 tooltips.energy.storage.info=%s / %s еЭ
 tooltips.energy.tier.info=Напряжение: %s [%s]

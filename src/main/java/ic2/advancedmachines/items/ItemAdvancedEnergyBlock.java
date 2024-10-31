@@ -17,7 +17,8 @@ public class ItemAdvancedEnergyBlock extends ItemBlock {
             "isu",
             "pesu",
             "transformer.ev",
-            "transformer.iv"
+            "transformer.iv",
+            "transformer.adjustable"
     };
 
     public ItemAdvancedEnergyBlock(int id) {
