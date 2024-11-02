@@ -46,8 +46,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     private static final int eventInterrupt = 1;
     private static final int eventStop = 2;
     public IStackFilter inputFilter;
+    public String guiPath;
 
-    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots, IStackFilter inputFilter) {
+    public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots, IStackFilter inputFilter, String guiPath) {
         super(inputSlots.length + outputSlots.length + 4, 0, maxEnergy, maxInput);
         this.invName = invName;
         this.inputs = inputSlots;
@@ -56,6 +57,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         this.progress = 0;
         this.soundTicker = IC2.random.nextInt(64);
         this.inputFilter = inputFilter;
+        this.guiPath = guiPath;
     }
 
     @Override
@@ -303,11 +305,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     }
 
     @Override
-    public String getGuiClassName(EntityPlayer entityPlayer) {
-        return "gui.GuiAdvancedMachine";
-    }
-
-    @Override
     public void onGuiClosed(EntityPlayer entityPlayer) {}
 
     @Override
@@ -359,5 +356,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
     public int gaugeFuelScaled(int factor) {
         return factor * this.energy / maxEnergy;
+    }
+
+    @Override
+    public String getGuiClassName(EntityPlayer player) {
+        return "gui.GuiAdv" + this.guiPath;
     }
 }

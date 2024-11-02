@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super(LangHelper.format("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER);
+        super(LangHelper.format("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER, "Extractor");
     }
 
     @Override

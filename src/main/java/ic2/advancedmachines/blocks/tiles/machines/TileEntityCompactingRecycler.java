@@ -18,7 +18,7 @@ import java.util.List;
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
     public TileEntityCompactingRecycler() {
-        super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{1}, StackFilters.RECYCLER_FILTER);
+        super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{1}, StackFilters.RECYCLER_FILTER, "Recycler");
     }
 
     @Override

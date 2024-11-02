@@ -17,7 +17,7 @@ import java.util.List;
 public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     public TileEntityRotaryMacerator() {
-        super(LangHelper.format("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3}, StackFilters.MACERATOR_FILTER);
+        super(LangHelper.format("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3}, StackFilters.MACERATOR_FILTER, "Macerator");
     }
 
     @Override

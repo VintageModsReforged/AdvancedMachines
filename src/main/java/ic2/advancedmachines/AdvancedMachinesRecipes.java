@@ -16,7 +16,7 @@ public class AdvancedMachinesRecipes {
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
         AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
-        Ic2Recipes.addCompressorRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_COMPONENT);
+        Ic2Recipes.addCompressorRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_DEAD);
 
         Ic2Recipes.addCraftingRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",

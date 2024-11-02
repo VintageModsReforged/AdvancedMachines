@@ -2,7 +2,6 @@ package ic2.core.gui;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.utils.Refs;
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
@@ -14,10 +13,12 @@ import org.lwjgl.opengl.GL11;
 public class GuiAdvancedMachine extends GuiContainer {
 
     TileEntityAdvancedMachine TILE;
+    String texture;
 
-    public GuiAdvancedMachine(ContainerAdvancedMachine container) {
+    public GuiAdvancedMachine(ContainerAdvancedMachine container, String texture) {
         super(container);
         this.TILE = container.TILE;
+        this.texture = texture;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class GuiAdvancedMachine extends GuiContainer {
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-        int texture = this.mc.renderEngine.getTexture(Refs.getTextureName(TILE));
+        int texture = this.mc.renderEngine.getTexture(this.texture);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.renderEngine.bindTexture(texture);
         int x = (this.width - this.xSize) / 2;

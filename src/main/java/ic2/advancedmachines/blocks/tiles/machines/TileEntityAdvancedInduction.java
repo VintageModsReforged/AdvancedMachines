@@ -22,7 +22,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
     public int outputBIndex = 4;
 
     public TileEntityAdvancedInduction() {
-        super(LangHelper.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4}, StackFilters.FURNACE_FILTER);
+        super(LangHelper.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4}, StackFilters.FURNACE_FILTER, "Induction");
     }
 
     @Override
