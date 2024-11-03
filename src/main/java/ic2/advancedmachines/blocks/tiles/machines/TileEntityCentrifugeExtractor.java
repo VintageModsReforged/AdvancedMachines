@@ -2,10 +2,10 @@ package ic2.advancedmachines.blocks.tiles.machines;
 
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.StackFilters;
-import ic2.api.Ic2Recipes;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -36,7 +36,7 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
 
     @Override
     public ItemStack getResultFor(ItemStack input, boolean adjustOutput) {
-        return Ic2Recipes.getExtractorOutputFor(input, adjustOutput);
+        return AdvMachinesRecipeManager.getOutputForExtractor(input, adjustOutput);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package ic2.advancedmachines.utils;
 
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
+import ic2.api.Items;
+import ic2.core.block.machine.tileentity.TileEntityExtractor;
+import ic2.core.util.StackUtil;
 import net.minecraft.item.ItemStack;
 
 import java.util.AbstractMap;
@@ -35,9 +38,19 @@ public class AdvMachinesRecipeManager {
         return TileEntityChargedElectrolyzer.recipesPower;
     }
 
+    public static ItemStack getOutputForExtractor(ItemStack input, boolean adjustInput) {
+        return getOutputFor(input, adjustInput, TileEntityExtractor.recipes);
+    }
+
     private static ItemStack getOutputFor(ItemStack input, boolean adjustInput, List recipeList) {
         if (input == null) {
             return null;
+        } else if (StackUtil.isStackEqual(input, Items.getItem("scrapBox"))) {
+            ItemStack drop = ScrapBoxUtils.getDrop();
+            if (adjustInput) {
+                --input.stackSize;
+            }
+            return drop;
         } else {
             Iterator recipes = recipeList.iterator();
             Map.Entry entry;
