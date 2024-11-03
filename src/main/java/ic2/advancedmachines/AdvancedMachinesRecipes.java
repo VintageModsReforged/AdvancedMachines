@@ -3,6 +3,7 @@ package ic2.advancedmachines;
 import ic2.advancedmachines.blocks.AdvEnergyBlocks;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
+import ic2.advancedmachines.utils.ScrapBoxUtils;
 import ic2.api.Ic2Recipes;
 import ic2.api.Items;
 import net.minecraft.block.Block;
@@ -12,10 +13,12 @@ import net.minecraft.item.ItemStack;
 public class AdvancedMachinesRecipes {
 
     public static void init() {
+        ScrapBoxUtils.init();
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
         AdvMachinesRecipeManager.addPowerElectrolyzerRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
         Ic2Recipes.addCompressorRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_DEAD);
+        Ic2Recipes.addExtractorRecipe(Items.getItem("scrapBox"), new ItemStack(Item.stick));
 
         Ic2Recipes.addCraftingRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
