@@ -2,7 +2,6 @@ package ic2.advancedmachines.integration.nei.providers;
 
 import ic2.api.Ic2Recipes;
 import ic2.core.gui.GuiAdvCompressor;
-import ic2.core.gui.GuiAdvMacerator;
 import ic2.neiIntegration.core.MachineRecipeHandler;
 
 import java.util.List;

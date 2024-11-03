@@ -1,7 +1,7 @@
 package ic2.advancedmachines.integration.nei.providers;
 
 import ic2.api.Ic2Recipes;
-import ic2.core.gui.GuiAdvCompressor;
+import ic2.core.gui.GuiAdvExtractor;
 import ic2.neiIntegration.core.MachineRecipeHandler;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public class NEIExtractorProvider extends MachineRecipeHandler {
 
     @Override
     public Class getGuiClass() {
-        return GuiAdvCompressor.class;
+        return GuiAdvExtractor.class;
     }
 
     @Override
