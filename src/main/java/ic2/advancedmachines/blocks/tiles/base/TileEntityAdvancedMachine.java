@@ -48,6 +48,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     public IStackFilter inputFilter;
     public String guiPath;
 
+    private ItemStack cachedOutput = null;
+    private boolean outputLocked = false;
+
+
     public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots, IStackFilter inputFilter, String guiPath) {
         super(inputSlots.length + outputSlots.length + 4, 0, maxEnergy, maxInput);
         this.invName = invName;
@@ -80,23 +84,17 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     }
 
     @Override
-    public void onUnloaded() {
-        super.onUnloaded();
-        if (IC2.platform.isRendering() && this.audioSource != null) {
-            IC2.audioManager.removeSources(this);
-            this.audioSource = null;
-        }
-    }
-
-    @Override
     public void updateEntity() {
         super.updateEntity();
         boolean needsInvUpdate = false;
+
         if (this.energy <= maxEnergy) {
             needsInvUpdate = this.provideEnergy();
         }
 
-        boolean newActive = this.getActive();
+        boolean wasActive = this.getActive();
+        boolean newActive = false;
+
         if (this.speed == 0) {
             newActive = false;
         }
@@ -105,8 +103,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
             this.operate();
             needsInvUpdate = true;
             this.progress = 0;
-            newActive = false;
-            IC2.network.initiateTileEntityEvent(this, eventStop, true);
         }
 
         boolean canOperate = this.canOperate();
@@ -118,15 +114,16 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
                 speed = (short) maxSpeed;
             }
             energy -= energyConsume;
-
             newActive = true;
-            NetworkHelper.initiateTileEntityEvent(this, eventStart, true);
+            if (!wasActive) {
+                NetworkHelper.initiateTileEntityEvent(this, eventStart, true); // Start sound only when first becoming active
+            }
 
         } else {
             boolean wasWorking = speed != 0;
             speed = (short) (speed - Math.min(speed, 4));
             if (wasWorking && speed == 0) {
-                NetworkHelper.initiateTileEntityEvent(this, eventInterrupt, true);
+                NetworkHelper.initiateTileEntityEvent(this, eventInterrupt, true); // Interrupt sound if progress stops
             }
         }
 
@@ -134,6 +131,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
             if (!canOperate || this.energy < energyUsage) {
                 if (!canOperate) {
                     this.progress = 0;
+                    NetworkHelper.initiateTileEntityEvent(this, eventInterrupt, true); // Interrupt sound if progress stops unexpectedly
                 }
                 newActive = false;
             }
@@ -146,10 +144,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         }
 
         if (newActive && canOperate) {
-            this.progress = (short)(this.progress + this.speed / 30);
+            this.progress = (short) (this.progress + this.speed / 30);
         }
 
-        for(int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 2; ++i) {
             ItemStack upgradeStack = this.inventory[this.getUpgradeSlots()[i]];
             if (upgradeStack != null && upgradeStack.getItem() instanceof IUpgradeItem) {
                 IUpgradeItem upgrade = (IUpgradeItem) upgradeStack.getItem();
@@ -163,68 +161,97 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
             this.onInventoryChanged();
         }
 
-        if (newActive != this.getActive()) {
+        if (newActive != wasActive) {
+            if (newActive) {
+                NetworkHelper.initiateTileEntityEvent(this, eventStart, true); // Start sound only when transitioning to active
+            } else {
+                NetworkHelper.initiateTileEntityEvent(this, eventStop, true); // Stop sound only when transitioning to inactive
+            }
             this.setActive(newActive);
         }
     }
 
     protected boolean canOperate() {
         if (inventory[inputs[0]] == null) {
+            cachedOutput = null; // Invalidate cached output if no input
+            outputLocked = false;
             return false;
         } else {
-            ItemStack resultStack = getResultFor(inventory[inputs[0]], false);
-            if (resultStack == null) {
-                return false;
-            } else {
-                int resultMaxStackSize = resultStack.getMaxStackSize();
-                int freeSpaceOutputSlots = 0;
-                for (int index = 0; index < outputs.length; ++index) {
-                    int curOutputSlot = outputs[index];
-                    if (inventory[curOutputSlot] == null) {
-                        freeSpaceOutputSlots += resultMaxStackSize;
-                    } else if (inventory[curOutputSlot].isItemEqual(resultStack)) {
-                        freeSpaceOutputSlots += (resultMaxStackSize - inventory[curOutputSlot].stackSize);
-                    }
+            if (!outputLocked) {
+                ItemStack resultStack = getResultFor(inventory[inputs[0]], false);
+                if (resultStack == null) {
+                    cachedOutput = null; // Invalidate cached output if no result
+                    return false;
+                } else {
+                    cachedOutput = resultStack.copy();
+                    outputLocked = true;
                 }
-
-                return freeSpaceOutputSlots >= resultStack.stackSize;
             }
+
+            int resultMaxStackSize = cachedOutput.getMaxStackSize();
+            int freeSpaceOutputSlots = 0;
+
+            for (int curOutputSlot : outputs) {
+                if (inventory[curOutputSlot] == null) {
+                    freeSpaceOutputSlots += resultMaxStackSize;
+                } else if (inventory[curOutputSlot].isItemEqual(cachedOutput)) {
+                    freeSpaceOutputSlots += (resultMaxStackSize - inventory[curOutputSlot].stackSize);
+                }
+            }
+            return freeSpaceOutputSlots >= cachedOutput.stackSize;
         }
     }
 
     protected void operate() {
         if (canOperate()) {
-            ItemStack resultStack = getResultFor(inventory[inputs[0]], true).copy();
-            int[] stackSizeSpaceAvailableInOutput = new int[outputs.length];
+            ItemStack resultStack = cachedOutput.copy(); // Use the validated cachedOutput
+            int[] spaceInOutput = new int[outputs.length];
             int resultMaxStackSize = resultStack.getMaxStackSize();
 
-            int index;
-            for (index = 0; index < outputs.length; ++index) {
-                if (inventory[outputs[index]] == null) {
-                    stackSizeSpaceAvailableInOutput[index] = resultMaxStackSize;
-                } else if (inventory[outputs[index]].isItemEqual(resultStack)) {
-                    stackSizeSpaceAvailableInOutput[index] = resultMaxStackSize - inventory[outputs[index]].stackSize;
+            // Calculate space available in each output slot
+            for (int i = 0; i < outputs.length; i++) {
+                if (inventory[outputs[i]] == null) {
+                    spaceInOutput[i] = resultMaxStackSize;
+                } else if (inventory[outputs[i]].isItemEqual(resultStack)) {
+                    spaceInOutput[i] = resultMaxStackSize - inventory[outputs[i]].stackSize;
                 }
             }
 
-            for (index = 0; index < stackSizeSpaceAvailableInOutput.length; ++index) {
-                if (stackSizeSpaceAvailableInOutput[index] > 0) {
-                    int stackSizeToStash = Math.min(resultStack.stackSize, stackSizeSpaceAvailableInOutput[index]);
-                    if (inventory[outputs[index]] == null) {
-                        inventory[outputs[index]] = resultStack;
-                        break;
+            // Ensure we don't partially operate if there's not enough space
+            int totalFreeSpace = 0;
+            for (int space : spaceInOutput) {
+                totalFreeSpace += space;
+            }
+            if (totalFreeSpace < resultStack.stackSize) {
+                return; // Not enough space to operate
+            }
+
+            // Distribute items into output slots
+            for (int i = 0; i < outputs.length; i++) {
+                int space = spaceInOutput[i];
+                if (space > 0) {
+                    int toTransfer = Math.min(resultStack.stackSize, space);
+                    if (inventory[outputs[i]] == null) {
+                        inventory[outputs[i]] = resultStack.splitStack(toTransfer);
                     } else {
-                        inventory[outputs[index]].stackSize += stackSizeToStash;
-                        resultStack.stackSize -= stackSizeToStash;
-                        if (resultStack.stackSize <= 0) {
-                            break;
-                        }
+                        inventory[outputs[i]].stackSize += toTransfer;
+                        resultStack.stackSize -= toTransfer;
+                    }
+                    if (resultStack.stackSize <= 0) {
+                        break;
                     }
                 }
             }
+
+            // Decrease input stack size or set to null if empty
+            --inventory[inputs[0]].stackSize;
             if (inventory[inputs[0]].stackSize <= 0) {
                 inventory[inputs[0]] = null;
             }
+
+            // Invalidate `cachedOutput` after operation
+            cachedOutput = null;
+            outputLocked = false;
         }
     }
 
