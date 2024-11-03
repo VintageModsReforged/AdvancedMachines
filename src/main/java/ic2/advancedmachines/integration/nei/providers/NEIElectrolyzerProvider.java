@@ -56,17 +56,22 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
 
     @Override
     public void loadTransferRects() {
-        this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(70, 23, 32, 17), "ic2.electrolyzer"));
+        this.transferRects.add(new TemplateRecipeHandler.RecipeTransferRect(new Rectangle(70, 23, 32, 17), "ic2.electrolyzer", new Object[0]));
     }
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("ic2.electrolyzer")) {
-            List recipes = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
-            recipes.addAll(AdvMachinesRecipeManager.getPowerElectrolyzerRecipes());
-            Iterator recipesIter = recipes.iterator();
-            while (recipesIter.hasNext()) {
-                Map.Entry recipe = (Map.Entry) recipesIter.next();
+            List recipesDrain = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
+            Iterator recipesDrainIter = recipesDrain.iterator();
+            while (recipesDrainIter.hasNext()) {
+                Map.Entry recipe = (Map.Entry) recipesDrainIter.next();
+                this.arecipes.add(new CachedIORecipe(recipe));
+            }
+            List recipesPower = AdvMachinesRecipeManager.getPowerElectrolyzerRecipes();
+            Iterator recipesPowerIter = recipesPower.iterator();
+            while (recipesPowerIter.hasNext()) {
+                Map.Entry recipe = (Map.Entry) recipesPowerIter.next();
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
         } else {
@@ -76,12 +81,18 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        List recipes = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
-        recipes.addAll(AdvMachinesRecipeManager.getPowerElectrolyzerRecipes());
-        Iterator recipesIter = recipes.iterator();
-
-        while (recipesIter.hasNext()) {
-            Map.Entry recipe = (Map.Entry) recipesIter.next();
+        List recipesDrain = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
+        Iterator recipesDrainIter = recipesDrain.iterator();
+        while (recipesDrainIter.hasNext()) {
+            Map.Entry recipe = (Map.Entry) recipesDrainIter.next();
+            if (NEIServerUtils.areStacksSameTypeCrafting((ItemStack) recipe.getValue(), result)) {
+                this.arecipes.add(new CachedIORecipe(recipe));
+            }
+        }
+        List recipesPower = AdvMachinesRecipeManager.getPowerElectrolyzerRecipes();
+        Iterator recipesPowerIter = recipesPower.iterator();
+        while (recipesPowerIter.hasNext()) {
+            Map.Entry recipe = (Map.Entry) recipesPowerIter.next();
             if (NEIServerUtils.areStacksSameTypeCrafting((ItemStack) recipe.getValue(), result)) {
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
@@ -90,12 +101,18 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        List recipes = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
-        recipes.addAll(AdvMachinesRecipeManager.getPowerElectrolyzerRecipes());
-        Iterator recipesIter = recipes.iterator();
-
-        while (recipesIter.hasNext()) {
-            Map.Entry recipe = (Map.Entry) recipesIter.next();
+        List recipesDrain = AdvMachinesRecipeManager.getDrainElectrolyzerRecipes();
+        Iterator recipesDrainIter = recipesDrain.iterator();
+        while (recipesDrainIter.hasNext()) {
+            Map.Entry recipe = (Map.Entry) recipesDrainIter.next();
+            if (NEIServerUtils.areStacksSameTypeCrafting((ItemStack) recipe.getKey(), ingredient)) {
+                this.arecipes.add(new CachedIORecipe(recipe));
+            }
+        }
+        List recipesPower = AdvMachinesRecipeManager.getPowerElectrolyzerRecipes();
+        Iterator recipesPowerIter = recipesPower.iterator();
+        while (recipesPowerIter.hasNext()) {
+            Map.Entry recipe = (Map.Entry) recipesPowerIter.next();
             if (NEIServerUtils.areStacksSameTypeCrafting((ItemStack) recipe.getKey(), ingredient)) {
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
