@@ -45,7 +45,7 @@ public class StackFilters {
     public static final IStackFilter EXTRACTOR_FILTER = new IStackFilter() {
         @Override
         public boolean match(ItemStack stack) {
-            return stack != null && Ic2Recipes.getExtractorOutputFor(stack, false) != null;
+            return stack != null && Ic2Recipes.getExtractorOutputFor(stack, false) != null || StackUtil.isStackEqual(stack, Items.getItem("scrapBox"));
         }
     };
 
