@@ -6,9 +6,6 @@ import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.Ic2Recipes;
-import ic2.api.Items;
-import ic2.core.item.ItemScrapbox;
-import ic2.core.util.StackUtil;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -39,12 +36,7 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
 
     @Override
     public ItemStack getResultFor(ItemStack input, boolean adjustOutput) {
-        if (StackUtil.isStackEqual(input, Items.getItem("scrapBox"))) {
-            if (adjustOutput) {
-                --input.stackSize;
-            }
-            return ItemScrapbox.getDrop(this.worldObj);
-        } else return Ic2Recipes.getExtractorOutputFor(input, adjustOutput);
+        return Ic2Recipes.getExtractorOutputFor(input, adjustOutput);
     }
 
     @Override
