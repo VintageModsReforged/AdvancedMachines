@@ -84,6 +84,15 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     }
 
     @Override
+    public void onUnloaded() {
+        super.onUnloaded();
+        if (IC2.platform.isRendering() && this.audioSource != null) {
+            IC2.audioManager.removeSources(this);
+            this.audioSource = null;
+        }
+    }
+
+    @Override
     public void updateEntity() {
         super.updateEntity();
         boolean needsInvUpdate = false;
