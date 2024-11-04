@@ -38,7 +38,7 @@ public class AdvancedMachinesConfig {
     public static boolean SEASONAL_IC2;
 
     public static void init() {
-        MAIN_CONFIG = new Configuration(new File((File) FMLInjectionData.data()[6], "config/advMachines.cfg"));
+        MAIN_CONFIG = new Configuration(new File((File) FMLInjectionData.data()[6], "config/AdvancedMachines.cfg"));
         MAIN_CONFIG.load();
 
         LANGS = getStrings("language Support", null,"localizations", new String[] {"en_US", "ru_RU"}, "Supported localizations.");
