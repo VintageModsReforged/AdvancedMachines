@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super(LangHelper.format("block.advanced.compressor.name"), new int[]{1}, new int[]{1}, StackFilters.COMPRESSOR_FILTER, "Compressor");
+        super(LangHelper.format("block.advanced.compressor.name"), new int[]{1}, new int[]{2}, StackFilters.COMPRESSOR_FILTER, "Compressor");
     }
 
     @Override
