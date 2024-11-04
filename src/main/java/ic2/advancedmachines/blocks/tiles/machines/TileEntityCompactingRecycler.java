@@ -18,7 +18,7 @@ import java.util.List;
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
     public TileEntityCompactingRecycler() {
-        super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{1}, StackFilters.RECYCLER_FILTER, "Recycler");
+        super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{2}, StackFilters.RECYCLER_FILTER, "Recycler");
     }
 
     @Override
@@ -32,26 +32,30 @@ public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
     @Override
     protected void operate() {
         if (canOperate()) {
-            boolean blackListed = TileEntityRecycler.getIsItemBlacklisted(this.inventory[1]);
-            --this.inventory[1].stackSize;
-            if (this.inventory[1].stackSize <= 0) {
-                this.inventory[1] = null;
+            int inputIndex = this.inputs[0];
+            int outputIndex = this.outputs[0];
+            boolean blackListed = TileEntityRecycler.getIsItemBlacklisted(this.inventory[inputIndex]);
+            --this.inventory[inputIndex].stackSize;
+            if (this.inventory[inputIndex].stackSize <= 0) {
+                this.inventory[inputIndex] = null;
             }
 
             if (this.worldObj.rand.nextInt(8) == 0 && !blackListed) {
-                if (this.inventory[2] == null) {
-                    this.inventory[2] = Items.getItem("scrap").copy();
-                } else ++this.inventory[2].stackSize;
+                if (this.inventory[outputIndex] == null) {
+                    this.inventory[outputIndex] = Items.getItem("scrap").copy();
+                } else ++this.inventory[outputIndex].stackSize;
             }
         }
     }
 
     @Override
     protected boolean canOperate() {
+        int inputIndex = this.inputs[0];
+        int outputIndex = this.outputs[0];
         ItemStack scrap = Items.getItem("scrap");
-        if (this.inventory[1] == null) {
+        if (this.inventory[inputIndex] == null) {
             return false;
-        } else return this.inventory[2] == null || this.inventory[2].isItemEqual(scrap) && this.inventory[2].stackSize < scrap.getMaxStackSize();
+        } else return this.inventory[outputIndex] == null || this.inventory[outputIndex].isItemEqual(scrap) && this.inventory[outputIndex].stackSize < scrap.getMaxStackSize();
     }
 
     @Override
