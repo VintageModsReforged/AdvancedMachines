@@ -11,7 +11,8 @@ public enum AdvMachines{
     RECYCLER,
     ELECTROLYZER;
 
-    public ItemStack STACK;
+    public final ItemStack STACK;
+    public static final AdvMachines[] VALUES = values();
 
     AdvMachines() {
         this.STACK = new ItemStack(BlocksItems.ADVANCED_MACHINE_BLOCK, 1, ordinal());

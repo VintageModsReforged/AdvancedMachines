@@ -11,7 +11,8 @@ public enum AdvEnergyBlocks {
     TRANSFORMER_IV,
     TRANSFORMER_ADJ;
 
-    public ItemStack STACK;
+    public final ItemStack STACK;
+    public static final AdvEnergyBlocks[] VALUES = values();
 
     AdvEnergyBlocks() {
         this.STACK = new ItemStack(BlocksItems.ADVANCED_ENERGY_BLOCK, 1, ordinal());
