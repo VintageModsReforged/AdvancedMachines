@@ -62,24 +62,66 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public void operate() {
-        InvSlotProcessable input = this.inputs.get(0).isEmpty() ? this.inputs.get(1) : this.inputs.get(0);
-        InvSlotOutput output = canOperate(input, this.outputs.get(0)) ? outputs.get(0) : this.outputs.get(1);
+        InvSlotProcessable inputA = this.inputs.get(0);
+        InvSlotProcessable inputB = this.inputs.get(1);
+        InvSlotOutput outputA = this.outputs.get(0);
+        InvSlotOutput outputB = this.outputs.get(1);
 
-        // Handle cases where one of the inputs is empty
-        if (this.inputs.get(0).isEmpty() || this.inputs.get(1).isEmpty()) {
-            this.operate(input, output);
-            this.operate(input, output);
-        } else {
-            // Both inputs are not empty
-            if (canOperate(this.inputs.get(0), this.outputs.get(0)) && canOperate(this.inputs.get(1), this.outputs.get(1))) {
-                this.operate(this.inputs.get(0), this.outputs.get(0));
-                this.operate(this.inputs.get(1), this.outputs.get(1));
-            } else if (canOperate(this.inputs.get(0), this.outputs.get(1)) && canOperate(this.inputs.get(1), this.outputs.get(0))) {
-                this.operate(this.inputs.get(0), this.outputs.get(1));
-                this.operate(this.inputs.get(1), this.outputs.get(0));
+        boolean inputAEmpty = this.inputs.get(0).isEmpty();
+        boolean inputBEmpty = this.inputs.get(1).isEmpty();
+
+        boolean canProcessAA = canOperate(inputA, outputA);
+        boolean canProcessAB = canOperate(inputA, outputB);
+        boolean canProcessBB = canOperate(inputB, outputB);
+        boolean canProcessBA = canOperate(inputB, outputA);
+
+        // inputA
+        if (!inputAEmpty) { // if input A isn't empty
+            boolean inputBNotProcessable = inputBEmpty || (!canProcessBB && !canProcessBA); // if input B is empty OR we can't process it into either one of the outputs
+            if (inputBNotProcessable) {
+                if (canProcessAA) {
+                    operate(inputA, outputA); // process input A into output A
+                    operate(inputA, outputA); // process input A into output A
+                } else if (canProcessAB) {
+                    operate(inputA, outputB); // process input A into output B
+                    operate(inputA, outputB); // process input A into output B
+                }
             }
         }
-     }
+
+        // inputB
+        if (!inputBEmpty) { // if input B isn't empty
+            boolean inputANotProcessable = inputAEmpty || (!canProcessAA && !canProcessAB); // if input A is empty OR we can't process it into either one of the outputs
+            if (inputANotProcessable) {
+                if (canProcessBB) {
+                    operate(inputB, outputB); // process input B into output B
+                    operate(inputB, outputB); // process input B into output B
+                } else if (canProcessBA) {
+                    operate(inputB, outputA); // process input B into output A
+                    operate(inputB, outputA); // process input B into output A
+                }
+            }
+        }
+
+        if (!inputAEmpty && !inputBEmpty) { // if both inputs aren't empty
+            if (canProcessAA && canProcessBB) { // if we can process A-A and B-B
+                operate(inputA, outputA); // process input A into output A
+                operate(inputB, outputB); // process input B into output B
+
+            } else if (canProcessAB && canProcessBA) { // if we can process A-B and B-A
+                operate(inputA, outputB); // process input A into output B
+                operate(inputB, outputA); // process input B into output A
+
+            } else if (canProcessAA && canProcessBA) { // if we can process A-A and B-A
+                operate(inputA, outputA); // process input A into output A
+                operate(inputB, outputB); // process input B into output A
+
+            } else if (canProcessAB && canProcessBB) { // if we can process A-B and B-B
+                operate(inputA, outputB); // process input A into output B
+                operate(inputB, outputB); // process input B into output B
+            }
+        }
+    }
 
     public void operate(InvSlotProcessable inputSlot, InvSlotOutput outputSlot) {
         if (this.canOperate(inputSlot, outputSlot)) {
