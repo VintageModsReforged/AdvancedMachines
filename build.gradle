@@ -51,6 +51,8 @@ dependencies {
 	implementation 'org.jetbrains:annotations-java5:23.0.0'
 
 	modImplementation files("libs/industrialcraft-2_1.117.385-lf.jar")
+	modImplementation files("libs/craftguide.zip")
+	modImplementation files("libs/gregtech.zip")
 	modImplementation("maven.modrinth:nei:1.5.2.28")
 	modImplementation("maven.modrinth:codechicken-core:0.8.7.3")
 }

@@ -6,9 +6,11 @@ import ic2.advancedmachines.blocks.gui.GuiAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
+import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
 import ic2.advancedmachines.utils.InvAdvSlotUpgrade;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
+import ic2.api.recipe.IMachineRecipeManager;
 import ic2.core.ContainerBase;
 import ic2.core.IC2;
 import ic2.core.IHasGui;
@@ -18,7 +20,6 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityElectricMachine;
 import ic2.core.slot.SlotInvSlot;
-import ic2.core.util.StackUtil;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -49,8 +50,12 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     private static final int eventInterrupt = 1;
     private static final int eventStop = 2;
     public InvAdvSlotUpgrade upgradeSlot;
+    public IMachineRecipeManager recipeFilter;
 
-    public TileEntityAdvancedMachine(String invName, int upgradeSlotStartIndex) {
+    private ItemStack cachedOutput = null;
+    private boolean outputLocked = false;
+
+    public TileEntityAdvancedMachine(String invName, int upgradeSlotStartIndex, IMachineRecipeManager recipeFilter) {
         super(maxEnergy, 2, 0);
         this.soundTicker = IC2.random.nextInt(64);
         this.invName = invName;
@@ -59,6 +64,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         this.speed = 0;
         this.progress = 0;
         this.upgradeSlot = new InvAdvSlotUpgrade(this, "upgrade", upgradeSlotStartIndex, 2);
+        this.recipeFilter = recipeFilter;
         this.addSlots();
     }
 
@@ -97,7 +103,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         super.updateEntity();
         boolean needsInvUpdate = false;
 
-        boolean newActive = this.getActive();
+        boolean wasActive = this.getActive();
+        boolean newActive = false;
+
         if (this.speed == 0) {
             newActive = false;
         }
@@ -106,8 +114,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
             this.operate();
             needsInvUpdate = true;
             this.progress = 0;
-            newActive = false;
-            IC2.network.initiateTileEntityEvent(this, eventStop, true);
         }
 
         boolean canOperate = this.canOperate();
@@ -119,10 +125,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
                 speed = (short) maxSpeed;
             }
             energy -= energyConsume;
-
             newActive = true;
-            NetworkHelper.initiateTileEntityEvent(this, eventStart, true);
-
+            if (!wasActive) {
+                NetworkHelper.initiateTileEntityEvent(this, eventStart, true); // Start sound only when first becoming active
+            }
         } else {
             boolean wasWorking = speed != 0;
             speed = (short) (speed - Math.min(speed, 4));
@@ -135,6 +141,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
             if (!canOperate || this.energy < energyUsage) {
                 if (!canOperate) {
                     this.progress = 0;
+                    NetworkHelper.initiateTileEntityEvent(this, eventInterrupt, true); // Interrupt sound if progress stops unexpectedly
                 }
                 newActive = false;
             }
@@ -150,62 +157,110 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
             this.progress = (short)(this.progress + this.speed / 30);
         }
 
+        for (int i = 0; i < 2; ++i) {
+            ItemStack upgradeStack = this.upgradeSlot.get(i);
+            if (upgradeStack != null && upgradeStack.getItem() instanceof ISimpleUpgrade) {
+                ISimpleUpgrade upgrade = (ISimpleUpgrade) upgradeStack.getItem();
+                if (upgrade.canTick(upgradeStack) && upgrade.onTick(this, upgradeStack)) {
+                    needsInvUpdate = true;
+                }
+            }
+        }
+
         if (needsInvUpdate) {
             this.onInventoryChanged();
         }
 
-        if (newActive != this.getActive()) {
+        if (newActive != wasActive) {
+            if (newActive) {
+                NetworkHelper.initiateTileEntityEvent(this, eventStart, true); // Start sound only when transitioning to active
+            } else {
+                NetworkHelper.initiateTileEntityEvent(this, eventStop, true); // Stop sound only when transitioning to inactive
+            }
             this.setActive(newActive);
         }
     }
 
     public boolean canOperate() {
         if (this.inputs.get(0).isEmpty()) {
+            cachedOutput = null; // Invalidate cached output if no input
+            outputLocked = false;
             return false;
         } else {
-            boolean canOperate = false;
-            ItemStack result;
-            for (InvSlotOutput output : this.outputs) {
-                result = this.getResultFor(this.inputs.get(0).get(), false);
-                if (result != null) {
-                    canOperate = output.canAdd(result);
+            if (!outputLocked) {
+                ItemStack resultStack = (ItemStack) this.recipeFilter.getOutputFor(this.inputs.get(0).get(), false);
+                if (resultStack == null) {
+                    cachedOutput = null; // Invalidate cached output if no result
+                    return false;
+                } else {
+                    cachedOutput = resultStack.copy();
+                    outputLocked = true;
                 }
             }
-            return canOperate;
+
+            int resultMaxStackSize = cachedOutput.getMaxStackSize();
+            int freeSpaceOutputSlots = 0;
+            for (InvSlotOutput curOutputSlot : this.outputs) {
+                if (curOutputSlot.isEmpty()) {
+                    freeSpaceOutputSlots += resultMaxStackSize;
+                } else if (curOutputSlot.get().isItemEqual(cachedOutput)) {
+                    freeSpaceOutputSlots += (resultMaxStackSize - curOutputSlot.get().stackSize);
+                }
+            }
+            return freeSpaceOutputSlots >= cachedOutput.stackSize;
         }
     }
 
-    public void operate() {
+    protected void operate() {
         if (canOperate()) {
-            ItemStack result = this.getResultFor(this.inputs.get(0).get(), false).copy();
-            int[] stackSizeSpaceAvailableInOutput = new int[outputs.size()];
-            int resultMaxStackSize = result.getMaxStackSize();
-            int index;
-            for (index = 0; index < outputs.size(); index++) {
-                if (outputs.get(index).isEmpty()) {
-                    stackSizeSpaceAvailableInOutput[index] = resultMaxStackSize;
-                } else if (StackUtil.isStackEqual(outputs.get(index).get(), result)) {
-                    stackSizeSpaceAvailableInOutput[index] = resultMaxStackSize - outputs.get(index).get().stackSize;
+            ItemStack resultStack = cachedOutput.copy(); // Use the validated cachedOutput
+            int[] spaceInOutput = new int[outputs.size()];
+            int resultMaxStackSize = resultStack.getMaxStackSize();
+
+            // Calculate space available in each output slot
+            for (int i = 0; i < outputs.size(); i++) {
+                if (this.outputs.get(i).isEmpty()) {
+                    spaceInOutput[i] = resultMaxStackSize;
+                } else if (this.outputs.get(i).get().isItemEqual(resultStack)) {
+                    spaceInOutput[i] = resultMaxStackSize - this.outputs.get(i).get().stackSize;
                 }
             }
-            for (index = 0; index < stackSizeSpaceAvailableInOutput.length; index++) {
-                if (stackSizeSpaceAvailableInOutput[index] > 0) {
-                    int stackSizeToStash = Math.min(result.stackSize, stackSizeSpaceAvailableInOutput[index]);
-                    if (outputs.get(index).isEmpty()) {
-                        outputs.get(index).add(result);
-                        break;
+
+            // Ensure we don't partially operate if there's not enough space
+            int totalFreeSpace = 0;
+            for (int space : spaceInOutput) {
+                totalFreeSpace += space;
+            }
+            if (totalFreeSpace < resultStack.stackSize) {
+                return; // Not enough space to operate
+            }
+
+            // Distribute items into output slots
+            for (int i = 0; i < outputs.size(); i++) {
+                int space = spaceInOutput[i];
+                if (space > 0) {
+                    int toTransfer = Math.min(resultStack.stackSize, space);
+                    if (this.outputs.get(i).isEmpty()) {
+                        this.outputs.get(i).put(resultStack.splitStack(toTransfer));
                     } else {
-                        outputs.get(index).get().stackSize += stackSizeToStash;
-                        result.stackSize -= stackSizeToStash;
-                        if (result.stackSize <= 0) {
-                            break;
-                        }
+                        this.outputs.get(i).get().stackSize += toTransfer;
+                        resultStack.stackSize -= toTransfer;
+                    }
+                    if (resultStack.stackSize <= 0) {
+                        break;
                     }
                 }
             }
-            if (inputs.get(0).get().stackSize <= 0) {
-                inputs.get(0).clear();
+
+            // Decrease input stack size or set to null if empty
+            --this.inputs.get(0).get().stackSize;
+            if (this.inputs.get(0).get().stackSize <= 0) {
+                this.inputs.get(0).clear();
             }
+
+            // Invalidate `cachedOutput` after operation
+            cachedOutput = null;
+            outputLocked = false;
         }
     }
 
@@ -289,7 +344,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
             boolean redstoneUpgrade = false;
             for (int i = 0; i < slots.size(); i++) {
                 ItemStack upgrade = slots.get(i);
-                if (upgrade != null && upgrade.isItemEqual(new ItemStack(BlocksItems.REDSTONE_UPGRADE))) {
+                if (upgrade != null && upgrade.isItemEqual(BlocksItems.REDSTONE_INVERTER)) {
                     redstoneUpgrade = true;
                     break;
                 }

@@ -2,12 +2,9 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.BlocksItems;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityAdvancedInduction;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityRotaryMacerator;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntitySingularityCompressor;
+import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.items.ItemAdvancedMachine;
 import ic2.advancedmachines.render.RenderAdvBlock;
 import ic2.api.item.Items;
 import ic2.api.tile.IWrenchable;
@@ -30,7 +27,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -39,83 +35,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockAdvancedMachines extends BlockContainer {
-
-    public enum AdvMachines{
-        MACERATOR(0),
-        COMPRESSOR(1),
-        EXTRACTOR(2),
-        INDUCTION(3);
-
-        public ItemStack STACK;
-
-        AdvMachines(int meta) {
-            this.STACK = new ItemStack(BlocksItems.ADVANCED_MACHINE_BLOCK, 1, meta);
-        }
-    }
+public abstract class BlockAdvancedBlock extends BlockContainer {
 
     public static final int[][] sideAndFacingToSpriteOffset = BlockMultiID.sideAndFacingToSpriteOffset;
     @SideOnly(Side.CLIENT)
     protected Icon[][] textures;
     public int renderMask = 63;
 
-    public BlockAdvancedMachines(int var1) {
-        super(var1, Material.iron);
+    protected BlockAdvancedBlock(int id) {
+        super(id, Material.iron);
+        this.setUnlocalizedName("blockAdvanced");
         this.setHardness(2.0F);
-        this.setUnlocalizedName("blockAdvMachine");
         this.setStepSound(soundMetalFootstep);
-        this.setCreativeTab(IC2.tabIC2);
+        this.setCreativeTab(AdvancedMachines.ADV_TAB);
     }
+
+    public abstract TileEntity createTileEntity(World world, int metadata);
 
     public String getTextureFolder() {
         return "machines";
     }
 
-    public String getTextureName(int index) {
-        Item item = Item.itemsList[this.blockID];
-        if (!item.getHasSubtypes()) {
-            return index == 0 ? this.getUnlocalizedName() : null;
-        } else {
-            ItemStack itemStack = new ItemStack(this, 1, index);
-            String ret = item.getUnlocalizedName(itemStack);
-            return ret == null ? null : ret.replace("item", "block");
-        }
-    }
-
-    public int getTextureIndex(int meta) {
-        return meta;
-    }
-
-    public int getFacing(int meta) {
-        return 3;
-    }
-
-    public int getFacing(IBlockAccess iBlockAccess, int x, int y, int z) {
-        TileEntity te = iBlockAccess.getBlockTileEntity(x, y, z);
-        if (te instanceof TileEntityAdvancedMachine) {
-            return ((TileEntityAdvancedMachine) te).getFacing();
-        } else {
-            int meta = iBlockAccess.getBlockMetadata(x, y, z);
-            return this.getFacing(meta);
-        }
-    }
-
-    public final int getTextureSubIndex(int side, int facing) {
-        return this.getTextureSubIndex(side, facing, false);
-    }
-
-    public final int getTextureSubIndex(int side, int facing, boolean active) {
-        int ret = sideAndFacingToSpriteOffset[side][facing];
-        return active ? ret + 6 : ret;
-    }
-
-
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IconRegister iconRegister) {
-        int metaCount;
-        for(metaCount = 0; this.getTextureName(metaCount) != null; ++metaCount) {}
-
+        int metaCount = 4;
+//        for(metaCount = 0; this.getTextureName(metaCount) != null; ++metaCount) {}
         this.textures = new Icon[metaCount][12];
         String textureFolder = this.getTextureFolder() == null ? "" : this.getTextureFolder() + "/";
 
@@ -145,9 +90,8 @@ public class BlockAdvancedMachines extends BlockContainer {
         } else {
             try {
                 return this.textures[index][subIndex];
-            } catch (Exception var12) {
-                Exception e = var12;
-                IC2.platform.displayError(e, "Coordinates: " + x + "/" + y + "/" + z + "\n" + "Side: " + side + "\n" + "Block: " + this + "\n" + "Meta: " + meta + "\n" + "Facing: " + facing + "\n" + "Active: " + active + "\n" + "Index: " + index + "\n" + "SubIndex: " + subIndex);
+            } catch (Exception e) {
+                AdvancedMachines.LOGGER.info(String.format("Coordinates: [x=%s, y=%s, z=%s]. Side: %s. Block: %s. Meta: %s. Facing: %s. Active: %s. Index: %s. SubIndex: %s", x, y, z, side, this, meta, facing, active, index, subIndex));
                 return null;
             }
         }
@@ -164,8 +108,7 @@ public class BlockAdvancedMachines extends BlockContainer {
         } else {
             try {
                 return this.textures[index][subIndex];
-            } catch (Exception var7) {
-                Exception e = var7;
+            } catch (Exception e) {
                 IC2.platform.displayError(e, "Side: " + side + "\n" + "Block: " + this + "\n" + "Meta: " + meta + "\n" + "Facing: " + facing + "\n" + "Index: " + index + "\n" + "SubIndex: " + subIndex);
                 return null;
             }
@@ -198,7 +141,7 @@ public class BlockAdvancedMachines extends BlockContainer {
         } else {
             TileEntity te = world.getBlockTileEntity(x, y, z);
             if (te instanceof IHasGui) {
-                return IC2.platform.isSimulating() ? IC2.platform.launchGui(entityPlayer, (IHasGui) te) : true;
+                return IC2.platform.isRendering() || IC2.platform.launchGui(entityPlayer, (IHasGui) te);
             } else {
                 return false;
             }
@@ -206,22 +149,22 @@ public class BlockAdvancedMachines extends BlockContainer {
     }
 
     @Override
-    public ArrayList<ItemStack> getBlockDropped(World var1, int var2, int var3, int var4, int var5, int var6) {
-        ArrayList<ItemStack> var7 = super.getBlockDropped(var1, var2, var3, var4, var5, var6);
-        TileEntity var8 = var1.getBlockTileEntity(var2, var3, var4);
+    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> dropped = super.getBlockDropped(world, x, y, z, metadata, fortune);
+        TileEntity var8 = world.getBlockTileEntity(x, y, z);
         if (var8 instanceof IInventory) {
-            IInventory var9 = (IInventory) var8;
+            IInventory inventory = (IInventory) var8;
 
-            for (int var10 = 0; var10 < var9.getSizeInventory(); ++var10) {
-                ItemStack var11 = var9.getStackInSlot(var10);
-                if (var11 != null) {
-                    var7.add(var11);
-                    var9.setInventorySlotContents(var10, null);
+            for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+                ItemStack stack = inventory.getStackInSlot(i);
+                if (stack != null) {
+                    dropped.add(stack);
+                    inventory.setInventorySlotContents(i, null);
                 }
             }
         }
 
-        return var7;
+        return dropped;
     }
 
     @Override
@@ -282,69 +225,77 @@ public class BlockAdvancedMachines extends BlockContainer {
         }
     }
 
+    @Override
+    public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis) {
+        if (axis != ForgeDirection.UNKNOWN) {
+            TileEntity tileEntity = worldObj.getBlockTileEntity(x, y, z);
+            if (tileEntity instanceof IWrenchable) {
+                IWrenchable te = (IWrenchable) tileEntity;
+                int newFacing = ForgeDirection.getOrientation(te.getFacing()).getRotation(axis).ordinal();
+                if (te.wrenchCanSetFacing((EntityPlayer) null, newFacing)) {
+                    te.setFacing((short) newFacing);
+                }
+            }
+
+        }
+        return false;
+    }
+
+    @Override
+    public int idDropped(int meta, Random random, int i) {
+        return Items.getItem("advancedMachine").itemID;
+    }
+
+    @Override
+    public int damageDropped(int par1) {
+        return Items.getItem("advancedMachine").getItemDamage();
+    }
+
+    public final int getTextureSubIndex(int side, int facing) {
+        return this.getTextureSubIndex(side, facing, false);
+    }
+
+    public final int getTextureSubIndex(int side, int facing, boolean active) {
+        int ret = sideAndFacingToSpriteOffset[side][facing];
+        return active ? ret + 6 : ret;
+    }
+
     public static boolean isActive(IBlockAccess iblockaccess, int i, int j, int k) {
         TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
         return te instanceof TileEntityBlock && ((TileEntityBlock) te).getActive();
     }
 
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        return new ItemStack(this, 1, world.getBlockMetadata(x, y, z));
+    public int getFacing(int meta) {
+        return 3;
     }
 
-    @Override
-    public boolean rotateBlock(World worldObj, int x, int y, int z, ForgeDirection axis) {
-        if (axis == ForgeDirection.UNKNOWN) {
-            return false;
+    public int getFacing(IBlockAccess iBlockAccess, int x, int y, int z) {
+        TileEntity te = iBlockAccess.getBlockTileEntity(x, y, z);
+        if (te instanceof TileEntityAdvancedMachine) {
+            return ((TileEntityAdvancedMachine) te).getFacing();
         } else {
-            TileEntity tileEntity = worldObj.getBlockTileEntity(x, y, z);
-            if (tileEntity instanceof IWrenchable) {
-                IWrenchable te = (IWrenchable)tileEntity;
-                int newFacing = ForgeDirection.getOrientation(te.getFacing()).getRotation(axis).ordinal();
-                if (te.wrenchCanSetFacing((EntityPlayer)null, newFacing)) {
-                    te.setFacing((short)newFacing);
-                }
-            }
-
-            return false;
+            int meta = iBlockAccess.getBlockMetadata(x, y, z);
+            return this.getFacing(meta);
         }
+    }
+
+    public String getTextureName(int index) {
+        Item item = Item.itemsList[this.blockID];
+        if (!item.getHasSubtypes()) {
+            return index == 0 ? this.getUnlocalizedName() : null;
+        } else {
+            ItemStack itemStack = new ItemStack(this, 1, index);
+            String ret = item.getUnlocalizedName(itemStack);
+            return ret == null ? null : ret.replace("item", "block");
+        }
+    }
+
+    public int getTextureIndex(int meta) {
+        return meta;
     }
 
     @Override
     public TileEntity createNewTileEntity(World world) {
         return null;
-    }
-
-    @Override
-    public TileEntity createTileEntity(World world, int meta) {
-        return getBlockEntity(meta);
-    }
-
-
-    @Override
-    public int idDropped(int var1, Random var2, int var3) {
-        return Items.getItem("advancedMachine").itemID;
-    }
-
-    /**
-     * Get the block's damage value (for use with pick block).
-     */
-    @Override
-    public int getDamageValue(World world, int x, int y, int z) {
-        return world.getBlockMetadata(x, y, z); // advanced machine item meta exactly equals the block meta
-    }
-
-    private TileEntityAdvancedMachine getBlockEntity(int var1) {
-        switch (var1) {
-            case 0:
-                return new TileEntityRotaryMacerator();
-            case 1:
-                return new TileEntitySingularityCompressor();
-            case 2:
-                return new TileEntityCentrifugeExtractor();
-            case 3:
-                return new TileEntityAdvancedInduction();
-            default:
-                return null;
-        }
     }
 }

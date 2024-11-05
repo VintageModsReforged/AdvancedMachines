@@ -12,16 +12,30 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public class ItemAdvancedMachine extends ItemBlock {
+
+    public String[] names = new String[] {
+            "macerator",
+            "compressor",
+            "extractor",
+            "induction",
+            "recycler",
+            "electrolyzer"
+    };
+
     public ItemAdvancedMachine(int id) {
         super(id);
         setMaxDamage(0);
         setHasSubtypes(true);
     }
 
+    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
+        int itemDamage = stack.getItemDamage();
+        if (itemDamage == 5) {
+            tooltip.add(TextFormatter.AQUA.format("tooltips.transfer.info"));
+        } else tooltip.add(TextFormatter.AQUA.format("tooltips.usage.info"));
     }
 
     @SideOnly(Side.CLIENT)
@@ -35,29 +49,19 @@ public class ItemAdvancedMachine extends ItemBlock {
         return meta;
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public String getUnlocalizedName(ItemStack stack) {
         int itemDamage = stack.getItemDamage();
-        switch (itemDamage) {
-            case 0:
-                return "block.advanced.macerator";
-            case 1:
-                return "block.advanced.compressor";
-            case 2:
-                return "block.advanced.extractor";
-            case 3:
-                return "block.advanced.induction";
-            default:
-                return null;
-        }
+        return "block.advanced." + names[itemDamage];
     }
 
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-        par3List.add(new ItemStack(par1, 1, 0));
-        par3List.add(new ItemStack(par1, 1, 1));
-        par3List.add(new ItemStack(par1, 1, 2));
-        par3List.add(new ItemStack(par1, 1, 3));
+    public void getSubItems(int par1, CreativeTabs tabs, List list) {
+        for(int i = 0; i < names.length; ++i) {
+            ItemStack is = new ItemStack(this, 1, i);
+            list.add(is);
+        }
     }
 }

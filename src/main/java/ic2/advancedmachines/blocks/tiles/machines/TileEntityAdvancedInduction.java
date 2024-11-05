@@ -1,7 +1,8 @@
-package ic2.advancedmachines.blocks.tiles;
+package ic2.advancedmachines.blocks.tiles.machines;
 
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.utils.AdvMachinesRecipes;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
@@ -16,7 +17,7 @@ import java.util.List;
 public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     public TileEntityAdvancedInduction() {
-        super(LangHelper.format("block.advanced.induction.name"), 5);
+        super(LangHelper.format("block.advanced.induction.name"), 5, AdvMachinesRecipes.furnace);
     }
 
     @Override

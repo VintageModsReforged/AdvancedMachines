@@ -1,9 +1,9 @@
 package ic2.advancedmachines.utils;
 
-import ic2.advancedmachines.blocks.tiles.TileEntityAdvancedInduction;
-import ic2.advancedmachines.blocks.tiles.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.blocks.tiles.TileEntityRotaryMacerator;
-import ic2.advancedmachines.blocks.tiles.TileEntitySingularityCompressor;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityAdvancedInduction;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityRotaryMacerator;
+import ic2.advancedmachines.blocks.tiles.machines.TileEntitySingularityCompressor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 
 public class Refs {

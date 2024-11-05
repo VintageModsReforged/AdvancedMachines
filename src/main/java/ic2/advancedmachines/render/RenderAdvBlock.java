@@ -4,7 +4,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.blocks.BlockAdvancedMachines;
+import ic2.advancedmachines.blocks.BlockAdvancedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -52,7 +52,7 @@ public class RenderAdvBlock implements ISimpleBlockRenderingHandler {
 
     @Override
     public boolean renderWorldBlock(IBlockAccess blockAccess, int x, int y, int z, Block block, int modelId, RenderBlocks renderblocks) {
-        ((BlockAdvancedMachines) block).onRender(blockAccess, x, y, z);
+        ((BlockAdvancedBlock) block).onRender(blockAccess, x, y, z);
         return renderblocks.renderStandardBlock(block, x, y, z);
     }
 
