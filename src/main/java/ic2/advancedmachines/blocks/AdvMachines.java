@@ -7,9 +7,9 @@ public enum AdvMachines{
     MACERATOR,
     COMPRESSOR,
     EXTRACTOR,
-    INDUCTION,
+    INDUCTION/*,
     RECYCLER,
-    ELECTROLYZER;
+    ELECTROLYZER*/;
 
     public final ItemStack STACK;
     public static final AdvMachines[] VALUES = values();

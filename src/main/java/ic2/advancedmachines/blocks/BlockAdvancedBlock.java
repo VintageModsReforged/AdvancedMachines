@@ -4,7 +4,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
-import ic2.advancedmachines.items.ItemAdvancedMachine;
 import ic2.advancedmachines.render.RenderAdvBlock;
 import ic2.api.item.Items;
 import ic2.api.tile.IWrenchable;
@@ -41,6 +40,7 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
     @SideOnly(Side.CLIENT)
     protected Icon[][] textures;
     public int renderMask = 63;
+    public int metaMachinesCount;
 
     protected BlockAdvancedBlock(int id) {
         super(id, Material.iron);
@@ -59,7 +59,7 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IconRegister iconRegister) {
-        int metaCount = 4;
+        int metaCount = metaMachinesCount;
 //        for(metaCount = 0; this.getTextureName(metaCount) != null; ++metaCount) {}
         this.textures = new Icon[metaCount][12];
         String textureFolder = this.getTextureFolder() == null ? "" : this.getTextureFolder() + "/";
@@ -249,6 +249,14 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
     @Override
     public int damageDropped(int par1) {
         return Items.getItem("advancedMachine").getItemDamage();
+    }
+
+    /**
+     * Get the block's damage value (for use with pick block).
+     */
+    @Override
+    public int getDamageValue(World world, int x, int y, int z) {
+        return world.getBlockMetadata(x, y, z); // advanced machine item meta exactly equals the block meta
     }
 
     public final int getTextureSubIndex(int side, int facing) {

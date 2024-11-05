@@ -1,9 +1,6 @@
 package ic2.advancedmachines.utils;
 
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityAdvancedInduction;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityRotaryMacerator;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntitySingularityCompressor;
+import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 
 public class Refs {
@@ -17,22 +14,23 @@ public class Refs {
     public static final String PROXY_COMMON = "ic2.advancedmachines.proxy.CommonProxy";
     public static final String PROXY_CLIENT = "ic2.advancedmachines.proxy.ClientProxy";
 
-    public static final String GUI_EXTRACTOR = "/mods/advancedmachines/textures/gui/extractor.png";
-    public static final String GUI_INDUCTION = "/mods/advancedmachines/textures/gui/induction.png";
-    public static final String GUI_MACERATOR = "/mods/advancedmachines/textures/gui/macerator.png";
-    public static final String GUI_COMPRESSOR = "/mods/advancedmachines/textures/gui/compressor.png";
+    public static String getGuiPath(String machine) {
+        return "/mods/advancedmachines/textures/gui/" + machine + ".png";
+    }
 
     public static String getTextureName(TileEntityAdvancedMachine tile) {
         if (tile instanceof TileEntityAdvancedInduction) {
-            return GUI_INDUCTION;
+            return getGuiPath("induction");
         } else if (tile instanceof TileEntityCentrifugeExtractor) {
-            return GUI_EXTRACTOR;
+            return getGuiPath("extractor");
         } else if (tile instanceof TileEntityRotaryMacerator) {
-            return GUI_MACERATOR;
+            return getGuiPath("macerator");
         } else if (tile instanceof TileEntitySingularityCompressor){
-            return GUI_COMPRESSOR;
+            return getGuiPath("compressor");
+        } else if (tile instanceof TileEntityCompactingRecycler) {
+            return getGuiPath("recycler");
         } else {
-            return "";
+            return null;
         }
     }
 }

@@ -1,6 +1,7 @@
 package ic2.advancedmachines;
 
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.utils.ScrapBoxUtils;
 import ic2.api.item.Items;
 import ic2.api.recipe.Recipes;
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.item.Item;
 public class AdvancedMachinesRecipes {
 
     public static void init() {
+        ScrapBoxUtils.init();
         Recipes.advRecipes.addRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
                 'R', Items.getItem("refinedIronIngot"),

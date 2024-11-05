@@ -2,10 +2,8 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityAdvancedInduction;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityRotaryMacerator;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntitySingularityCompressor;
+import ic2.advancedmachines.blocks.tiles.machines.*;
+import ic2.advancedmachines.items.ItemAdvancedMachine;
 import ic2.core.block.TileEntityInventory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -28,6 +26,7 @@ public class BlockAdvancedMachine extends BlockAdvancedBlock {
 
     public BlockAdvancedMachine(int id) {
         super(id);
+        this.metaMachinesCount = ItemAdvancedMachine.names.length;
     }
 
     @Override
@@ -41,15 +40,10 @@ public class BlockAdvancedMachine extends BlockAdvancedBlock {
             case COMPRESSOR: return new TileEntitySingularityCompressor();
             case EXTRACTOR: return new TileEntityCentrifugeExtractor();
             case INDUCTION: return new TileEntityAdvancedInduction();
-//            case RECYCLER: return new TileEntityCompactingRecycler();
+            case RECYCLER: return new TileEntityCompactingRecycler();
 //            case ELECTROLYZER: return new TileEntityChargedElectrolyzer();
             default: return null;
         }
-    }
-
-    @Override
-    public int getDamageValue(World world, int x, int y, int z) {
-        return world.getBlockMetadata(x, y, z); // advanced machine item meta exactly equals the block meta
     }
 
     @Override

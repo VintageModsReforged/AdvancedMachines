@@ -13,19 +13,19 @@ import java.util.List;
 
 public class ItemAdvancedMachine extends ItemBlock {
 
-    public String[] names = new String[] {
+    public static String[] names = new String[] {
             "macerator",
             "compressor",
             "extractor",
             "induction",
-            "recycler",
-            "electrolyzer"
+            "recycler"/*,
+            "electrolyzer"*/
     };
 
     public ItemAdvancedMachine(int id) {
         super(id);
-        setMaxDamage(0);
-        setHasSubtypes(true);
+        this.setMaxDamage(0);
+        this.setHasSubtypes(true);
     }
 
     @SuppressWarnings("unchecked")
