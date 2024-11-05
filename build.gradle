@@ -26,8 +26,14 @@ volde {
 
 	runs {
 		client {
-			programArg "quaternary"
+			programArg "CrossVas"
 		}
+	}
+}
+
+repositories {
+	maven {
+		url = "https://api.modrinth.com/maven"
 	}
 }
 
@@ -41,13 +47,15 @@ dependencies {
 		baseZip "net.minecraftforge:forge:${forgeVersion}:src@zip"
 		unmapClass(["bar", "bas"])
 	}
-	implementation("it.unimi.dsi:fastutil:8.2.1")
+
 	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
 	modImplementation files("libs/gregtechmod290h.zip")
 	modImplementation files("libs/craftguide.zip")
 	modImplementation files("libs/CoFHCore.zip")
 	modImplementation files("libs/hopper.jar")
 	modImplementation files("libs/AdvPowerMng.jar")
+	modImplementation("maven.modrinth:nei:1.4.7.4")
+	modImplementation("maven.modrinth:codechicken-core:0.8.1.6")
 //	coremodImplementation files("libs/NotEnoughItemsPatched.jar")
 //	coremodImplementation files("libs/CodeChickenCore.jar")
 }
