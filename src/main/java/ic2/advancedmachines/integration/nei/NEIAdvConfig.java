@@ -21,7 +21,6 @@ public class NEIAdvConfig implements IConfigureNEI {
     @Override
     public void loadConfig() {
         AdvancedMachines.LOGGER.info("Loading NEI Plugin for AdvancedMachines!");
-
         API.registerRecipeHandler(new NEIMaceratorProvider());
         API.registerUsageHandler(new NEIMaceratorProvider());
         API.registerRecipeHandler(new NEICompressorProvider());
@@ -64,6 +63,7 @@ public class NEIAdvConfig implements IConfigureNEI {
         neiCat.add(BlocksItems.CIRCUIT_COMPLEX);
         neiCat.add(BlocksItems.IRIDIUM_CORE);
         API.addSetRange(Refs.ID, neiCat);
+        AdvancedMachines.LOGGER.info("NEI Plugin for AdvancedMachines Loaded!");
     }
 
     @Override
