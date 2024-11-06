@@ -11,8 +11,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
-import ic2.advancedmachines.utils.Refs;
 import ic2.advancedmachines.proxy.CommonProxy;
+import ic2.advancedmachines.utils.Refs;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

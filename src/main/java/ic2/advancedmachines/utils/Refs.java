@@ -1,7 +1,7 @@
 package ic2.advancedmachines.utils;
 
-import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.blocks.tiles.machines.*;
 
 public class Refs {
 

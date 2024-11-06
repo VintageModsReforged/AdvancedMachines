@@ -1,8 +1,5 @@
 package ic2.advancedmachines.blocks.tiles.base;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import ic2.advancedmachines.blocks.gui.GuiAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
@@ -20,7 +17,6 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityElectricMachine;
 import ic2.core.slot.SlotInvSlot;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
