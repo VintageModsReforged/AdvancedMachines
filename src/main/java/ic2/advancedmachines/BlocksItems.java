@@ -75,12 +75,6 @@ public class BlocksItems {
         GameRegistry.registerTileEntity(TileEntityTranformerIV.class, "IV Transformer");
     }
 
-    public static  <T extends Item> T registerItem(T item, int iconIndex, String regName) {
-        item.setIconIndex(iconIndex);
-        GameRegistry.registerItem(item, regName);
-        return item;
-    }
-
     public static  <T extends Item> T registerItem(T item, String regName) {
         GameRegistry.registerItem(item, regName);
         return item;

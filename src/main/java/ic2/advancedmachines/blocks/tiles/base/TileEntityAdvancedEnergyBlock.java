@@ -7,12 +7,10 @@ import ic2.core.ContainerIC2;
 import ic2.core.IC2;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock implements IEnergyProvider {
 
     public String name;
-    public byte workMode = 0;
 
     public TileEntityAdvancedEnergyBlock(String name, int tier, int out, int maxStorage) {
         super(tier, out, maxStorage);
@@ -20,25 +18,8 @@ public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock imple
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound nbttagcompound) {
-        super.writeToNBT(nbttagcompound);
-        nbttagcompound.setByte("workMode", workMode);
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound nbttagcompound) {
-        super.readFromNBT(nbttagcompound);
-        workMode = nbttagcompound.getByte("workMode");
-    }
-
-    @Override
     public String getInvName() {
         return this.name;
-    }
-
-    @Override
-    public void updateEntity() {
-        super.updateEntity();
     }
 
     @Override

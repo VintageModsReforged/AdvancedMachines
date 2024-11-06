@@ -70,13 +70,6 @@ public class StackFilters {
         }
     };
 
-    public static final IStackFilter ELECTROLYZER_OUT = new IStackFilter() {
-        @Override
-        public boolean match(ItemStack stack) {
-            return StackUtil.isStackEqual(stack, Items.getItem("electrolyzedWaterCell")) || StackUtil.isStackEqual(stack, BlocksItems.MAGNET_COMPONENT);
-        }
-    };
-
     public static final IStackFilter BATTERY_FILTER = new IStackFilter() {
         @Override
         public boolean match(ItemStack stack) {
