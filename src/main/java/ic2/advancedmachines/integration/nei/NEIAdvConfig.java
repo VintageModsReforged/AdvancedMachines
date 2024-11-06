@@ -1,5 +1,6 @@
 package ic2.advancedmachines.integration.nei;
 
+import codechicken.nei.ItemRange;
 import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
