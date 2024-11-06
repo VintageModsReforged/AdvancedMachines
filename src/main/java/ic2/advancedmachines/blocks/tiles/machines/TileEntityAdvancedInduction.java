@@ -1,6 +1,9 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.blocks.gui.GuiAdvInduction;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.StackFilters;
@@ -8,6 +11,8 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.invslot.InvSlotProcessableSmelting;
 import ic2.core.slot.SlotInvSlot;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -17,6 +22,12 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     public TileEntityAdvancedInduction() {
         super(LangHelper.format("block.advanced.induction.name"), 5, StackFilters.FURNACE_FILTER);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public GuiScreen getGui(EntityPlayer player, boolean b) {
+        return new GuiAdvInduction(player.inventory, this);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.blocks.gui.GuiAdvRecycler;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.LangHelper;
@@ -10,6 +13,8 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
 import ic2.core.slot.SlotInvSlot;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -18,6 +23,12 @@ import java.util.List;
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
     public TileEntityCompactingRecycler() {
         super(LangHelper.format("block.advanced.recycler.name"), 3, StackFilters.RECYCLER_FILTER);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public GuiScreen getGui(EntityPlayer player, boolean b) {
+        return new GuiAdvRecycler(player.inventory, this);
     }
 
     @Override

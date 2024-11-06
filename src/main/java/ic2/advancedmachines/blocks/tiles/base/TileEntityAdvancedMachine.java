@@ -310,12 +310,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         return new ContainerAdvancedMachine(player, this);
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public GuiScreen getGui(EntityPlayer player, boolean b) {
-        return new GuiAdvancedMachine(player.inventory, this);
-    }
-
     @Override
     public float getWrenchDropRate() {
         return 0.8F;

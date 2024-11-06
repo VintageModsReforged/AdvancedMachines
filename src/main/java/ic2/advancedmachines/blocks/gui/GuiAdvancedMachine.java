@@ -15,10 +15,12 @@ import org.lwjgl.opengl.GL11;
 public class GuiAdvancedMachine extends GuiContainer {
 
     TileEntityAdvancedMachine TILE;
+    String texture;
 
-    public GuiAdvancedMachine(InventoryPlayer playerInv, TileEntityAdvancedMachine tile) {
+    public GuiAdvancedMachine(InventoryPlayer playerInv, TileEntityAdvancedMachine tile, String texture) {
         super(new ContainerAdvancedMachine(playerInv.player, tile));
         this.TILE = tile;
+        this.texture = texture;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class GuiAdvancedMachine extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(Refs.getTextureName(TILE));
+        this.mc.renderEngine.bindTexture(Refs.getGuiPath(this.texture));
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);

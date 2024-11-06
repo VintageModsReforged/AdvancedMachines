@@ -1,12 +1,17 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.blocks.gui.GuiAdvMacerator;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.slot.SlotInvSlot;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +20,12 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     public TileEntityRotaryMacerator() {
         super(LangHelper.format("block.advanced.macerator.name"), 4, StackFilters.MACERATOR_FILTER);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public GuiScreen getGui(EntityPlayer player, boolean b) {
+        return new GuiAdvMacerator(player.inventory, this);
     }
 
     @Override

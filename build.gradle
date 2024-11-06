@@ -29,6 +29,10 @@ archivesBaseName = project.modid
 version = project.mod_version
 
 volde {
+	forgeCapabilities {
+		srgsAsFallback = true
+	}
+
 	runs {
 		client {
 			programArg "CrossVas"
@@ -45,7 +49,11 @@ repositories {
 dependencies {
 	minecraft "com.mojang:minecraft:${minecraftVersion}"
 	forge "net.minecraftforge:forge:${forgeVersion}:universal@zip"
-	mappings "net.minecraftforge:forge:${forgeVersion}:src@zip"
+//	mappings "net.minecraftforge:forge:${forgeVersion}:src@zip"
+
+	mappings volde.layered {
+		baseZip "net.minecraftforge:forge:${forgeVersion}:src@zip"
+	}
 
 	implementation 'net.jcip:jcip-annotations:1.0'
 	implementation 'org.jetbrains:annotations-java5:23.0.0'
