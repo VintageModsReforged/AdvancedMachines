@@ -57,6 +57,7 @@ public class BlocksItems {
         GameRegistry.registerTileEntity(TileEntityCentrifugeExtractor.class, "Centrifuge Extractor");
         GameRegistry.registerTileEntity(TileEntityAdvancedInduction.class, "Advanced Induction");
         GameRegistry.registerTileEntity(TileEntityCompactingRecycler.class, "Compacting Recycler");
+        GameRegistry.registerTileEntity(TileEntityChargedElectrolyzer.class, "Charged Electrolyzer");
 
         GameRegistry.registerTileEntity(TileEntityESU.class, "ESU");
         GameRegistry.registerTileEntity(TileEntityISU.class, "ISU");

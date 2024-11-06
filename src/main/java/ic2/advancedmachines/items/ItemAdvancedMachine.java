@@ -18,8 +18,8 @@ public class ItemAdvancedMachine extends ItemBlock {
             "compressor",
             "extractor",
             "induction",
-            "recycler"/*,
-            "electrolyzer"*/
+            "recycler",
+            "electrolyzer"
     };
 
     public ItemAdvancedMachine(int id) {

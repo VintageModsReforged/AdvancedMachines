@@ -42,7 +42,7 @@ public class BlockAdvancedMachine extends BlockAdvancedBlock {
             case EXTRACTOR: return new TileEntityCentrifugeExtractor();
             case INDUCTION: return new TileEntityAdvancedInduction();
             case RECYCLER: return new TileEntityCompactingRecycler();
-//            case ELECTROLYZER: return new TileEntityChargedElectrolyzer();
+            case ELECTROLYZER: return new TileEntityChargedElectrolyzer();
             default: return null;
         }
     }

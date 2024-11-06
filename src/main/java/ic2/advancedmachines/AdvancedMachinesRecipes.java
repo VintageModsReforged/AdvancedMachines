@@ -1,6 +1,7 @@
 package ic2.advancedmachines;
 
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.utils.AdvMachinesRecipes;
 import ic2.advancedmachines.utils.ScrapBoxUtils;
 import ic2.api.item.Items;
 import ic2.api.recipe.Recipes;
@@ -11,7 +12,12 @@ public class AdvancedMachinesRecipes {
 
     public static void init() {
         ScrapBoxUtils.init();
+        AdvMachinesRecipes.electrolyzer_drain.addRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
+        AdvMachinesRecipes.electrolyzer_drain.addRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
+        AdvMachinesRecipes.electrolyzer_power.addRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
+        Recipes.compressor.addRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_DEAD);
         Recipes.extractor.addRecipe(Items.getItem("scrapBox"), Item.stick);
+
         Recipes.advRecipes.addRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
                 'R', Items.getItem("refinedIronIngot"),
