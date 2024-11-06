@@ -17,13 +17,13 @@ import java.util.List;
 
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
     public TileEntityCompactingRecycler() {
-        super(LangHelper.format("block.advanced.recycler.name"), 3, StackFilters.ANYTHING);
+        super(LangHelper.format("block.advanced.recycler.name"), 3, StackFilters.RECYCLER_FILTER);
     }
 
     @Override
     public void addSlots() {
         // inputs
-        this.inputs.add(new InvSlotFiltered(this, "inputA", 1, 1, StackFilters.ANYTHING));
+        this.inputs.add(new InvSlotFiltered(this, "inputA", 1, 1, StackFilters.RECYCLER_FILTER));
         // outputs
         this.outputs.add(new InvSlotOutput(this, "outputA", 2, 1));
     }
