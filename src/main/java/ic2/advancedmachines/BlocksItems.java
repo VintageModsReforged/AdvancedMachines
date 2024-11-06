@@ -1,12 +1,11 @@
 package ic2.advancedmachines;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import ic2.advancedmachines.blocks.BlockAdvEnergyBlock;
 import ic2.advancedmachines.blocks.BlockAdvancedMachine;
+import ic2.advancedmachines.blocks.tiles.energy.*;
 import ic2.advancedmachines.blocks.tiles.machines.*;
-import ic2.advancedmachines.items.ItemAdvBattery;
-import ic2.advancedmachines.items.ItemAdvUpgrade;
-import ic2.advancedmachines.items.ItemAdvancedMachine;
-import ic2.advancedmachines.items.ItemMisc;
+import ic2.advancedmachines.items.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,6 +13,7 @@ import net.minecraft.item.ItemStack;
 public class BlocksItems {
 
     public static Block ADVANCED_MACHINE_BLOCK;
+    public static Block ADVANCED_ENERGY_BLOCK;
 
     public static Item ADVANCED_UPGRADE;
     public static ItemStack REDSTONE_INVERTER;
@@ -46,15 +46,23 @@ public class BlocksItems {
         UNIVERSAL_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.UNIVERSAL_CRYSTAL_ID, "universal_crystal", 4, 10000, 17500000);
         PLASMA_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.PLASMA_CRYSTAL_ID, "plasma_crystal", 4, 25000, 50000000);
 
-        ADVANCED_MACHINE_BLOCK = new BlockAdvancedMachine(AdvancedMachinesConfig.ADV_MACHINE_ID);
+        ADVANCED_MACHINE_BLOCK = new BlockAdvancedMachine();
+        ADVANCED_ENERGY_BLOCK = new BlockAdvEnergyBlock();
 
         GameRegistry.registerBlock(ADVANCED_MACHINE_BLOCK, ItemAdvancedMachine.class, "blockAdvMachine");
+        GameRegistry.registerBlock(ADVANCED_ENERGY_BLOCK, ItemAdvancedEnergyBlock.class, "blockAdvEnergyBlock");
 
         GameRegistry.registerTileEntity(TileEntityRotaryMacerator.class, "Rotary Macerator");
         GameRegistry.registerTileEntity(TileEntitySingularityCompressor.class, "Singularity Compressor");
         GameRegistry.registerTileEntity(TileEntityCentrifugeExtractor.class, "Centrifuge Extractor");
         GameRegistry.registerTileEntity(TileEntityAdvancedInduction.class, "Advanced Induction");
         GameRegistry.registerTileEntity(TileEntityCompactingRecycler.class, "Compacting Recycler");
+
+        GameRegistry.registerTileEntity(TileEntityESU.class, "ESU");
+        GameRegistry.registerTileEntity(TileEntityISU.class, "ISU");
+        GameRegistry.registerTileEntity(TileEntityPESU.class, "PESU");
+        GameRegistry.registerTileEntity(TileEntityTranformerEV.class, "EV Transformer");
+        GameRegistry.registerTileEntity(TileEntityTranformerIV.class, "IV Transformer");
     }
 
     public static  <T extends Item> T registerItem(T item, String regName) {

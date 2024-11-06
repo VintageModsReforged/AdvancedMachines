@@ -3,7 +3,6 @@ package ic2.advancedmachines.blocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
-import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.render.RenderAdvBlock;
 import ic2.api.item.Items;
 import ic2.api.tile.IWrenchable;
@@ -60,7 +59,6 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
     @Override
     public void registerIcons(IconRegister iconRegister) {
         int metaCount = metaMachinesCount;
-//        for(metaCount = 0; this.getTextureName(metaCount) != null; ++metaCount) {}
         this.textures = new Icon[metaCount][12];
         String textureFolder = this.getTextureFolder() == null ? "" : this.getTextureFolder() + "/";
 
@@ -279,8 +277,8 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
 
     public int getFacing(IBlockAccess iBlockAccess, int x, int y, int z) {
         TileEntity te = iBlockAccess.getBlockTileEntity(x, y, z);
-        if (te instanceof TileEntityAdvancedMachine) {
-            return ((TileEntityAdvancedMachine) te).getFacing();
+        if (te instanceof TileEntityBlock) {
+            return ((TileEntityBlock) te).getFacing();
         } else {
             int meta = iBlockAccess.getBlockMetadata(x, y, z);
             return this.getFacing(meta);

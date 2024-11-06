@@ -2,6 +2,7 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.advancedmachines.items.ItemAdvancedMachine;
 import ic2.core.block.TileEntityInventory;
@@ -24,8 +25,8 @@ public class BlockAdvancedMachine extends BlockAdvancedBlock {
     public static final int RECYCLER = 4;
     public static final int ELECTROLYZER = 5;
 
-    public BlockAdvancedMachine(int id) {
-        super(id);
+    public BlockAdvancedMachine() {
+        super(AdvancedMachinesConfig.ADV_MACHINE_ID);
         this.metaMachinesCount = ItemAdvancedMachine.names.length;
     }
 
