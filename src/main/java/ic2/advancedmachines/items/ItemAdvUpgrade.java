@@ -88,7 +88,7 @@ public class ItemAdvUpgrade extends Item implements ISimpleUpgrade {
         if (machine.getWorldObj().getTotalWorldTime() % 20 == 0) {
             List<InvSlotProcessable> inputs = machine.inputs;
             ItemStack cobblestone = new ItemStack(Block.cobblestone);
-            boolean canProcessCobblestone = machine.recipeFilter.getOutputFor(cobblestone, false) != null;
+            boolean canProcessCobblestone = machine.inputFilter.getOutputFor(cobblestone, false) != null;
 
             if (canProcessCobblestone) {
                 int cobblestoneLeft = cobblestoneUpgrade.stackSize;

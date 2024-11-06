@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.Map;
 
-public class AdvRecyclerManager implements IMachineRecipeManager {
+public class ScrapBoxManager implements IMachineRecipeManager {
 
     @Override
     public void addRecipe(ItemStack itemStack, Object o) {}

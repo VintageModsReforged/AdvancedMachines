@@ -11,6 +11,7 @@ public class AdvancedMachinesRecipes {
 
     public static void init() {
         ScrapBoxUtils.init();
+        Recipes.extractor.addRecipe(Items.getItem("scrapBox"), Item.stick);
         Recipes.advRecipes.addRecipe(AdvMachines.MACERATOR.STACK,
                 "RRR", "RMR", "RAR",
                 'R', Items.getItem("refinedIronIngot"),

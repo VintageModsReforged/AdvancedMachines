@@ -7,10 +7,10 @@ import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
+import ic2.advancedmachines.utils.IStackFilter;
 import ic2.advancedmachines.utils.InvAdvSlotUpgrade;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
-import ic2.api.recipe.IMachineRecipeManager;
 import ic2.core.ContainerBase;
 import ic2.core.IC2;
 import ic2.core.IHasGui;
@@ -50,12 +50,12 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     private static final int eventInterrupt = 1;
     private static final int eventStop = 2;
     public InvAdvSlotUpgrade upgradeSlot;
-    public IMachineRecipeManager recipeFilter;
+    public IStackFilter inputFilter;
 
     private ItemStack cachedOutput = null;
     private boolean outputLocked = false;
 
-    public TileEntityAdvancedMachine(String invName, int upgradeSlotStartIndex, IMachineRecipeManager recipeFilter) {
+    public TileEntityAdvancedMachine(String invName, int upgradeSlotStartIndex, IStackFilter inputFilter) {
         super(maxEnergy, 2, 0);
         this.soundTicker = IC2.random.nextInt(64);
         this.invName = invName;
@@ -64,7 +64,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         this.speed = 0;
         this.progress = 0;
         this.upgradeSlot = new InvAdvSlotUpgrade(this, "upgrade", upgradeSlotStartIndex, 2);
-        this.recipeFilter = recipeFilter;
+        this.inputFilter = inputFilter;
         this.addSlots();
     }
 
@@ -188,7 +188,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
             return false;
         } else {
             if (!outputLocked) {
-                ItemStack resultStack = (ItemStack) this.recipeFilter.getOutputFor(this.inputs.get(0).get(), false);
+                ItemStack resultStack = this.inputFilter.getOutputFor(this.inputs.get(0).get(), false);
                 if (resultStack == null) {
                     cachedOutput = null; // Invalidate cached output if no result
                     return false;
@@ -289,16 +289,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
                 }
         }
     }
-
-    /**
-     * Returns the ItemStack that results from processing whatever is in the Input, or null
-     *
-     * @param input        ItemStack to be processed
-     * @param adjustOutput if true, whatever was used as input will be taken from the input slot and destroyed,
-     *                     if false, the input Slots remain as they are
-     * @return ItemStack that results from processing the Input, or null if no processing is possible
-     */
-    public abstract ItemStack getResultFor(ItemStack input, boolean adjustOutput);
 
     public abstract String getStartSoundFile();
 

@@ -1,13 +1,12 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
-import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.LangHelper;
-import ic2.api.recipe.Recipes;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.invslot.InvSlotProcessableGeneric;
 import ic2.core.slot.SlotInvSlot;
-import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +14,13 @@ import java.util.List;
 public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     public TileEntityRotaryMacerator() {
-        super(LangHelper.format("block.advanced.macerator.name"), 4, Recipes.macerator);
+        super(LangHelper.format("block.advanced.macerator.name"), 4, StackFilters.MACERATOR_FILTER);
     }
 
     @Override
     public void addSlots() {
         // inputs
-        this.inputs.add(new InvSlotProcessableGeneric(this, "inputA", 1, 1, this.recipeFilter));
+        this.inputs.add(new InvSlotFiltered(this, "inputA", 1, 1, this.inputFilter));
         // outputs
         this.outputs.add(new InvSlotOutput(this, "outputA", 2, 1));
         this.outputs.add(new InvSlotOutput(this, "outputB", 3, 1));
@@ -36,11 +35,6 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
         slots.add(new SlotInvSlot(this.outputs.get(1), 0, 115, 46));
 
         return slots;
-    }
-
-    @Override
-    public ItemStack getResultFor(ItemStack macerated, boolean adjustOutput) {
-        return (ItemStack) Recipes.macerator.getOutputFor(macerated, adjustOutput);
     }
 
     @Override

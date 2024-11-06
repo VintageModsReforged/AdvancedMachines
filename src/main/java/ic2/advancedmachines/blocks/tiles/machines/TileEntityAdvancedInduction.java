@@ -1,15 +1,14 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
-import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
-import ic2.advancedmachines.utils.AdvMachinesRecipes;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.LangHelper;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.invslot.InvSlotProcessableSmelting;
 import ic2.core.slot.SlotInvSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
 public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     public TileEntityAdvancedInduction() {
-        super(LangHelper.format("block.advanced.induction.name"), 5, AdvMachinesRecipes.furnace);
+        super(LangHelper.format("block.advanced.induction.name"), 5, StackFilters.FURNACE_FILTER);
     }
 
     @Override
@@ -40,15 +39,6 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
         slots.add(new SlotInvSlot(this.outputs.get(1), 0, 131, 35));
 
         return slots;
-    }
-
-    @Override
-    public ItemStack getResultFor(ItemStack input, boolean adjustOutput) {
-        ItemStack result = FurnaceRecipes.smelting().getSmeltingResult(input);
-        if (adjustOutput && result != null) {
-            --input.stackSize;
-        }
-        return result;
     }
 
     @Override
@@ -115,7 +105,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
             } else if (canProcessAA && canProcessBA) { // if we can process A-A and B-A
                 operate(inputA, outputA); // process input A into output A
-                operate(inputB, outputB); // process input B into output A
+                operate(inputB, outputA); // process input B into output A
 
             } else if (canProcessAB && canProcessBB) { // if we can process A-B and B-B
                 operate(inputA, outputB); // process input A into output B

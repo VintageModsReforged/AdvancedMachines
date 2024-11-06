@@ -1,27 +1,25 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
-import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
+import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.LangHelper;
-import ic2.api.recipe.Recipes;
+import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
-import ic2.core.block.invslot.InvSlotProcessableGeneric;
 import ic2.core.slot.SlotInvSlot;
-import net.minecraft.item.ItemStack;
-import uristqwerty.CraftGuide.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super(LangHelper.format("block.advanced.extractor.name"), 5, Recipes.extractor);
+        super(LangHelper.format("block.advanced.extractor.name"), 5, StackFilters.EXTRACTOR_FILTER);
     }
 
     @Override
     public void addSlots() {
         // inputs
-        this.inputs.add(new InvSlotProcessableGeneric(this, "inputA", 1, 1, this.recipeFilter));
+        this.inputs.add(new InvSlotFiltered(this, "inputA", 1, 1, this.inputFilter));
         // outputs
         this.outputs.add(new InvSlotOutput(this, "outputA", 2, 1));
         this.outputs.add(new InvSlotOutput(this, "outputB", 3, 1));
@@ -38,11 +36,6 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
         slots.add(new SlotInvSlot(this.outputs.get(2), 0, 115, 53));
 
         return slots;
-    }
-
-    @Override
-    public ItemStack getResultFor(ItemStack macerated, boolean adjustOutput) {
-        return (ItemStack) Recipes.extractor.getOutputFor(macerated, adjustOutput);
     }
 
     @Override
