@@ -1,5 +1,6 @@
 package ic2.advancedmachines.utils;
 
+import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
 import ic2.api.item.Items;
 import ic2.api.recipe.Recipes;
@@ -98,7 +99,8 @@ public class StackFilters {
     public static final IStackFilter ELECTROLYZER_IN = new IStackFilter() {
         @Override
         public boolean match(ItemStack stack) {
-            return stack != null && (AdvMachinesRecipes.electrolyzer_power.getOutputFor(stack, false) != null || AdvMachinesRecipes.electrolyzer_drain.getOutputFor(stack, false) != null);
+            return stack != null && (TileEntityChargedElectrolyzer.electrolyzer_power.getOutputFor(stack, false) != null ||
+                    TileEntityChargedElectrolyzer.electrolyzer_drain.getOutputFor(stack, false) != null);
         }
 
         @Override
