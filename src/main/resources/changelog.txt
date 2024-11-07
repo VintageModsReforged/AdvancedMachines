@@ -1,4 +1,15 @@
 Version 4.7.5.2a
+    added: Compacting Recycler: advanced machine variant for regular Recycler
+    added: Charged Electrolyzer: advanced machine variant for regular Electrolyzer, works with every adjacent EnergyBlock around it
+    added: Advanced Energy Storage Blocks: GESU, UESU, PESU, EV-Transformer, EV-Transformer. Energy Storage Blocks have armor slot inside their GUI for easier armor recharge, as well as translatable messages and tooltips on hover for `Redstone Behavior`
+    added: Adjustable Transformer for easier voltage management
+    added: Cobblestone Generator Upgrade: upgrade that will generate cobblestone inside compatible machines
+    added: Advanced energy crystals: will charge items from hotbar when the crystal is on hotbar itself, Sneak + Right click to activate, has glow effect when active
+    added: ScrapBox extraction recipe for Extractors
+    fixed: Slot indexes being messed up
+    fixed: Recipe update logic, should be more consistent
+    fixed: Recipe processing logic, should be more stable
+    fixed: Induction Processing logic being messed up, now it covers every possible case
 
 Version 4.7h
     fixed: energy usage being too high
