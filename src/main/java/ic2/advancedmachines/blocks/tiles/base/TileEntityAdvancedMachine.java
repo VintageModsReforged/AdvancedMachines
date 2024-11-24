@@ -6,6 +6,7 @@ import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
 import ic2.advancedmachines.utils.IStackFilter;
 import ic2.advancedmachines.utils.InvAdvSlotUpgrade;
+import ic2.api.item.Items;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
 import ic2.core.ContainerBase;
@@ -16,6 +17,7 @@ import ic2.core.audio.PositionSpec;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityElectricMachine;
+import ic2.core.item.IUpgradeItem;
 import ic2.core.slot.SlotInvSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,10 +31,13 @@ import java.util.Locale;
 
 public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachine implements IHasGui, INetworkTileEntityEventListener {
 
-    public static final int maxProgress = 4000;
-    public static final int maxEnergy = 5000;
-    public static final int maxSpeed = 10000;
-    public static final int energyUsage = 15;
+    public int maxProgress = 4000;
+    public int maxSpeed = 10000;
+    public int energyUsage = 15;
+
+    public int defaultMaxInput;
+    public int defaultEnergyStorage;
+    public int defaultTier;
 
     public short speed;
     public String invName;
@@ -42,9 +47,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     public String speedFormat = "%s%%";
     public int soundTicker;
     public AudioSource audioSource;
-    private static final int eventStart = 0;
-    private static final int eventInterrupt = 1;
-    private static final int eventStop = 2;
+    private final int eventStart = 0;
+    private final int eventInterrupt = 1;
+    private final int eventStop = 2;
     public InvAdvSlotUpgrade upgradeSlot;
     public IStackFilter inputFilter;
 
@@ -52,7 +57,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     private boolean outputLocked = false;
 
     public TileEntityAdvancedMachine(String invName, int upgradeSlotStartIndex, IStackFilter inputFilter) {
-        super(maxEnergy, 2, 0);
+        super(5000, 2, 0);
         this.soundTicker = IC2.random.nextInt(64);
         this.invName = invName;
         this.inputs = new ArrayList<InvSlotProcessable>();
@@ -62,6 +67,10 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         this.upgradeSlot = new InvAdvSlotUpgrade(this, "upgrade", upgradeSlotStartIndex, 2);
         this.inputFilter = inputFilter;
         this.addSlots();
+
+        this.defaultMaxInput = this.maxInput;
+        this.defaultEnergyStorage = this.maxEnergy;
+        this.defaultTier = 2;
     }
 
     public abstract void addSlots();
@@ -91,6 +100,22 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         if (IC2.platform.isRendering() && this.audioSource != null) {
             IC2.audioManager.removeSources(this);
             this.audioSource = null;
+        }
+    }
+
+    @Override
+    public void onLoaded() {
+        super.onLoaded();
+        if (IC2.platform.isSimulating()) {
+            this.handleUpgrades();
+        }
+    }
+
+    @Override
+    public void onInventoryChanged() {
+        super.onInventoryChanged();
+        if (IC2.platform.isSimulating()) {
+            this.handleUpgrades();
         }
     }
 
@@ -339,5 +364,31 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
 
     public int gaugeFuelScaled(int factor) {
         return factor * this.energy / maxEnergy;
+    }
+
+    public void handleUpgrades() {
+        int extraEnergyStorage = 0;
+        double energyStorageMultiplier = 1.0;
+        int extraTier = 0;
+
+        for (int i = 0; i < this.upgradeSlot.size(); i++) {
+            ItemStack upgradeStack = this.upgradeSlot.get(i);
+            if (upgradeStack != null) {
+                if (upgradeStack.isItemEqual(Items.getItem("energyStorageUpgrade"))) {
+                    extraEnergyStorage += 10000 * upgradeStack.stackSize;
+                    energyStorageMultiplier *= Math.pow(1.0, upgradeStack.stackSize);
+                } else if (upgradeStack.isItemEqual(Items.getItem("transformerUpgrade"))) {
+                    extraTier += upgradeStack.stackSize;
+                }
+            }
+        }
+
+        this.setTier(this.applyModifier(this.defaultTier, extraTier, (double)1.0F));
+        this.maxEnergy = this.applyModifier(this.defaultEnergyStorage, extraEnergyStorage + this.maxInput - 1, energyStorageMultiplier);
+    }
+
+    private int applyModifier(int base, int extra, double multiplier) {
+        double ret = (double) Math.round(((double) base + (double) extra) * multiplier);
+        return ret > (double) Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) ret;
     }
 }
