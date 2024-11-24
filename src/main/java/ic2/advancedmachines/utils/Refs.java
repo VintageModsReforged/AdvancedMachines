@@ -7,7 +7,7 @@ public class Refs {
 
     public static final String ID = "AdvancedMachines";
     public static final String NAME = "IC2 Advanced Machines Addon";
-    public static final String VERSION = "4.7.5.2a";
+    public static final String VERSION = "4.7.5.2b";
     public static final String MC_VERSION = "[1.5.2]";
     public static final String DEPS = "required-after:IC2";
 
