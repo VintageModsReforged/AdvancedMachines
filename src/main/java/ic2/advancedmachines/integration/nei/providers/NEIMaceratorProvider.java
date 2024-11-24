@@ -25,7 +25,7 @@ public class NEIMaceratorProvider extends MachineRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/ic2/sprites/GUIMacerator.png";
+        return "/mods/ic2/textures/gui/GUIMacerator.png";
     }
 
     @Override

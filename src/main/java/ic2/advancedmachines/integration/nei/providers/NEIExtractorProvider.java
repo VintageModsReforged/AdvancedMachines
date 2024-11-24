@@ -25,7 +25,7 @@ public class NEIExtractorProvider extends MachineRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/ic2/sprites/GUIExtractor.png";
+        return "/mods/ic2/textures/gui/GUIExtractor.png";
     }
 
     @Override

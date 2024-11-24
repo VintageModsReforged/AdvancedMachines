@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class MultiItemRange {
     public ArrayList<ItemRange> ranges = new ArrayList<ItemRange>();
-    public byte state;
 
     public MultiItemRange() {}
 

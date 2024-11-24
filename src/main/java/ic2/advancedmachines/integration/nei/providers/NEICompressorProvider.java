@@ -25,7 +25,7 @@ public class NEICompressorProvider extends MachineRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/ic2/sprites/GUICompressor.png";
+        return "/mods/ic2/textures/gui/GUICompressor.png";
     }
 
     @Override
