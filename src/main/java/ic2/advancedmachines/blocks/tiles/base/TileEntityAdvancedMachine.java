@@ -6,6 +6,7 @@ import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
 import ic2.advancedmachines.utils.IStackFilter;
 import ic2.advancedmachines.utils.InvAdvSlotUpgrade;
+import ic2.api.Direction;
 import ic2.api.item.Items;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
@@ -17,11 +18,13 @@ import ic2.core.audio.PositionSpec;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityElectricMachine;
-import ic2.core.item.IUpgradeItem;
 import ic2.core.slot.SlotInvSlot;
+import ic2.core.util.StackUtil;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -180,10 +183,19 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
 
         for (int i = 0; i < 2; ++i) {
             ItemStack upgradeStack = this.upgradeSlot.get(i);
-            if (upgradeStack != null && upgradeStack.getItem() instanceof ISimpleUpgrade) {
-                ISimpleUpgrade upgrade = (ISimpleUpgrade) upgradeStack.getItem();
-                if (upgrade.canTick(upgradeStack) && upgrade.onTick(this, upgradeStack)) {
-                    needsInvUpdate = true;
+            if (upgradeStack != null) {
+                // handle out tickable upgrades
+                if (upgradeStack.getItem() instanceof ISimpleUpgrade) {
+                    ISimpleUpgrade upgrade = (ISimpleUpgrade) upgradeStack.getItem();
+                    if (upgrade.canTick(upgradeStack) && upgrade.onTick(this, upgradeStack)) {
+                        needsInvUpdate = true;
+                    }
+                }
+                // handle IC2 tickable upgrade - ejectorUpgrade
+                if (upgradeStack.isItemEqual(Items.getItem("ejectorUpgrade"))) {
+                    if (inventoryManagementUpgradeTick(upgradeStack, this)) {
+                        needsInvUpdate = true;
+                    }
                 }
             }
         }
@@ -390,5 +402,31 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     private int applyModifier(int base, int extra, double multiplier) {
         double ret = (double) Math.round(((double) base + (double) extra) * multiplier);
         return ret > (double) Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) ret;
+    }
+
+    public static boolean inventoryManagementUpgradeTick(ItemStack stack, TileEntityAdvancedMachine machine) {
+        for (InvSlotOutput outputSlot : machine.outputs) {
+            ItemStack outputStack = outputSlot.get();
+            if (outputStack != null && machine.energy >= 20) {
+                int amount = Math.min(outputStack.stackSize, machine.energy / 20);
+                int outputSide = StackUtil.getOrCreateNbtData(stack).getByte("dir");
+                if (outputSide >= 1 && outputSide <= 6) {
+                    TileEntity tileEntity = Direction.values()[outputSide - 1].applyToTileEntity(machine);
+                    if (!(tileEntity instanceof IInventory)) {
+                        return false;
+                    }
+                    amount = StackUtil.putInInventory((IInventory) tileEntity, StackUtil.copyWithSize(outputStack, amount), false);
+                } else {
+                    amount = StackUtil.distribute(machine, StackUtil.copyWithSize(outputStack, amount), false);
+                }
+                outputStack.stackSize -= amount;
+                if (outputStack.stackSize <= 0) {
+                    outputSlot.clear();
+                }
+                machine.energy -= 20 * amount;
+                return true;
+            }
+        }
+        return false;
     }
 }

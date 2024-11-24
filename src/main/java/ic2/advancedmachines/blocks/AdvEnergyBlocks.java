@@ -8,8 +8,7 @@ public enum AdvEnergyBlocks {
     ISU,
     PESU,
     TRANSFORMER_EV,
-    TRANSFORMER_IV,
-    TRANSFORMER_ADJ;
+    TRANSFORMER_IV;
 
     public final ItemStack STACK;
     public static final AdvEnergyBlocks[] VALUES = values();
