@@ -144,11 +144,5 @@ public class AdvancedMachinesRecipes {
                 '#', BlocksItems.CIRCUIT_COMPLEX,
                 'T', AdvEnergyBlocks.TRANSFORMER_EV.STACK,
                 'X', BlocksItems.GLOWTRONIC_CRYSTAL);
-
-        Recipes.advRecipes.addRecipe(AdvEnergyBlocks.TRANSFORMER_ADJ.STACK,
-                "T", "#", "M",
-                'T', Items.getItem("lvTransformer"),
-                '#', BlocksItems.CIRCUIT_COMPLEX,
-                'M', AdvEnergyBlocks.TRANSFORMER_EV.STACK);
     }
 }
