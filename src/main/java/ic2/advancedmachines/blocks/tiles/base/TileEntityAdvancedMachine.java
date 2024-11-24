@@ -6,6 +6,7 @@ import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.items.IUpgradeItem;
 import ic2.advancedmachines.utils.IStackFilter;
 import ic2.api.Direction;
+import ic2.api.Items;
 import ic2.api.network.INetworkTileEntityEventListener;
 import ic2.api.network.NetworkHelper;
 import ic2.core.ContainerIC2;
@@ -28,11 +29,12 @@ import java.util.Locale;
 
 public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine implements IHasGui, ISidedInventory, INetworkTileEntityEventListener {
 
-    public static int maxProgress = 4000;
-    public static int maxEnergy = 5000;
-    public static int maxSpeed = 10000;
-    public static int maxInput = 128;
-    public static int energyUsage = 15;
+    public int maxProgress = 4000;
+    public int maxSpeed = 10000;
+    public int energyUsage = 15;
+
+    public int defaultMaxInput;
+    public int defaultEnergyStorage;
 
     public short speed;
     public String invName;
@@ -42,9 +44,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     public String speedFormat = "%s%%";
     public int soundTicker;
     public AudioSource audioSource;
-    private static final int eventStart = 0;
-    private static final int eventInterrupt = 1;
-    private static final int eventStop = 2;
+    private final int eventStart = 0;
+    private final int eventInterrupt = 1;
+    private final int eventStop = 2;
     public IStackFilter inputFilter;
     public String guiPath;
 
@@ -53,7 +55,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
 
     public TileEntityAdvancedMachine(String invName, int[] inputSlots, int[] outputSlots, IStackFilter inputFilter, String guiPath) {
-        super(inputSlots.length + outputSlots.length + 4, 0, maxEnergy, maxInput);
+        super(inputSlots.length + outputSlots.length + 4, 0, 5000, 128);
         this.invName = invName;
         this.inputs = inputSlots;
         this.outputs = outputSlots;
@@ -62,6 +64,9 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         this.soundTicker = IC2.random.nextInt(64);
         this.inputFilter = inputFilter;
         this.guiPath = guiPath;
+
+        this.defaultMaxInput = this.maxInput;
+        this.defaultEnergyStorage = this.maxEnergy;
     }
 
     @Override
@@ -89,6 +94,22 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
         if (IC2.platform.isRendering() && this.audioSource != null) {
             IC2.audioManager.removeSources(this);
             this.audioSource = null;
+        }
+    }
+
+    @Override
+    public void onLoaded() {
+        super.onLoaded();
+        if (IC2.platform.isSimulating()) {
+            this.handleUpgrades();
+        }
+    }
+
+    @Override
+    public void onInventoryChanged() {
+        super.onInventoryChanged();
+        if (IC2.platform.isSimulating()) {
+            this.handleUpgrades();
         }
     }
 
@@ -397,5 +418,30 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
     @Override
     public String getGuiClassName(EntityPlayer player) {
         return "gui.GuiAdv" + this.guiPath;
+    }
+
+    public void handleUpgrades() {
+        int transformerUpgradeCount = 0;
+        int energyStorageUpgradeCount = 0;
+        int[] upgradeSlots = getUpgradeSlots();
+        for (int i = 0; i < 2; i++) {
+            int upgradeSlot = upgradeSlots[i];
+            ItemStack upgradeStack = this.inventory[upgradeSlot];
+            if (upgradeStack != null) {
+                if (upgradeStack.isItemEqual(Items.getItem("transformerUpgrade"))) {
+                    transformerUpgradeCount += upgradeStack.stackSize;
+                } else if (upgradeStack.isItemEqual(Items.getItem("energyStorageUpgrade"))) {
+                    energyStorageUpgradeCount += upgradeStack.stackSize;
+                }
+            }
+        }
+
+        if (transformerUpgradeCount > 10) {
+            transformerUpgradeCount = 10;
+        }
+
+        this.maxInput = this.defaultMaxInput * (int) Math.pow(4.0F, transformerUpgradeCount);
+        this.maxEnergy = this.defaultEnergyStorage + energyStorageUpgradeCount * 10000 + this.maxInput - 1;
+        this.tier = transformerUpgradeCount + 1;
     }
 }
