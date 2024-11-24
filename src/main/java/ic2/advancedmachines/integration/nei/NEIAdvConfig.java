@@ -21,23 +21,15 @@ public class NEIAdvConfig implements IConfigureNEI {
     @Override
     public void loadConfig() {
         AdvancedMachines.LOGGER.info("Loading NEI Plugin for AdvancedMachines!");
-        API.registerRecipeHandler(new NEIMaceratorProvider());
         API.registerUsageHandler(new NEIMaceratorProvider());
-        API.registerRecipeHandler(new NEICompressorProvider());
         API.registerUsageHandler(new NEICompressorProvider());
-        API.registerRecipeHandler(new NEIExtractorProvider());
         API.registerUsageHandler(new NEIExtractorProvider());
 
-        API.registerRecipeHandler(new NEIIronFurnaceProvider());
         API.registerUsageHandler(new NEIIronFurnaceProvider());
-        API.registerRecipeHandler(new NEIElectricFurnaceProvider());
         API.registerUsageHandler(new NEIElectricFurnaceProvider());
-        API.registerRecipeHandler(new NEIInductionFurnaceProvider());
         API.registerUsageHandler(new NEIInductionFurnaceProvider());
-        API.registerRecipeHandler(new NEIAdvInductionFurnaceProvider());
         API.registerUsageHandler(new NEIAdvInductionFurnaceProvider());
 
-        API.registerRecipeHandler(new NEIElectrolyzerProvider());
         API.registerUsageHandler(new NEIElectrolyzerProvider());
 
         API.registerGuiOverlay(GuiAdvMacerator.class, "macerator", 5, 11);
