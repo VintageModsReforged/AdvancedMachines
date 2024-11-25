@@ -2,11 +2,11 @@ package ic2.advancedmachines.blocks.tiles.machines;
 
 import ic2.advancedmachines.blocks.tiles.container.ContainerChargedElectrolyzer;
 import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
-import ic2.advancedmachines.utils.LangHelper;
 import ic2.api.Items;
 import ic2.core.ContainerIC2;
 import ic2.core.block.machine.tileentity.TileEntityElectrolyzer;
 import ic2.core.block.wiring.TileEntityElectricBlock;
+import mods.vintage.core.helpers.LangHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

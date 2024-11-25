@@ -14,6 +14,8 @@ import ic2.advancedmachines.network.AdvNetworkHandlerClient;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
+import mods.vintage.core.platform.lang.ILangProvider;
+import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -23,7 +25,7 @@ import java.util.logging.Logger;
 @NetworkMod(clientSideRequired = true,
         clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandlerClient.class),
         serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandler.class))
-public class AdvancedMachines {
+public class AdvancedMachines implements ILangProvider {
 
     @SidedProxy(clientSide = Refs.PROXY_CLIENT, serverSide = Refs.PROXY_COMMON)
     public static CommonProxy proxy;
@@ -49,6 +51,7 @@ public class AdvancedMachines {
     @Mod.PreInit
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
+        LangManager.THIS.registerLangProvider(this);
     }
 
     @Mod.Init
@@ -63,5 +66,10 @@ public class AdvancedMachines {
             LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.SEASONAL_IC2, IC2.seasonal));
             IC2.seasonal = AdvancedMachinesConfig.SEASONAL_IC2;
         }
+    }
+
+    @Override
+    public String getModid() {
+        return Refs.ID;
     }
 }

@@ -14,14 +14,14 @@ public class Refs {
     public static final String NETWORK_COMMON = "ic2.advancedmachines.network.AdvNetworkHandler";
     public static final String NETWORK_CLIENT = "ic2.advancedmachines.network.AdvNetworkHandlerClient";
 
-    public static final String BLOCK_MACHINES = "/mods/advancedmachines/textures/blocks/machines.png";
-    public static final String BLOCK_ELECTRIC = "/mods/advancedmachines/textures/blocks/electric.png";
-    public static final String ITEMS = "/mods/advancedmachines/textures/items/items.png";
+    public static final String BLOCK_MACHINES = "/mods/AdvancedMachines/textures/blocks/machines.png";
+    public static final String BLOCK_ELECTRIC = "/mods/AdvancedMachines/textures/blocks/electric.png";
+    public static final String ITEMS = "/mods/AdvancedMachines/textures/items/items.png";
 
     public static final String[] KEY_DIRECTION_NAMES = {"inv.dir.down", "inv.dir.up", "inv.dir.north", "inv.dir.south", "inv.dir.west", "inv.dir.east"};
 
     public static String getGuiPath(String machine) {
-        return "/mods/advancedmachines/textures/gui/" + machine + ".png";
+        return "/mods/AdvancedMachines/textures/gui/" + machine + ".png";
     }
 
     public static final int AT_MIN_PACKET = 4;

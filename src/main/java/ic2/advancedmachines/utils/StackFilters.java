@@ -1,6 +1,5 @@
 package ic2.advancedmachines.utils;
 
-import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.items.IUpgradeItem;
 import ic2.api.IElectricItem;
 import ic2.api.Ic2Recipes;

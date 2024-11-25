@@ -6,7 +6,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.BlocksItems;
-import ic2.advancedmachines.utils.LangHelper;
 import ic2.api.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -17,7 +16,6 @@ public class CommonProxy {
     public void preInit(FMLPreInitializationEvent e) {
         // config, langs, items
         AdvancedMachinesConfig.init();
-        LangHelper.init();
         BlocksItems.init();
     }
 
