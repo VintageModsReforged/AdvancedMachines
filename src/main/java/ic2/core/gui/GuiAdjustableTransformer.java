@@ -8,7 +8,7 @@ import ic2.advancedmachines.blocks.tiles.energy.TileEntityAdjustableTransformer;
 import ic2.advancedmachines.utils.RenderUtils;
 import ic2.advancedmachines.utils.CustomSmallButton;
 import ic2.advancedmachines.utils.Refs;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;

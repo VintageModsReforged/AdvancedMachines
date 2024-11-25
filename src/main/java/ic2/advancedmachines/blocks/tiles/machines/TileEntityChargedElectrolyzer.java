@@ -6,7 +6,7 @@ import ic2.api.Items;
 import ic2.core.ContainerIC2;
 import ic2.core.block.machine.tileentity.TileEntityElectrolyzer;
 import ic2.core.block.wiring.TileEntityElectricBlock;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

@@ -10,7 +10,7 @@ import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.Direction;
 import ic2.core.util.StackUtil;
-import mods.vintage.core.platform.lang.TextFormatter;
+import core.platform.lang.TextFormatter;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

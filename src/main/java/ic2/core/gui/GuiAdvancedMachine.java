@@ -5,7 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;
 

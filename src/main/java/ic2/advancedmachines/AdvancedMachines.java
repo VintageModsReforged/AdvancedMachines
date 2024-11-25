@@ -1,5 +1,7 @@
 package ic2.advancedmachines;
 
+import core.platform.lang.ILangProvider;
+import core.platform.lang.LangManager;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -14,8 +16,6 @@ import ic2.advancedmachines.network.AdvNetworkHandlerClient;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
-import mods.vintage.core.platform.lang.ILangProvider;
-import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

@@ -9,7 +9,7 @@ import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
-import mods.vintage.core.platform.lang.TextFormatter;
+import core.platform.lang.TextFormatter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

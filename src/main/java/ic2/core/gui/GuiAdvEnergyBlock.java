@@ -6,7 +6,7 @@ import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedElectricBloc
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.GuiIconButton;
 import ic2.core.IC2;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;

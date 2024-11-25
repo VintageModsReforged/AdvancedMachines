@@ -55,7 +55,6 @@ dependencies {
 	modImplementation files("libs/CoFHCore.zip")
 	modImplementation files("libs/hopper.jar")
 	modImplementation files("libs/AdvPowerMng.jar")
-	modImplementation files("libs/VintageCore-1.4.7-1.0.0-dev.jar")
 	modImplementation("maven.modrinth:nei:1.4.7.4")
 	modImplementation("maven.modrinth:codechicken-core:0.8.1.6")
 //	coremodImplementation files("libs/NotEnoughItemsPatched.jar")
