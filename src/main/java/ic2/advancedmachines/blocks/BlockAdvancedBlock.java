@@ -66,7 +66,7 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
             for(int active = 0; active < 2; ++active) {
                 for(int side = 0; side < 6; ++side) {
                     int subIndex = active * 6 + side;
-                    String name = "advancedmachines:" + textureFolder + this.getTextureName(index) + "." + subIndex;
+                    String name = "AdvancedMachines:" + textureFolder + this.getTextureName(index) + "." + subIndex;
                     TextureStitched texture = new BlockTextureStitched(name);
                     this.textures[index][subIndex] = texture;
                     ((TextureMap)iconRegister).setTextureEntry(name, texture);

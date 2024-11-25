@@ -13,6 +13,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
+import mods.vintage.core.platform.lang.ILangProvider;
+import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
@@ -20,7 +22,7 @@ import java.util.logging.Logger;
 
 @Mod(modid = Refs.ID, name = Refs.NAME, version = Refs.VERSION, acceptedMinecraftVersions = Refs.MC_VERSION, dependencies = Refs.DEPS)
 @NetworkMod(clientSideRequired = true)
-public class AdvancedMachines {
+public class AdvancedMachines implements ILangProvider {
 
     @SidedProxy(clientSide = Refs.PROXY_CLIENT, serverSide = Refs.PROXY_COMMON)
     public static CommonProxy proxy;
@@ -41,6 +43,7 @@ public class AdvancedMachines {
     @PreInit
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
+        LangManager.THIS.registerLangProvider(this);
     }
 
     @Init
@@ -51,5 +54,10 @@ public class AdvancedMachines {
     @PostInit
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+    }
+
+    @Override
+    public String getModid() {
+        return Refs.ID;
     }
 }

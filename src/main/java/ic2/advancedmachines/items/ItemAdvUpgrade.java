@@ -46,7 +46,7 @@ public class ItemAdvUpgrade extends Item implements ISimpleUpgrade {
     @Override
     public void registerIcons(IconRegister registry) {
         for (int i = 0; i < names.length; i++) {
-            icons[i] = registry.registerIcon("advancedmachines:upgrades/" + names[i]);
+            icons[i] = registry.registerIcon("AdvancedMachines:upgrades/" + names[i]);
         }
     }
 

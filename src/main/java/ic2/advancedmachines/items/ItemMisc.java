@@ -44,7 +44,7 @@ public class ItemMisc extends Item {
     @Override
     public void registerIcons(IconRegister registry) {
         for (int i = 0; i < names.length; i++) {
-            textures[i] = registry.registerIcon("advancedmachines:misc/" + names[i]);
+            textures[i] = registry.registerIcon("AdvancedMachines:misc/" + names[i]);
         }
     }
 

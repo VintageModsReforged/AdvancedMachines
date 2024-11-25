@@ -4,11 +4,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.utils.AdvUtils;
-import ic2.advancedmachines.utils.TextFormatter;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
+import mods.vintage.core.platform.lang.TextFormatter;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -117,7 +117,7 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     public void registerIcons(IconRegister iconRegister) {
         String textureFolder = "batteries";
         for(int index = 0; index < this.textures.length; ++index) {
-            this.textures[index] = iconRegister.registerIcon("advancedmachines:" + textureFolder + "/" + this.name + "/" + index);
+            this.textures[index] = iconRegister.registerIcon("AdvancedMachines:" + textureFolder + "/" + this.name + "/" + index);
         }
     }
 

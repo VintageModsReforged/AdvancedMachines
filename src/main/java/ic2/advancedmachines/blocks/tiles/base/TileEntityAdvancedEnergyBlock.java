@@ -5,10 +5,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.blocks.container.ContainerAdvancedElectricBlock;
 import ic2.advancedmachines.blocks.gui.GuiAdvancedElectricBlock;
 import ic2.advancedmachines.blocks.tiles.machines.IEnergyProvider;
-import ic2.advancedmachines.utils.LangHelper;
 import ic2.core.ContainerBase;
 import ic2.core.IC2;
 import ic2.core.block.wiring.TileEntityElectricBlock;
+import mods.vintage.core.helpers.LangHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 

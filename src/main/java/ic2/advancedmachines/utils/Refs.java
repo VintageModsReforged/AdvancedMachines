@@ -9,13 +9,13 @@ public class Refs {
     public static final String NAME = "IC2 Advanced Machines Addon";
     public static final String VERSION = "4.7.5.2b";
     public static final String MC_VERSION = "[1.5.2]";
-    public static final String DEPS = "required-after:IC2";
+    public static final String DEPS = "required-after:VintageCore;required-after:IC2";
 
     public static final String PROXY_COMMON = "ic2.advancedmachines.proxy.CommonProxy";
     public static final String PROXY_CLIENT = "ic2.advancedmachines.proxy.ClientProxy";
 
     public static String getGuiPath(String machine) {
-        return "/mods/advancedmachines/textures/gui/" + machine + ".png";
+        return "/mods/AdvancedMachines/textures/gui/" + machine + ".png";
     }
 
     public static String getTextureName(TileEntityAdvancedMachine tile) {

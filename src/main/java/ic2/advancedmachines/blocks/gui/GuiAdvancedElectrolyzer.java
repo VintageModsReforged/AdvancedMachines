@@ -4,8 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.blocks.container.ContainerChargedElectrolyzer;
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
-import ic2.advancedmachines.utils.LangHelper;
 import ic2.advancedmachines.utils.Refs;
+import mods.vintage.core.helpers.LangHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;
 
