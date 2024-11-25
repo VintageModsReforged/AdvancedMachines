@@ -19,7 +19,14 @@ inv.dir.north=Север
 inv.dir.south=Юг
 inv.dir.west=Запад
 inv.dir.east=Восток
-inv.dir.all=первой доступной
+
+output.top=верхней
+output.bottom=нижней
+output.north=северной
+output.east=восточной
+output.south=южной
+output.west=западной
+output.all=первой доступной
 
 item.redstone.inverter.name=Инвертор красного сигнала
 item.cobblestone.generator.name=Генератор булыжника

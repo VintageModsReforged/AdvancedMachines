@@ -19,7 +19,14 @@ inv.dir.north=North
 inv.dir.south=South
 inv.dir.west=West
 inv.dir.east=East
-inv.dir.all=first valid
+
+output.top=top
+output.bottom=bottom
+output.north=north
+output.east=east
+output.south=south
+output.west=west
+output.all=first valid
 
 item.redstone.inverter.name=Redstone Inverter Upgrade
 item.cobblestone.generator.name=Cobblestone Generator Upgrade

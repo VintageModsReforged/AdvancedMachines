@@ -8,7 +8,7 @@ public class LangHelper {
         return StatCollector.translateToLocalFormatted(key, args);
     }
 
-    public static String format(boolean b) {
-        return format(b ? "true" : "false");
+    public static String format(boolean value) {
+        return format(value ? "true" : "false");
     }
 }

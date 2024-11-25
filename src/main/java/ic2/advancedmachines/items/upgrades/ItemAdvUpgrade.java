@@ -74,25 +74,25 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
             int outputSide = StackUtil.getOrCreateNbtData(stack).getByte("output") - 1;
             switch (outputSide) {
                 case 0:
-                    side = "inv.dir.west";
+                    side = "output.west";
                     break;
                 case 1:
-                    side = "inv.dir.east";
+                    side = "output.east";
                     break;
                 case 2:
-                    side = "inv.dir.down";
+                    side = "output.bottom";
                     break;
                 case 3:
-                    side = "inv.dir.up";
+                    side = "output.top";
                     break;
                 case 4:
-                    side = "inv.dir.north";
+                    side = "output.north";
                     break;
                 case 5:
-                    side = "inv.dir.south";
+                    side = "output.south";
                     break;
                 default:
-                    side = "inv.dir.all";
+                    side = "output.all";
             }
             list.add(TextFormatter.AQUA.format("tooltip.item.upgrade.ejector", TextFormatter.GOLD.format(side)));
         }
