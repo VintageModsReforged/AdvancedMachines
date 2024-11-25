@@ -1,6 +1,8 @@
 Version 4.7.5.2b
     fixed: NEI recipe providers duplication, now Adv Machines are added as Usage Providers only
     added: support for Energy Storage Upgrade and Transformer Upgrade
+    added: ejector upgrade
+    added: experimental ITextComponent for better formatting
 
 Version 4.7.5.2a
     added: Compacting Recycler: advanced machine variant for regular Recycler
