@@ -3,6 +3,7 @@ Version 4.7.5.2b
     fixed: removed recipe for non-existing Adjustable Transformer, woops
     fixed: added OreDict values for Cobblestone Recipe input items, the recipe is working now
     added: support for Energy Storage Upgrade and Transformer Upgrade
+    added: support for Tickable Upgrades
 
 Version 4.7.5.2a
     added: Compacting Recycler: advanced machine variant for regular Recycler
