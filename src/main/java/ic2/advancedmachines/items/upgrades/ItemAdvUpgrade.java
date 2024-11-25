@@ -6,11 +6,20 @@ import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.items.IUpgradeItem;
+import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
+import ic2.advancedmachines.utils.TextFormatter;
+import ic2.api.Direction;
+import ic2.core.util.StackUtil;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -18,7 +27,8 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
 
     public String[] names = new String[] {
             "redstone.inverter",
-            "cobblestone.generator"
+            "cobblestone.generator",
+            "ejector"
     };
 
     public ItemAdvUpgrade() {
@@ -35,9 +45,70 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
     }
 
     @Override
+    public boolean requiresMultipleRenderPasses() {
+        return true;
+    }
+
+    @Override
+    public int getIconIndex(ItemStack stack, int pass) {
+        int damage = stack.getItemDamage();
+        if (damage == 2) {
+            int outputSide = StackUtil.getOrCreateNbtData(stack).getByte("output");
+            return getIconFromDamage(22 + outputSide);
+        } else return super.getIconIndex(stack);
+    }
+
+    @Override
     public String getItemNameIS(ItemStack stack) {
         int damage = stack.getItemDamage();
         return "item." + names[damage];
+    }
+
+    @SuppressWarnings("unchecked")
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean debug) {
+        super.addInformation(stack, player, list, debug);
+        if (stack.getItemDamage() == 2) {
+            String side;
+            int outputSide = StackUtil.getOrCreateNbtData(stack).getByte("output") - 1;
+            switch (outputSide) {
+                case 0:
+                    side = "inv.dir.west";
+                    break;
+                case 1:
+                    side = "inv.dir.east";
+                    break;
+                case 2:
+                    side = "inv.dir.down";
+                    break;
+                case 3:
+                    side = "inv.dir.up";
+                    break;
+                case 4:
+                    side = "inv.dir.north";
+                    break;
+                case 5:
+                    side = "inv.dir.south";
+                    break;
+                default:
+                    side = "inv.dir.all";
+            }
+            list.add(TextFormatter.AQUA.format("tooltip.item.upgrade.ejector", TextFormatter.GOLD.format(side)));
+        }
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float xOffset, float yOffset, float zOffset) {
+        if (stack.getItemDamage() == 2) {
+            int outputSide = 1 + (side + 2) % 6;
+            NBTTagCompound tag = StackUtil.getOrCreateNbtData(stack);
+            if (tag.getByte("output") != outputSide) {
+                tag.setByte("output", (byte) outputSide);
+                return true;
+            }
+        }
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +123,8 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
 
     @Override
     public boolean canTick(ItemStack upgrade) {
-        return upgrade.getItemDamage() == 1; // only cobblestone upgrade for now
+        return upgrade.getItemDamage() == 1
+                || upgrade.getItemDamage() == 2;
     }
 
     @Override
@@ -60,9 +132,39 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
         int meta = upgrade.getItemDamage();
         if (meta == 1) { // Cobblestone generator
             return generateCobblestone(machine, upgrade);
+        } else if (meta == 2) {
+            return handleTransport(machine, upgrade);
         }
         return false;
     }
+
+    public boolean handleTransport(TileEntityAdvancedMachine machine, ItemStack upgrade) {
+        for (int i = 0; i < machine.outputs.length; i++) {
+            int outputSlot = machine.outputs[i];
+            ItemStack output = machine.inventory[outputSlot];
+            if (output != null && machine.energy >= 20) {
+                int amount = Math.min(output.stackSize, machine.energy / 20);
+                int dir = StackUtil.getOrCreateNbtData(upgrade).getByte("output");
+                if (dir >= 1 && dir <= 6) {
+                    TileEntity te = Direction.values()[dir - 1].applyToTileEntity(machine);
+                    if (!(te instanceof IInventory)) {
+                        return false;
+                    }
+                    amount = AdvUtils.extractToInventory((IInventory) te, StackUtil.copyWithSize(output, amount), false);
+                } else {
+                    amount = AdvUtils.distribute(machine, StackUtil.copyWithSize(output, amount), false);
+                }
+                output.stackSize -= amount;
+                if (output.stackSize <= 0) {
+                    machine.inventory[outputSlot] = null;
+                }
+                machine.energy -= 20 * amount;
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public int lastFilledSlot = 0; // Tracks the last filled input slot
 

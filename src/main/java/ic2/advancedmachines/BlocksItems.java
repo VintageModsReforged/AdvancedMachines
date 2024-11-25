@@ -26,6 +26,7 @@ public class BlocksItems {
     public static Item ADVANCED_UPGRADE;
     public static ItemStack REDSTONE_INVERTER;
     public static ItemStack COBBLESTONE_GENERATOR;
+    public static ItemStack EJECTOR;
 
     public static Item COMPONENT;
     public static ItemStack MAGNET_CHUNK;
@@ -38,6 +39,7 @@ public class BlocksItems {
         ADVANCED_UPGRADE = registerItem(new ItemAdvUpgrade(), "advanced.upgrade");
         REDSTONE_INVERTER = new ItemStack(ADVANCED_UPGRADE, 1, 0);
         COBBLESTONE_GENERATOR = new ItemStack(ADVANCED_UPGRADE, 1, 1);
+        EJECTOR = new ItemStack(ADVANCED_UPGRADE, 1, 2);
 
         COMPONENT = registerItem(new ItemComponent(17), "component");
         MAGNET_CHUNK = new ItemStack(COMPONENT, 1, 0);

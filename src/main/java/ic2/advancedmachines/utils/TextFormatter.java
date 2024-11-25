@@ -1,5 +1,9 @@
 package ic2.advancedmachines.utils;
 
+import ic2.advancedmachines.utils.components.ChatComponentText;
+import ic2.advancedmachines.utils.components.ChatComponentTranslation;
+import ic2.advancedmachines.utils.components.ChatStyle;
+
 public enum TextFormatter {
     BLACK("0"),
     DARK_BLUE("1"),
@@ -16,7 +20,13 @@ public enum TextFormatter {
     RED("c"),
     LIGHT_PURPLE("d"),
     YELLOW("e"),
-    WHITE("f");
+    WHITE("f"),
+    OBFUSCATED("k"),
+    BOLD("l"),
+    STRIKETHROUGH("m"),
+    UNDERLINE("n"),
+    ITALIC("o"),
+    RESET("r");
 
     private final String colorCode;
 
@@ -24,16 +34,16 @@ public enum TextFormatter {
         this.colorCode = "\247" + colorIndex;
     }
 
-    public String literal(String text) {
-        return this.colorCode + text + GRAY;
+    public String format(String translatable) {
+        return new ChatComponentTranslation(translatable).setChatStyle(new ChatStyle().setColor(this)).getFormattedText();
     }
 
-    public String format(String text) {
-        return this.colorCode + LangHelper.format(text) + GRAY;
+    public String format(String translatable, Object... args) {
+        return new ChatComponentTranslation(translatable, args).setChatStyle(new ChatStyle().setColor(this)).getFormattedText();
     }
 
-    public String format(String text, Object... args) {
-        return this.colorCode + LangHelper.format(text, args) + GRAY;
+    public String literal(String literal) {
+        return new ChatComponentText(literal).setChatStyle(new ChatStyle().setColor(this)).getFormattedText();
     }
 
     @Override

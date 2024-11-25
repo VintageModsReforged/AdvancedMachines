@@ -150,5 +150,13 @@ public class AdvancedMachinesRecipes {
                 'T', Items.getItem("lvTransformer"),
                 '#', BlocksItems.CIRCUIT_COMPLEX,
                 'M', AdvEnergyBlocks.TRANSFORMER_EV.STACK);
+
+        Ic2Recipes.addCraftingRecipe(BlocksItems.EJECTOR,
+                "PCP", "I#I", "WIW",
+                'P', Block.pistonBase,
+                'C', Block.chest,
+                'I', Items.getItem("refinedIronIngot"),
+                '#', Items.getItem("electronicCircuit"),
+                'W', Items.getItem("insulatedCopperCableItem"));
     }
 }

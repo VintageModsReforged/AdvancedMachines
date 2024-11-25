@@ -342,7 +342,7 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElecMachine im
 
     @Override
     public int injectEnergy(Direction directionFrom, int amount) {
-        if (amount > 128) {
+        if (amount > this.maxInput) {
             IC2.explodeMachineAt(this.worldObj, this.xCoord, this.yCoord, this.zCoord);
             return 0;
         } else {
