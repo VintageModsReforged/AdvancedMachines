@@ -2,7 +2,7 @@ package ic2.advancedmachines.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.vintage.core.platform.lang.TextFormatter;
+import core.platform.lang.TextFormatter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;

@@ -6,7 +6,7 @@ import ic2.advancedmachines.blocks.container.ContainerAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityCentrifugeExtractor;
 import ic2.advancedmachines.utils.Refs;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;

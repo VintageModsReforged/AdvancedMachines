@@ -13,8 +13,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
-import mods.vintage.core.platform.lang.ILangProvider;
-import mods.vintage.core.platform.lang.LangManager;
+import core.platform.lang.ILangProvider;
+import core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 

@@ -9,7 +9,7 @@ import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.slot.SlotInvSlot;
-import mods.vintage.core.helpers.LangHelper;
+import core.helpers.LangHelper;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 

@@ -14,10 +14,8 @@ public class AdvancedMachinesConfig {
     public static final String SOUND_CAT_DESC = "Sound files to use on operation. Remember to use '/' instead of backslashes and the Sound directory starts on ic2/sounds. Set empty to disable.";
     public static final String ITEM_IDS_CAT = "Item IDs";
     public static final String BLOCK_IDS_CAT = "Block IDs";
-    public static final String BLOCK_GUI_IDS_CAT = "Gui IDs";
 
     public static Configuration MAIN_CONFIG;
-    public static String[] LANGS;
 
     public static int ADV_UPGRADE_ID;
     public static int COMPONENT_ID;
@@ -42,7 +40,6 @@ public class AdvancedMachinesConfig {
         MAIN_CONFIG = new Configuration(new File((File) FMLInjectionData.data()[6], "config/AdvancedMachines.cfg"));
         MAIN_CONFIG.load();
 
-        LANGS = getStrings("language Support", null,"localizations", new String[] {"en_US", "ru_RU"}, "Supported localizations.");
         MACERATOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "maceratorWorkSound", "Machines/MaceratorOp.ogg", "Macerator Work Sound");
         COMPRESSOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "compressorWorkSound", "Machines/CompressorOp.ogg", "Compressor Work Sound");
         EXTRACTOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "extractorWorkSound", "Machines/ExtractorOp.ogg", "Extractor Work Sound");
