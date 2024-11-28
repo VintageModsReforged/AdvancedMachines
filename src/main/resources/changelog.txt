@@ -1,3 +1,8 @@
+Version 4.7.5.2d
+    important: migrated to VintageCore, now this mod is required to run AdvancedMachines
+    fixed: client side elements being called on server
+    added: batteries, storage blocks' name format
+
 Version 4.7.5.2c
     added: common core module
 
