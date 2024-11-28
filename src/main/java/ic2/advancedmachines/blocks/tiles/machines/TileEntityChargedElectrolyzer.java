@@ -1,5 +1,6 @@
 package ic2.advancedmachines.blocks.tiles.machines;
 
+import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.blocks.container.ContainerChargedElectrolyzer;
 import ic2.advancedmachines.blocks.gui.GuiAdvancedElectrolyzer;
 import ic2.advancedmachines.utils.InvSlotFiltered;
@@ -13,7 +14,7 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityElectrolyzer;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import ic2.core.slot.SlotInvSlot;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,8 +27,6 @@ import java.util.List;
 public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     List<TileEntityElectricBlock> energyProviders = new ArrayList<TileEntityElectricBlock>();
-    public static IMachineRecipeManager electrolyzer_power = new BasicMachineRecipeManager();
-    public static IMachineRecipeManager electrolyzer_drain = new BasicMachineRecipeManager();
 
     public InvSlotConsumable input;
     public InvSlotOutput output;
@@ -46,7 +45,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     @Override
     public String getInvName() {
-        return LangHelper.format("block.advanced.electrolyzer.name");
+        return Translator.format("block.advanced.electrolyzer.name");
     }
 
     @Override
@@ -110,7 +109,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
             this.energy += (short) this.getProcessRateFrom(provider);
             if (this.energy >= 20000) {
                 this.energy -= 20000;
-                ItemStack result = ((ItemStack) electrolyzer_drain.getOutputFor(input.get(), true)).copy();
+                ItemStack result = ((ItemStack) AdvancedMachinesRecipes.electrolyzer_drain.getOutputFor(input.get(), true)).copy();
                 int stackSizeSpaceAvailableInOutput = 0;
                 int resultMaxStackSize = result.getMaxStackSize();
 
@@ -146,7 +145,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
                 provider.energy += out;
                 return false;
             } else {
-                ItemStack result = ((ItemStack) electrolyzer_power.getOutputFor(input.get(), true)).copy();
+                ItemStack result = ((ItemStack) AdvancedMachinesRecipes.electrolyzer_power.getOutputFor(input.get(), true)).copy();
                 if (result.isItemEqual(Items.getItem("waterCell"))) {
                     this.energy = (short) (this.energy + 12000 + 2000 * provider.tier);
                     int stackSizeSpaceAvailableInOutput = 0;
@@ -189,13 +188,13 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     @Override
     public boolean canDrain() {
-        ItemStack result = (ItemStack) electrolyzer_drain.getOutputFor(input.get(), false);
+        ItemStack result = (ItemStack) AdvancedMachinesRecipes.electrolyzer_drain.getOutputFor(input.get(), false);
         return canOperate(result);
     }
 
     @Override
     public boolean canPower() {
-        ItemStack result = (ItemStack) electrolyzer_power.getOutputFor(input.get(), false);
+        ItemStack result = (ItemStack) AdvancedMachinesRecipes.electrolyzer_power.getOutputFor(input.get(), false);
         return canOperate(result);
     }
 

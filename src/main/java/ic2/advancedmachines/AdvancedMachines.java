@@ -13,11 +13,13 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
-import core.platform.lang.ILangProvider;
-import core.platform.lang.LangManager;
+import mods.vintage.core.platform.lang.ILangProvider;
+import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Mod(modid = Refs.ID, name = Refs.NAME, version = Refs.VERSION, acceptedMinecraftVersions = Refs.MC_VERSION, dependencies = Refs.DEPS)
@@ -59,5 +61,10 @@ public class AdvancedMachines implements ILangProvider {
     @Override
     public String getModid() {
         return Refs.ID;
+    }
+
+    @Override
+    public List<String> getLocalizationList() {
+        return Arrays.asList(AdvancedMachinesConfig.LANGS);
     }
 }

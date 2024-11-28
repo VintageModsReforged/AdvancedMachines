@@ -42,11 +42,11 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
     public int defaultEnergyStorage;
     public int defaultTier;
 
-    public short speed;
+    public short speed = 0;
     public String invName;
     public List<InvSlotProcessable> inputs;
     public List<InvSlotOutput> outputs;
-    public short progress;
+    public short progress = 0;
     public String speedFormat = "%s%%";
     public int soundTicker;
     public AudioSource audioSource;
@@ -65,8 +65,6 @@ public abstract class TileEntityAdvancedMachine extends TileEntityElectricMachin
         this.invName = invName;
         this.inputs = new ArrayList<InvSlotProcessable>();
         this.outputs = new ArrayList<InvSlotOutput>();
-        this.speed = 0;
-        this.progress = 0;
         this.upgradeSlot = new InvAdvSlotUpgrade(this, "upgrade", upgradeSlotStartIndex, 2);
         this.inputFilter = inputFilter;
         this.addSlots();

@@ -3,12 +3,13 @@ package ic2.advancedmachines.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
+import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.utils.AdvUtils;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
-import core.platform.lang.TextFormatter;
+import mods.vintage.core.platform.lang.FormattedTranslator;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -42,6 +43,18 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     }
 
     @Override
+    public String getItemDisplayName(ItemStack stack) {
+        Item battery = stack.getItem();
+        FormattedTranslator format;
+        if (battery == BlocksItems.GLOWTRONIC_CRYSTAL) {
+            format = FormattedTranslator.YELLOW;
+        } else if (battery == BlocksItems.UNIVERSAL_CRYSTAL) {
+            format = FormattedTranslator.LIGHT_PURPLE;
+        } else format = FormattedTranslator.AQUA;
+        return format.literal(super.getItemDisplayName(stack));
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack) {
         return StackUtil.getOrCreateNbtData(stack).getBoolean("active");
@@ -52,8 +65,8 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
         DecimalFormat formatter = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ROOT));
-        tooltip.add(TextFormatter.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge(stack))));
-        tooltip.add(TextFormatter.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(stack), AdvUtils.getDisplayTier(this.getTier(stack))));
+        tooltip.add(FormattedTranslator.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge(stack))));
+        tooltip.add(FormattedTranslator.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(stack), AdvUtils.getDisplayTier(this.getTier(stack))));
         super.addInformation(stack, player, tooltip, isDebug);
     }
 

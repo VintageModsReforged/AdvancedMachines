@@ -3,6 +3,7 @@ package ic2.advancedmachines.integration.nei.providers;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.blocks.gui.GuiAdvancedElectrolyzer;
 import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.utils.Refs;
@@ -58,13 +59,13 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("ic2.electrolyzer")) {
-            Map recipesDrain = TileEntityChargedElectrolyzer.electrolyzer_drain.getRecipes();
+            Map recipesDrain = AdvancedMachinesRecipes.electrolyzer_drain.getRecipes();
             for (Object object : recipesDrain.entrySet()) {
                 Map.Entry recipe = (Map.Entry) object;
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
 
-            Map recipesPower = TileEntityChargedElectrolyzer.electrolyzer_power.getRecipes();
+            Map recipesPower = AdvancedMachinesRecipes.electrolyzer_power.getRecipes();
             for (Object object : recipesPower.entrySet()) {
                 Map.Entry recipe = (Map.Entry) object;
                 this.arecipes.add(new CachedIORecipe(recipe));
@@ -75,14 +76,14 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
     }
 
     public void loadCraftingRecipes(ItemStack result) {
-        Map recipesDrain = TileEntityChargedElectrolyzer.electrolyzer_drain.getRecipes();
+        Map recipesDrain = AdvancedMachinesRecipes.electrolyzer_drain.getRecipes();
         for (Object object : recipesDrain.entrySet()) {
             Map.Entry recipe = (Map.Entry) object;
             if (StackUtil.isStackEqual((ItemStack) recipe.getValue(), result)) {
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
         }
-        Map recipesPower = TileEntityChargedElectrolyzer.electrolyzer_power.getRecipes();
+        Map recipesPower = AdvancedMachinesRecipes.electrolyzer_power.getRecipes();
         for (Object object : recipesPower.entrySet()) {
             Map.Entry recipe = (Map.Entry) object;
             if (StackUtil.isStackEqual((ItemStack) recipe.getValue(), result)) {
@@ -92,14 +93,14 @@ public class NEIElectrolyzerProvider extends TemplateRecipeHandler {
     }
 
     public void loadUsageRecipes(ItemStack ingredient) {
-        Map recipesDrain = TileEntityChargedElectrolyzer.electrolyzer_drain.getRecipes();
+        Map recipesDrain = AdvancedMachinesRecipes.electrolyzer_drain.getRecipes();
         for (Object object : recipesDrain.entrySet()) {
             Map.Entry recipe = (Map.Entry) object;
             if (StackUtil.isStackEqual((ItemStack) recipe.getKey(), ingredient)) {
                 this.arecipes.add(new CachedIORecipe(recipe));
             }
         }
-        Map recipesPower = TileEntityChargedElectrolyzer.electrolyzer_power.getRecipes();
+        Map recipesPower = AdvancedMachinesRecipes.electrolyzer_power.getRecipes();
         for (Object object : recipesPower.entrySet()) {
             Map.Entry recipe = (Map.Entry) object;
             if (StackUtil.isStackEqual((ItemStack) recipe.getKey(), ingredient)) {

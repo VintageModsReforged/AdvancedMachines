@@ -2,21 +2,25 @@ package ic2.advancedmachines;
 
 import ic2.advancedmachines.blocks.AdvEnergyBlocks;
 import ic2.advancedmachines.blocks.AdvMachines;
-import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.utils.ScrapBoxUtils;
 import ic2.api.item.Items;
+import ic2.api.recipe.IMachineRecipeManager;
 import ic2.api.recipe.Recipes;
+import ic2.core.BasicMachineRecipeManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class AdvancedMachinesRecipes {
 
+    public static IMachineRecipeManager electrolyzer_power = new BasicMachineRecipeManager();
+    public static IMachineRecipeManager electrolyzer_drain = new BasicMachineRecipeManager();
+
     public static void init() {
         ScrapBoxUtils.init();
-        TileEntityChargedElectrolyzer.electrolyzer_drain.addRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
-        TileEntityChargedElectrolyzer.electrolyzer_drain.addRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
-        TileEntityChargedElectrolyzer.electrolyzer_power.addRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
+        electrolyzer_drain.addRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
+        electrolyzer_drain.addRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
+        electrolyzer_power.addRecipe(Items.getItem("electrolyzedWaterCell"), Items.getItem("waterCell"));
         Recipes.compressor.addRecipe(BlocksItems.MAGNET_CHUNK, BlocksItems.MAGNET_DEAD);
         Recipes.extractor.addRecipe(Items.getItem("scrapBox"), new ItemStack(Item.stick));
 

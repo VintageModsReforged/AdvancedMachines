@@ -48,10 +48,10 @@ dependencies {
 	forge "net.minecraftforge:forge:${forgeVersion}:universal@zip"
 	mappings "net.minecraftforge:forge:${forgeVersion}:src@zip"
 
-	implementation 'com.google.code.gson:gson:2.11.0'
 	implementation 'net.jcip:jcip-annotations:1.0'
 	implementation 'org.jetbrains:annotations-java5:23.0.0'
 
+	modImplementation files("libs/VintageCore-1.5.2-1.0.2-dev.jar")
 	modImplementation files("libs/industrialcraft-2_1.117.385-lf.jar")
 	modImplementation files("libs/craftguide.zip")
 	modImplementation files("libs/gregtech.zip")

@@ -113,6 +113,7 @@ public abstract class BlockAdvancedBlock extends BlockContainer {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public int getRenderType() {
         return RenderAdvBlock.renderId;

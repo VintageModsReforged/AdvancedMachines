@@ -12,7 +12,7 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
 import ic2.core.slot.SlotInvSlot;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
     public TileEntityCompactingRecycler() {
-        super(LangHelper.format("block.advanced.recycler.name"), 3, StackFilters.RECYCLER_FILTER);
+        super(Translator.format("block.advanced.recycler.name"), 3, StackFilters.RECYCLER_FILTER);
     }
 
     @SideOnly(Side.CLIENT)
@@ -82,6 +82,6 @@ public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return LangHelper.format("inv.speed.recycler");
+        return Translator.format("inv.speed.recycler");
     }
 }
