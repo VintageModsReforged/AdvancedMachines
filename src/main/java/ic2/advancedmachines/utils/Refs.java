@@ -4,9 +4,9 @@ public class Refs {
 
     public static final String ID = "AdvancedMachines";
     public static final String NAME = "IC2 Advanced Machines Addon";
-    public static final String VERSION = "4.7.5.2c";
+    public static final String VERSION = "4.7.5.2d";
     public static final String MC_VERSION = "[1.4.7]";
-    public static final String DEPS = "required-after:IC2";
+    public static final String DEPS = "required-after:VintageCore;required-after:IC2";
 
     public static final String PROXY_COMMON = "ic2.advancedmachines.proxy.CommonProxy";
     public static final String PROXY_CLIENT = "ic2.advancedmachines.proxy.ClientProxy";

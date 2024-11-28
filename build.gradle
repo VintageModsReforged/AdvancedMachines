@@ -10,6 +10,7 @@ buildscript {
 }
 
 apply plugin: "agency.highlysuspect.voldeloom"
+
 // make sure SKD is set to 11
 java.toolchain.languageVersion = JavaLanguageVersion.of(11) //Last version able to set a --release as low as 6
 compileJava.options.release.set(6) //Forge doesn't understand classes compiled to versions of the class-file format newer than Java 6's
@@ -32,9 +33,7 @@ volde {
 }
 
 repositories {
-	maven {
-		url = "https://api.modrinth.com/maven"
-	}
+	maven { url = "https://api.modrinth.com/maven" }
 }
 
 dependencies {
@@ -49,6 +48,7 @@ dependencies {
 		unmapClass(["bar", "bas"])
 	}
 
+	modImplementation files("libs/VintageCore-1.4.7-1.0.2-dev.jar")
 	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
 	modImplementation files("libs/gregtechmod290h.zip")
 	modImplementation files("libs/craftguide.zip")
@@ -57,8 +57,6 @@ dependencies {
 	modImplementation files("libs/AdvPowerMng.jar")
 	modImplementation("maven.modrinth:nei:1.4.7.4")
 	modImplementation("maven.modrinth:codechicken-core:0.8.1.6")
-//	coremodImplementation files("libs/NotEnoughItemsPatched.jar")
-//	coremodImplementation files("libs/CodeChickenCore.jar")
 }
 
 sourceSets {

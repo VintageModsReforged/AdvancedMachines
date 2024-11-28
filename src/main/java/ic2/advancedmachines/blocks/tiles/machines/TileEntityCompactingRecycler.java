@@ -6,7 +6,7 @@ import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.Items;
 import ic2.core.block.machine.tileentity.TileEntityRecycler;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -18,7 +18,7 @@ import java.util.List;
 public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
     public TileEntityCompactingRecycler() {
-        super(LangHelper.format("block.advanced.recycler.name"), new int[]{1}, new int[]{2}, StackFilters.RECYCLER_FILTER, "Recycler");
+        super(Translator.format("block.advanced.recycler.name"), new int[]{1}, new int[]{2}, StackFilters.RECYCLER_FILTER, "Recycler");
     }
 
     @Override
@@ -70,7 +70,7 @@ public class TileEntityCompactingRecycler extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return LangHelper.format("inv.speed.recycler");
+        return Translator.format("inv.speed.recycler");
     }
 
     @Override

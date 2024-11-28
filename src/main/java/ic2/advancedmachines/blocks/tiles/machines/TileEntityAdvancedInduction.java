@@ -4,7 +4,7 @@ import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.StackFilters;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -22,7 +22,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
     public int outputBIndex = 4;
 
     public TileEntityAdvancedInduction() {
-        super(LangHelper.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4}, StackFilters.FURNACE_FILTER, "Induction");
+        super(Translator.format("block.advanced.induction.name"), new int[] {1, 2}, new int[] {3, 4}, StackFilters.FURNACE_FILTER, "Induction");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return LangHelper.format("inv.speed.induction");
+        return Translator.format("inv.speed.induction");
     }
 
     @Override

@@ -5,7 +5,7 @@ import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.AdvMachinesRecipeManager;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.StackFilters;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super(LangHelper.format("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER, "Extractor");
+        super(Translator.format("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER, "Extractor");
     }
 
     @Override
@@ -46,6 +46,6 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return LangHelper.format("inv.speed.extractor");
+        return Translator.format("inv.speed.extractor");
     }
 }

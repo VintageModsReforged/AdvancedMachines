@@ -6,7 +6,7 @@ import ic2.api.Items;
 import ic2.core.ContainerIC2;
 import ic2.core.block.machine.tileentity.TileEntityElectrolyzer;
 import ic2.core.block.wiring.TileEntityElectricBlock;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +30,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     @Override
     public String getInvName() {
-        return LangHelper.format("block.advanced.electrolyzer.name");
+        return Translator.format("block.advanced.electrolyzer.name");
     }
 
     @Override

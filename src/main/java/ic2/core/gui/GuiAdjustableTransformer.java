@@ -8,7 +8,7 @@ import ic2.advancedmachines.blocks.tiles.energy.TileEntityAdjustableTransformer;
 import ic2.advancedmachines.utils.RenderUtils;
 import ic2.advancedmachines.utils.CustomSmallButton;
 import ic2.advancedmachines.utils.Refs;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import org.lwjgl.opengl.GL11;
@@ -55,7 +55,7 @@ public class GuiAdjustableTransformer extends GuiContainer {
             this.controlList.add(button);
         }
         for (int i = 0; i < dirButtons.length; i++) {
-            CustomSmallButton button = new CustomSmallButton(i + 16, xLoc + 173, yLoc + yOff + 24 + 13 * i, 32, 13, 27, 192, 27, 207, LangHelper.format(Refs.KEY_DIRECTION_NAMES[i]), 4210752, 16777120, guiTexture);
+            CustomSmallButton button = new CustomSmallButton(i + 16, xLoc + 173, yLoc + yOff + 24 + 13 * i, 32, 13, 27, 192, 27, 207, Translator.format(Refs.KEY_DIRECTION_NAMES[i]), 4210752, 16777120, guiTexture);
             this.controlList.add(button);
         }
 
@@ -71,9 +71,9 @@ public class GuiAdjustableTransformer extends GuiContainer {
         // Draw title text
         RenderUtils.drawCenteredText(fontRenderer, tile.getInvName(), width / 2, yLoc + 6, 4210752);
         // Draw stats text
-        RenderUtils.drawRightAlignedText(fontRenderer, LangHelper.format("inv.electric.avg.eu"), xLoc + 180, yLoc + 26, 4210752);
-        RenderUtils.drawRightAlignedText(fontRenderer, LangHelper.format("inv.electric.avg.packet.in"), xLoc + 180, yLoc + 36, 4210752);
-        RenderUtils.drawLeftAlignedText(fontRenderer, LangHelper.format("inv.electric.eu.bugger"), xLoc + 49, yLoc + 26, 4210752);
+        RenderUtils.drawRightAlignedText(fontRenderer, Translator.format("inv.electric.avg.eu"), xLoc + 180, yLoc + 26, 4210752);
+        RenderUtils.drawRightAlignedText(fontRenderer, Translator.format("inv.electric.avg.packet.in"), xLoc + 180, yLoc + 36, 4210752);
+        RenderUtils.drawLeftAlignedText(fontRenderer, Translator.format("inv.electric.eu.bugger"), xLoc + 49, yLoc + 26, 4210752);
 
         RenderUtils.drawRightAlignedGlowingText(fontRenderer, Integer.toString(tile.energyBuffer), xLoc + 44, yLoc + 26, GREEN, GREEN_GLOW);
         // Factor of 100 because data is in fixed point (x100)
@@ -83,20 +83,20 @@ public class GuiAdjustableTransformer extends GuiContainer {
         RenderUtils.drawRightAlignedGlowingText(fontRenderer, fraction.format(inAvg), xLoc + 230, yLoc + 36, GREEN, GREEN_GLOW);
 
         // Packet size section text
-        RenderUtils.drawCenteredText(fontRenderer, LangHelper.format("inv.electric.packet.size"), xLoc + 88, yLoc + yOff + 21, 0xB00000);
+        RenderUtils.drawCenteredText(fontRenderer, Translator.format("inv.electric.packet.size"), xLoc + 88, yLoc + yOff + 21, 0xB00000);
         RenderUtils.drawRightAlignedGlowingText(fontRenderer, Integer.toString(tile.packetSize), xLoc + 146, yLoc + yOff + 49, GREEN, GREEN_GLOW);
         fontRenderer.drawString("[" + Refs.AT_MIN_PACKET + " - " + Refs.AT_MAX_PACKET + "]", xLoc + 110, yLoc + yOff + 35, 4210752);
-        fontRenderer.drawString(LangHelper.format("inv.eu"), xLoc + 152, yLoc + yOff + 49, 4210752);
+        fontRenderer.drawString(Translator.format("inv.eu"), xLoc + 152, yLoc + yOff + 49, 4210752);
 
         // Transfer rate section text
-        RenderUtils.drawCenteredText(fontRenderer, LangHelper.format("inv.electric.transfer.max"), xLoc + 88, yLoc + yOff + 64, 0xB00000);
+        RenderUtils.drawCenteredText(fontRenderer, Translator.format("inv.electric.transfer.max"), xLoc + 88, yLoc + yOff + 64, 0xB00000);
         RenderUtils.drawRightAlignedGlowingText(fontRenderer, Integer.toString(tile.outputRate), xLoc + 146, yLoc + yOff + 92, GREEN, GREEN_GLOW);
         fontRenderer.drawString("[" + Refs.AT_MIN_OUTPUT + " - " + Refs.AT_MAX_OUTPUT + "]", xLoc + 110, yLoc + yOff + 78, 4210752);
-        fontRenderer.drawString(LangHelper.format("inv.eu"), xLoc + 152, yLoc + yOff + 92, 4210752);
+        fontRenderer.drawString(Translator.format("inv.eu"), xLoc + 152, yLoc + yOff + 92, 4210752);
 
         // Side input/output settings text
         for (int i = 0; i < 6; i++) {
-            RenderUtils.drawGlowingText(fontRenderer, LangHelper.format((tile.sideSettings[i] & 1) == 0 ? "inv.in" : "inv.out"), xLoc + 214, yLoc + yOff + 27 + 13 * i, GREEN, GREEN_GLOW);
+            RenderUtils.drawGlowingText(fontRenderer, Translator.format((tile.sideSettings[i] & 1) == 0 ? "inv.in" : "inv.out"), xLoc + 214, yLoc + yOff + 27 + 13 * i, GREEN, GREEN_GLOW);
         }
     }
 

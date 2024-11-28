@@ -5,7 +5,7 @@ import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.utils.AdvSlot;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.Ic2Recipes;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super(LangHelper.format("block.advanced.compressor.name"), new int[]{1}, new int[]{2}, StackFilters.COMPRESSOR_FILTER, "Compressor");
+        super(Translator.format("block.advanced.compressor.name"), new int[]{1}, new int[]{2}, StackFilters.COMPRESSOR_FILTER, "Compressor");
     }
 
     @Override
@@ -44,6 +44,6 @@ public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return LangHelper.format("inv.speed.compressor");
+        return Translator.format("inv.speed.compressor");
     }
 }

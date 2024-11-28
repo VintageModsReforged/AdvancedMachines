@@ -3,13 +3,14 @@ package ic2.advancedmachines.items;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
+import ic2.advancedmachines.BlocksItems;
 import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
-import core.platform.lang.TextFormatter;
+import mods.vintage.core.platform.lang.FormattedTranslator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,9 +46,21 @@ public class ItemBattery extends Item implements IElectricItem {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
         DecimalFormat formatter = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ROOT));
-        tooltip.add(TextFormatter.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge())));
-        tooltip.add(TextFormatter.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(), AdvUtils.getDisplayTier(this.getTier())));
+        tooltip.add(FormattedTranslator.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge())));
+        tooltip.add(FormattedTranslator.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(), AdvUtils.getDisplayTier(this.getTier())));
         super.addInformation(stack, player, tooltip, isDebug);
+    }
+
+    @Override
+    public String getItemDisplayName(ItemStack stack) {
+        Item battery = stack.getItem();
+        FormattedTranslator format;
+        if (battery == BlocksItems.GLOWTRONIC_CRYSTAL) {
+            format = FormattedTranslator.YELLOW;
+        } else if (battery == BlocksItems.UNIVERSAL_CRYSTAL) {
+            format = FormattedTranslator.LIGHT_PURPLE;
+        } else format = FormattedTranslator.AQUA;
+        return format.literal(super.getItemDisplayName(stack));
     }
 
     @Override

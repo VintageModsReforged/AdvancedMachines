@@ -10,7 +10,7 @@ import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.Direction;
 import ic2.core.util.StackUtil;
-import core.platform.lang.TextFormatter;
+import mods.vintage.core.platform.lang.FormattedTranslator;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -94,7 +94,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
                 default:
                     side = "output.all";
             }
-            list.add(TextFormatter.AQUA.format("tooltip.item.upgrade.ejector", TextFormatter.GOLD.format(side)));
+            list.add(FormattedTranslator.AQUA.format("tooltip.item.upgrade.ejector", FormattedTranslator.GOLD.format(side)));
         }
     }
 

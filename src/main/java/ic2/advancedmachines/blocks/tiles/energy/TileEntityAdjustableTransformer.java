@@ -17,7 +17,7 @@ import ic2.core.ContainerIC2;
 import ic2.core.IC2;
 import ic2.core.IHasGui;
 import ic2.core.block.TileEntityBlock;
-import core.helpers.LangHelper;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -168,7 +168,7 @@ public class TileEntityAdjustableTransformer extends TileEntityBlock implements 
 
     @Override
     public String getInvName() {
-        return LangHelper.format("block.advanced.transformer.adjustable.name");
+        return Translator.format("block.advanced.transformer.adjustable.name");
     }
 
     @Override
