@@ -6,8 +6,6 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-
 public class AdvancedMachinesConfig {
 
     public static final String SOUND_CAT = "Machine Sounds";
@@ -71,13 +69,6 @@ public class AdvancedMachinesConfig {
         Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
         prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + defaultValue;
         return prop.getBoolean(defaultValue);
-    }
-
-    private static String[] getStrings(String cat, @Nullable String tagComment, String tag, String[] defaultValue, String comment) {
-        comment = comment.replace("{t}", tag) + "\n";
-        Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
-        prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + Arrays.toString(defaultValue);
-        return prop.valueList;
     }
 
     private static String getString(String cat, @Nullable String tagComment, String tag, String defaultValue, String comment) {
