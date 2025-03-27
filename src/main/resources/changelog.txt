@@ -1,3 +1,6 @@
+Version 4.7.5.2e
+    update: dependencies
+
 Version 4.7.5.2d
     important: migrated to VintageCore, now this mod is required to run AdvancedMachines
     added: batteries, storage blocks' name format

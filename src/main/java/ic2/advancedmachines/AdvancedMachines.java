@@ -37,9 +37,7 @@ public class AdvancedMachines implements ILangProvider {
 
     public static Logger LOGGER = Logger.getLogger(Refs.ID);
 
-    public static CreativeTabs ADV_TAB = new CreativeTabs(Refs.ID) {{
-            LanguageRegistry.instance().addStringLocalization("itemGroup." + Refs.ID, Refs.NAME);
-        }
+    public static CreativeTabs ADV_TAB = new CreativeTabs(Refs.ID) {
         @Override
         public ItemStack getIconItemStack() {
             return AdvMachines.MACERATOR.STACK;
@@ -54,6 +52,7 @@ public class AdvancedMachines implements ILangProvider {
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
         LangManager.THIS.registerLangProvider(this);
+        LangManager.THIS.loadCreativeTabName(Refs.ID, Refs.NAME);
     }
 
     @Mod.Init
