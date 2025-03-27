@@ -9,7 +9,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
@@ -22,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Mod(modid = Refs.ID, name = Refs.NAME, version = Refs.VERSION, acceptedMinecraftVersions = Refs.MC_VERSION, dependencies = Refs.DEPS)
+@Mod(modid = Refs.ID, name = Refs.NAME, dependencies = Refs.DEPS, useMetadata = true)
 @NetworkMod(clientSideRequired = true)
 public class AdvancedMachines implements ILangProvider {
 
@@ -31,9 +30,7 @@ public class AdvancedMachines implements ILangProvider {
 
     public static Logger LOGGER = Logger.getLogger(Refs.ID);
 
-    public static CreativeTabs ADV_TAB = new CreativeTabs(Refs.ID) {{
-        LanguageRegistry.instance().addStringLocalization("itemGroup." + Refs.ID, Refs.NAME);
-    }
+    public static CreativeTabs ADV_TAB = new CreativeTabs(Refs.ID) {
         @Override
         public ItemStack getIconItemStack() {
             return AdvMachines.MACERATOR.STACK;
@@ -46,6 +43,7 @@ public class AdvancedMachines implements ILangProvider {
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
         LangManager.THIS.registerLangProvider(this);
+        LangManager.THIS.loadCreativeTabName(Refs.ID, Refs.NAME);
     }
 
     @Init

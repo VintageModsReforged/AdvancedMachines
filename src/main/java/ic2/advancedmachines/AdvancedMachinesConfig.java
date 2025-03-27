@@ -1,12 +1,10 @@
 package ic2.advancedmachines;
 
-import cpw.mods.fml.relauncher.FMLInjectionData;
+import ic2.advancedmachines.utils.Refs;
+import mods.vintage.core.helpers.ConfigHelper;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
 import org.jetbrains.annotations.Nullable;
-
-import java.io.File;
-import java.util.Arrays;
 
 public class AdvancedMachinesConfig {
 
@@ -39,10 +37,10 @@ public class AdvancedMachinesConfig {
     public static boolean SEASONAL_IC2;
 
     public static void init() {
-        MAIN_CONFIG = new Configuration(new File((File) FMLInjectionData.data()[6], "config/AdvancedMachines.cfg"));
+        MAIN_CONFIG = ConfigHelper.getConfigFor("AdvancedMachines");
         MAIN_CONFIG.load();
 
-        LANGS = getStrings("localization", null, "langs", new String[] {"en_US"}, "Supported localizations.");
+        LANGS = ConfigHelper.getLocalizations(MAIN_CONFIG, new String[] {"en_US"}, Refs.ID);
 
         MACERATOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "maceratorWorkSound", "Machines/MaceratorOp.ogg", "Macerator Work Sound");
         COMPRESSOR_WORK_SOUND = getString(SOUND_CAT, SOUND_CAT_DESC, "compressorWorkSound", "Machines/CompressorOp.ogg", "Compressor Work Sound");
@@ -70,13 +68,6 @@ public class AdvancedMachinesConfig {
         Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
         prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + defaultValue;
         return prop.getBoolean(defaultValue);
-    }
-
-    private static String[] getStrings(String cat, @Nullable String tagComment, String tag, String[] defaultValue, String comment) {
-        comment = comment.replace("{t}", tag) + "\n";
-        Property prop = MAIN_CONFIG.get(cat, tag, defaultValue);
-        prop.comment = comment + (tagComment == null ? "" : tagComment + "\n") + "Default: " + Arrays.toString(defaultValue);
-        return prop.getStringList();
     }
 
     private static String getString(String cat, @Nullable String tagComment, String tag, String defaultValue, String comment) {

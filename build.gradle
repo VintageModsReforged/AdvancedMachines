@@ -51,10 +51,11 @@ dependencies {
 	implementation 'net.jcip:jcip-annotations:1.0'
 	implementation 'org.jetbrains:annotations-java5:23.0.0'
 
-	modImplementation files("libs/VintageCore-1.5.2-1.0.2-dev.jar")
+	modImplementation files("libs/VintageCore-1.5.2-1.0.5-dev.jar")
 	modImplementation files("libs/industrialcraft-2_1.117.385-lf.jar")
 	modImplementation files("libs/craftguide.zip")
 	modImplementation files("libs/gregtech.zip")
+	modImplementation files("libs/bc.jar")
 	modImplementation("maven.modrinth:nei:1.5.2.28")
 	modImplementation("maven.modrinth:codechicken-core:0.8.7.3")
 }
