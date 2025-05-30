@@ -10,10 +10,10 @@ import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.invslot.InvSlotProcessable;
 import ic2.core.block.invslot.InvSlotProcessableSmelting;
 import ic2.core.slot.SlotInvSlot;
-import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     public TileEntityAdvancedInduction() {
-        super(Translator.format("block.advanced.induction.name"), 5, StackFilters.FURNACE_FILTER);
+        super(StatCollector.translateToLocal("block.advanced.induction.name"), 5, StackFilters.FURNACE_FILTER);
     }
 
     @SideOnly(Side.CLIENT)
@@ -59,7 +59,7 @@ public class TileEntityAdvancedInduction extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.induction");
+        return StatCollector.translateToLocal("inv.speed.induction");
     }
 
     @Override

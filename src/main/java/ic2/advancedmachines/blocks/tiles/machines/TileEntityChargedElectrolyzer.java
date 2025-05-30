@@ -6,19 +6,17 @@ import ic2.advancedmachines.blocks.gui.GuiAdvancedElectrolyzer;
 import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.api.item.Items;
-import ic2.api.recipe.IMachineRecipeManager;
-import ic2.core.BasicMachineRecipeManager;
 import ic2.core.ContainerBase;
 import ic2.core.block.invslot.InvSlotConsumable;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.block.machine.tileentity.TileEntityElectrolyzer;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import ic2.core.slot.SlotInvSlot;
-import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     @Override
     public String getInvName() {
-        return Translator.format("block.advanced.electrolyzer.name");
+        return StatCollector.translateToLocal("block.advanced.electrolyzer.name");
     }
 
     @Override

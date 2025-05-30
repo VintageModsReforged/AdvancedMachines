@@ -7,6 +7,7 @@ import ic2.advancedmachines.blocks.tiles.machines.TileEntityChargedElectrolyzer;
 import ic2.advancedmachines.utils.Refs;
 import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -22,7 +23,7 @@ public class GuiAdvancedElectrolyzer extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRenderer.drawString(tile.getInvName(), this.xSize / 2 - this.fontRenderer.getStringWidth(tile.getInvName()) / 2, 6, 4210752);
-        this.fontRenderer.drawString(Translator.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     @Override

@@ -9,9 +9,9 @@ import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.slot.SlotInvSlot;
-import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     public TileEntityRotaryMacerator() {
-        super(Translator.format("block.advanced.macerator.name"), 4, StackFilters.MACERATOR_FILTER);
+        super(StatCollector.translateToLocal("block.advanced.macerator.name"), 4, StackFilters.MACERATOR_FILTER);
     }
 
     @SideOnly(Side.CLIENT)
@@ -55,6 +55,6 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.macerator");
+        return StatCollector.translateToLocal("inv.speed.macerator");
     }
 }

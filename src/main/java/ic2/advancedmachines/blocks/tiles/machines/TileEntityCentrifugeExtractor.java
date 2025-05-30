@@ -9,16 +9,16 @@ import ic2.advancedmachines.utils.InvSlotFiltered;
 import ic2.advancedmachines.utils.StackFilters;
 import ic2.core.block.invslot.InvSlotOutput;
 import ic2.core.slot.SlotInvSlot;
-import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super(Translator.format("block.advanced.extractor.name"), 5, StackFilters.EXTRACTOR_FILTER);
+        super(StatCollector.translateToLocal("block.advanced.extractor.name"), 5, StackFilters.EXTRACTOR_FILTER);
     }
 
     @SideOnly(Side.CLIENT)
@@ -56,6 +56,6 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.extractor");
+        return StatCollector.translateToLocal("inv.speed.extractor");
     }
 }
