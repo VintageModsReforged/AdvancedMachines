@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -37,15 +38,15 @@ public class GuiAdvEnergyBlock extends GuiContainer {
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
         this.fontRenderer.drawString(name, (this.xSize - nameWidth) / 2, 6, 4210752);
-        this.fontRenderer.drawString(Translator.format("container.inventory"), 28, this.ySize - 96 + 2, 4210752);
-        this.fontRenderer.drawString(Translator.format("inv.electric.level"), 79, 25, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 28, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("inv.electric.level"), 79, 25, 4210752);
         int e = this.container.TILE.energy;
         if (e > this.container.TILE.maxStorage) {
             e = this.container.TILE.maxStorage;
         }
         this.fontRenderer.drawString(" " + e, 110, 35, 4210752);
         this.fontRenderer.drawString("/" + this.container.TILE.maxStorage, 110, 45, 4210752);
-        this.fontRenderer.drawString(Translator.format("inv.electric.output", this.container.TILE.output), 85, 60, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocalFormatted("inv.electric.output", this.container.TILE.output), 85, 60, 4210752);
         if (this.isPointInRegion(152, 4, 20, 20, mouseX, mouseY)) {
             this.drawCreativeTabHoveringText(this.container.TILE.getMode(), mouseX - x, mouseY - y);
         }

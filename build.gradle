@@ -48,7 +48,7 @@ dependencies {
 		unmapClass(["bar", "bas"])
 	}
 
-	modImplementation files("libs/VintageCore-1.4.7-1.0.5-dev.jar")
+	modImplementation files("libs/VintageCore-1.4.7-1.0.7-dev.jar")
 	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
 	modImplementation files("libs/gregtechmod290h.zip")
 	modImplementation files("libs/craftguide.zip")

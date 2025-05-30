@@ -25,6 +25,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.ByteArrayOutputStream;
@@ -168,7 +169,7 @@ public class TileEntityAdjustableTransformer extends TileEntityBlock implements 
 
     @Override
     public String getInvName() {
-        return Translator.format("block.advanced.transformer.adjustable.name");
+        return StatCollector.translateToLocal("block.advanced.transformer.adjustable.name");
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     public TileEntityRotaryMacerator() {
-        super(Translator.format("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3}, StackFilters.MACERATOR_FILTER, "Macerator");
+        super(StatCollector.translateToLocal("block.advanced.macerator.name"), new int[]{1}, new int[]{2, 3}, StackFilters.MACERATOR_FILTER, "Macerator");
     }
 
     @Override
@@ -46,6 +47,6 @@ public class TileEntityRotaryMacerator extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.macerator");
+        return StatCollector.translateToLocal("inv.speed.macerator");
     }
 }

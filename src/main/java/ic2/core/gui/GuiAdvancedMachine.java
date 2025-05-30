@@ -7,6 +7,7 @@ import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.blocks.tiles.container.ContainerAdvancedMachine;
 import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
@@ -25,7 +26,7 @@ public class GuiAdvancedMachine extends GuiContainer {
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         int yPos = TILE instanceof TileEntityCentrifugeExtractor ? 4 : 6;
         this.fontRenderer.drawString(TILE.invName, this.xSize / 2 - this.fontRenderer.getStringWidth(TILE.invName) / 2, yPos, 4210752);
-        this.fontRenderer.drawString(Translator.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
         this.fontRenderer.drawString(TILE.getSpeedName(), 6, 36, 4210752);
         this.fontRenderer.drawString(this.TILE.printFormattedData(), 10, 44, 4210752);
     }

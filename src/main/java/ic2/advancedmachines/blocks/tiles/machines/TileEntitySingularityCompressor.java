@@ -10,13 +10,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
     public TileEntitySingularityCompressor() {
-        super(Translator.format("block.advanced.compressor.name"), new int[]{1}, new int[]{2}, StackFilters.COMPRESSOR_FILTER, "Compressor");
+        super(StatCollector.translateToLocal("block.advanced.compressor.name"), new int[]{1}, new int[]{2}, StackFilters.COMPRESSOR_FILTER, "Compressor");
     }
 
     @Override
@@ -44,6 +45,6 @@ public class TileEntitySingularityCompressor extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.compressor");
+        return StatCollector.translateToLocal("inv.speed.compressor");
     }
 }

@@ -10,6 +10,7 @@ import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.ForgeDirection;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class TileEntityChargedElectrolyzer extends TileEntityElectrolyzer {
 
     @Override
     public String getInvName() {
-        return Translator.format("block.advanced.electrolyzer.name");
+        return StatCollector.translateToLocal("block.advanced.electrolyzer.name");
     }
 
     @Override

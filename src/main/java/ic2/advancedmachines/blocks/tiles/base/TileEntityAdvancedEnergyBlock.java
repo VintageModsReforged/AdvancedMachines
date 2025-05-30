@@ -7,6 +7,7 @@ import ic2.core.ContainerIC2;
 import ic2.core.IC2;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.StatCollector;
 
 public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock implements IEnergyProvider {
 
@@ -14,7 +15,7 @@ public class TileEntityAdvancedEnergyBlock extends TileEntityElectricBlock imple
 
     public TileEntityAdvancedEnergyBlock(String name, int tier, int out, int maxStorage) {
         super(tier, out, maxStorage);
-        this.name = Translator.format("block.advanced." + name + ".name");
+        this.name = StatCollector.translateToLocal("block.advanced." + name + ".name");
     }
 
     @Override

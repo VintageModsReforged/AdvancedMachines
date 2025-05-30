@@ -10,13 +10,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
     public TileEntityCentrifugeExtractor() {
-        super(Translator.format("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER, "Extractor");
+        super(StatCollector.translateToLocal("block.advanced.extractor.name"), new int[]{1}, new int[]{2, 3, 4}, StackFilters.EXTRACTOR_FILTER, "Extractor");
     }
 
     @Override
@@ -46,6 +47,6 @@ public class TileEntityCentrifugeExtractor extends TileEntityAdvancedMachine {
 
     @Override
     public String getSpeedName() {
-        return Translator.format("inv.speed.extractor");
+        return StatCollector.translateToLocal("inv.speed.extractor");
     }
 }
