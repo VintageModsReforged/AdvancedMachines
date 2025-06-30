@@ -1,5 +1,6 @@
 package ic2.advancedmachines;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -10,6 +11,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.integration.waila.WailaPlugin;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
 import mods.vintage.core.platform.lang.ILangProvider;
@@ -54,6 +56,9 @@ public class AdvancedMachines implements ILangProvider {
     @PostInit
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+        if (Loader.isModLoaded("BlockHelperAddons")) {
+            WailaPlugin.init();
+        }
     }
 
     @Override
