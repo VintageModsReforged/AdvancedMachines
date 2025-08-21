@@ -46,8 +46,6 @@
   "block.advanced.transformer.iv.name": "Трансформатор ЭН",
   "block.advanced.transformer.adjustable.name": "Регулируемый трансформатор",
 
-  "tooltips.energy.storage.info": "%s / %s еЭ %s",
-  "tooltips.energy.tier.info": "(Т: %s)",
   "tooltips.usage.info": "Потребляет 15 еЭ/т. Макс. напряжение: 128EU [Т2]",
   "tooltips.transfer.info": "Разная скорость передачи. Чем выше уровень блока хранения энергии, тем лучше!",
   "tooltip.block.energy.nothing": "Красный сигнал: Без действия",

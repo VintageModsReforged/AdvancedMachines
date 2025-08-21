@@ -21,10 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
-import java.util.Locale;
 
 public class ItemAdvBattery extends Item implements IElectricItem, IItemBlockIDProvider {
 
@@ -65,8 +62,7 @@ public class ItemAdvBattery extends Item implements IElectricItem, IItemBlockIDP
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        DecimalFormat formatter = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ROOT));
-        tooltip.add(Translator.AQUA.format("tooltips.energy.storage.info", formatter.format(ElectricHelper.getCharge(stack)), formatter.format(this.getMaxCharge(stack)), Translator.DARK_GRAY.format("tooltips.energy.tier.info", Translator.YELLOW.literal(ElectricHelper.getTierForDisplay(this.getTier(stack))))));
+        tooltip.add(ElectricHelper.energyTooltip(ElectricHelper.getCharge(stack), this.getMaxCharge(stack), this.getTier(stack)));
         super.addInformation(stack, player, tooltip, isDebug);
     }
 
