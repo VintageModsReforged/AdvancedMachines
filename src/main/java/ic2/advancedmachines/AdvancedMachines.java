@@ -15,6 +15,7 @@ import ic2.advancedmachines.integration.nei.NEIModule;
 import ic2.advancedmachines.integration.waila.WailaPlugin;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
+import ic2.core.IC2;
 import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -54,6 +55,10 @@ public class AdvancedMachines {
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
         NEIModule.init();
+        if (AdvancedMachinesConfig.SEASONAL_IC2 != IC2.seasonal) {
+            LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.SEASONAL_IC2, IC2.seasonal));
+            IC2.seasonal = AdvancedMachinesConfig.SEASONAL_IC2;
+        }
         if (Loader.isModLoaded("BlockHelperAddons")) {
             WailaPlugin.init();
         }
