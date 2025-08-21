@@ -12,6 +12,7 @@ import ic2.core.block.BlockMultiID;
 import ic2.core.block.BlockTextureStitched;
 import ic2.core.block.TileEntityBlock;
 import ic2.core.util.StackUtil;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class BlockAdvancedBlock extends BlockContainer {
+public abstract class BlockAdvancedBlock extends BlockContainer implements IItemBlockIDProvider {
 
     public static final int[][] sideAndFacingToSpriteOffset = BlockMultiID.sideAndFacingToSpriteOffset;
     @SideOnly(Side.CLIENT)

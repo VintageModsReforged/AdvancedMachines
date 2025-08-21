@@ -4,12 +4,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.BlocksItems;
-import ic2.advancedmachines.utils.AdvUtils;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
-import mods.vintage.core.platform.lang.FormattedTranslator;
+import mods.vintage.core.helpers.ElectricHelper;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -25,7 +26,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 
-public class ItemAdvBattery extends Item implements IElectricItem {
+public class ItemAdvBattery extends Item implements IElectricItem, IItemBlockIDProvider {
 
     public int tier, maxCharge, transfer;
     public String name;
@@ -45,12 +46,12 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     @Override
     public String getItemDisplayName(ItemStack stack) {
         Item battery = stack.getItem();
-        FormattedTranslator format;
+        Translator format;
         if (battery == BlocksItems.GLOWTRONIC_CRYSTAL) {
-            format = FormattedTranslator.YELLOW;
+            format = Translator.YELLOW;
         } else if (battery == BlocksItems.UNIVERSAL_CRYSTAL) {
-            format = FormattedTranslator.LIGHT_PURPLE;
-        } else format = FormattedTranslator.AQUA;
+            format = Translator.LIGHT_PURPLE;
+        } else format = Translator.AQUA;
         return format.literal(super.getItemDisplayName(stack));
     }
 
@@ -65,8 +66,7 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
         DecimalFormat formatter = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ROOT));
-        tooltip.add(FormattedTranslator.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge(stack))));
-        tooltip.add(FormattedTranslator.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(stack), AdvUtils.getDisplayTier(this.getTier(stack))));
+        tooltip.add(Translator.AQUA.format("tooltips.energy.storage.info", formatter.format(ElectricHelper.getCharge(stack)), formatter.format(this.getMaxCharge(stack)), Translator.DARK_GRAY.format("tooltips.energy.tier.info", Translator.YELLOW.literal(ElectricHelper.getTierForDisplay(this.getTier(stack))))));
         super.addInformation(stack, player, tooltip, isDebug);
     }
 
@@ -148,7 +148,7 @@ public class ItemAdvBattery extends Item implements IElectricItem {
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(int id, CreativeTabs tabs, List itemList) {
-        AdvUtils.addChargeVariants(this, itemList);
+        ElectricHelper.addChargeVariants(this, itemList);
     }
 
     @Override

@@ -18,35 +18,34 @@ public class RenderAdvBlock implements ISimpleBlockRenderingHandler {
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderblocks) {
-        Tessellator tessellator = Tessellator.instance;
-        block.setBlockBoundsForItemRender();
-        renderblocks.setRenderBoundsFromBlock(block);
+        Tessellator tess = Tessellator.instance;
         GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, -1.0F, 0.0F);
+        block.setBlockBoundsForItemRender();
+        renderblocks.setRenderBoundsFromBlock(block);
+        tess.startDrawingQuads();
+
+        // Bottom
+        tess.setNormal(0.0F, -1.0F, 0.0F);
         renderblocks.renderFaceYNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 0, metadata));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 1.0F, 0.0F);
+        // Top
+        tess.setNormal(0.0F, 1.0F, 0.0F);
         renderblocks.renderFaceYPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 1, metadata));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 0.0F, -1.0F);
+        // North
+        tess.setNormal(0.0F, 0.0F, -1.0F);
         renderblocks.renderFaceZNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 2, metadata));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(0.0F, 0.0F, 1.0F);
+        // South
+        tess.setNormal(0.0F, 0.0F, 1.0F);
         renderblocks.renderFaceZPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 3, metadata));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+        // West
+        tess.setNormal(-1.0F, 0.0F, 0.0F);
         renderblocks.renderFaceXNeg(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 4, metadata));
-        tessellator.draw();
-        tessellator.startDrawingQuads();
-        tessellator.setNormal(1.0F, 0.0F, 0.0F);
+        // East
+        tess.setNormal(1.0F, 0.0F, 0.0F);
         renderblocks.renderFaceXPos(block, 0.0, 0.0, 0.0, renderblocks.getBlockIconFromSideAndMetadata(block, 5, metadata));
-        tessellator.draw();
+
+        // 1 draw call
+        tess.draw();
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 

@@ -42,9 +42,9 @@ public class BlocksItems {
         CIRCUIT_COMPLEX = new ItemStack(COMPONENT, 1, 3);
         IRIDIUM_CORE = new ItemStack(COMPONENT, 1, 4);
 
-        GLOWTRONIC_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.GLOWTRONIC_CRYSTAL_ID, "glowtronic_crystal", 3, 5000, 7500000);
-        UNIVERSAL_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.UNIVERSAL_CRYSTAL_ID, "universal_crystal", 4, 10000, 17500000);
-        PLASMA_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.PLASMA_CRYSTAL_ID, "plasma_crystal", 4, 25000, 50000000);
+        GLOWTRONIC_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.GLOWTRONIC_CRYSTAL_ID.get(), "glowtronic_crystal", 3, 5000, 7500000);
+        UNIVERSAL_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.UNIVERSAL_CRYSTAL_ID.get(), "universal_crystal", 4, 10000, 17500000);
+        PLASMA_CRYSTAL = new ItemAdvBattery(AdvancedMachinesConfig.PLASMA_CRYSTAL_ID.get(), "plasma_crystal", 4, 25000, 50000000);
 
         ADVANCED_MACHINE_BLOCK = new BlockAdvancedMachine();
         ADVANCED_ENERGY_BLOCK = new BlockAdvEnergyBlock();

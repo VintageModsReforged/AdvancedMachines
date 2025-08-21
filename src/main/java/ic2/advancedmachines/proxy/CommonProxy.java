@@ -6,29 +6,28 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.AdvancedMachinesRecipes;
 import ic2.advancedmachines.BlocksItems;
-import ic2.api.item.Items;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraftforge.oredict.OreDictionary;
+import ic2.advancedmachines.utils.Refs;
+import mods.vintage.core.platform.config.ConfigHandler;
+import net.minecraftforge.common.Configuration;
 
 public class CommonProxy {
 
+    ConfigHandler CONFIG_HANDLER = new ConfigHandler(Refs.ID);
+    Configuration CONFIG;
+
     public void preInit(FMLPreInitializationEvent e) {
-        AdvancedMachinesConfig.init();
-        BlocksItems.init();
+        CONFIG = new AdvancedMachinesConfig();
+        CONFIG_HANDLER.initIDs(CONFIG);
+
     }
 
     public void init(FMLInitializationEvent e) {
-
+        CONFIG_HANDLER.confirmIDs(CONFIG);
+        BlocksItems.init();
+        AdvancedMachinesRecipes.init();
     }
 
     public void postInit(FMLPostInitializationEvent e) {
-        OreDictionary.registerOre("lava", Item.bucketLava);
-        OreDictionary.registerOre("lava", Items.getItem("lavaCell"));
-        OreDictionary.registerOre("water", Item.bucketWater);
-        OreDictionary.registerOre("water", Items.getItem("waterCell"));
-        OreDictionary.registerOre("blockGlass", Block.glass);
-        OreDictionary.registerOre("blockGlass", Items.getItem("reinforcedGlass"));
-        AdvancedMachinesRecipes.init();
+        CONFIG_HANDLER.confirmOwnership(CONFIG);
     }
 }

@@ -29,7 +29,7 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
     public static final int IV = 4;
 
     public BlockAdvEnergyBlock() {
-        super(AdvancedMachinesConfig.ADV_ENERGY_BLOCK_ID);
+        super(AdvancedMachinesConfig.ADV_ENERGY_BLOCK_ID.get());
         this.metaMachinesCount = ItemAdvancedEnergyBlock.names.length;
     }
 

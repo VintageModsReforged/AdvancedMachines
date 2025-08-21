@@ -26,7 +26,7 @@ public class BlockAdvancedMachine extends BlockAdvancedBlock {
     public static final int ELECTROLYZER = 5;
 
     public BlockAdvancedMachine() {
-        super(AdvancedMachinesConfig.ADV_MACHINE_ID);
+        super(AdvancedMachinesConfig.ADV_MACHINE_ID.get());
         this.metaMachinesCount = ItemAdvancedMachine.names.length;
     }
 

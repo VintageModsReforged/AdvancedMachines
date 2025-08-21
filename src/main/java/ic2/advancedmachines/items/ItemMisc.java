@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.AdvancedMachinesConfig;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -12,7 +13,7 @@ import net.minecraft.util.Icon;
 
 import java.util.List;
 
-public class ItemMisc extends Item {
+public class ItemMisc extends Item implements IItemBlockIDProvider {
 
     public String[] names = new String[] {
             "magnet.chunk",
@@ -25,7 +26,7 @@ public class ItemMisc extends Item {
     public Icon[] textures = new Icon[names.length];
 
     public ItemMisc() {
-        super(AdvancedMachinesConfig.COMPONENT_ID);
+        super(AdvancedMachinesConfig.COMPONENT_ID.get());
         this.setHasSubtypes(true);
         this.setCreativeTab(AdvancedMachines.ADV_TAB);
     }

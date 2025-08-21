@@ -7,6 +7,7 @@ import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.base.TileEntityAdvancedMachine;
 import ic2.advancedmachines.items.upgrades.ISimpleUpgrade;
 import ic2.core.block.invslot.InvSlotProcessable;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,7 +17,7 @@ import net.minecraft.util.Icon;
 
 import java.util.List;
 
-public class ItemAdvUpgrade extends Item implements ISimpleUpgrade {
+public class ItemAdvUpgrade extends Item implements ISimpleUpgrade, IItemBlockIDProvider {
 
     public String[] names = new String[] {
             "redstone.inverter",
@@ -26,7 +27,7 @@ public class ItemAdvUpgrade extends Item implements ISimpleUpgrade {
     public Icon[] icons = new Icon[names.length];
 
     public ItemAdvUpgrade() {
-        super(AdvancedMachinesConfig.ADV_UPGRADE_ID);
+        super(AdvancedMachinesConfig.ADV_UPGRADE_ID.get());
         this.setUnlocalizedName("advanced.upgrade");
         this.setHasSubtypes(true);
         this.setCreativeTab(AdvancedMachines.ADV_TAB);

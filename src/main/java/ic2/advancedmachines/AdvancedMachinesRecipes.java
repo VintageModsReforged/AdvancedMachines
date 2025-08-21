@@ -10,6 +10,7 @@ import ic2.core.BasicMachineRecipeManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class AdvancedMachinesRecipes {
 
@@ -17,6 +18,13 @@ public class AdvancedMachinesRecipes {
     public static IMachineRecipeManager electrolyzer_drain = new BasicMachineRecipeManager();
 
     public static void init() {
+        OreDictionary.registerOre("lava", Item.bucketLava);
+        OreDictionary.registerOre("lava", Items.getItem("lavaCell"));
+        OreDictionary.registerOre("water", Item.bucketWater);
+        OreDictionary.registerOre("water", Items.getItem("waterCell"));
+        OreDictionary.registerOre("blockGlass", Block.glass);
+        OreDictionary.registerOre("blockGlass", Items.getItem("reinforcedGlass"));
+
         ScrapBoxUtils.init();
         electrolyzer_drain.addRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
         electrolyzer_drain.addRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);
