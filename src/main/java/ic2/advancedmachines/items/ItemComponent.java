@@ -5,13 +5,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.utils.Refs;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class ItemComponent extends Item {
+public class ItemComponent extends Item implements IItemBlockIDProvider {
 
     public String[] names = new String[] {
             "magnet.chunk",
@@ -24,7 +25,7 @@ public class ItemComponent extends Item {
     public int textureIndex;
 
     public ItemComponent(int textureIndex) {
-        super(AdvancedMachinesConfig.COMPONENT_ID);
+        super(AdvancedMachinesConfig.COMPONENT_ID.get());
         this.setHasSubtypes(true);
         this.setItemName("component");
         this.setCreativeTab(AdvancedMachines.ADV_TAB);

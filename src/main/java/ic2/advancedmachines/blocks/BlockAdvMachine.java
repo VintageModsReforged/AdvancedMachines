@@ -2,6 +2,7 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.machines.*;
 import ic2.core.block.machine.tileentity.TileEntityMachine;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,8 +24,8 @@ public class BlockAdvMachine extends BlockAdvancedBlock {
     public static final int RECYCLER = 4;
     public static final int ELECTROLYZER = 5;
 
-    public BlockAdvMachine(int id) {
-        super(id);
+    public BlockAdvMachine() {
+        super(AdvancedMachinesConfig.ADV_MACHINE_ID.get());
     }
 
     @Override

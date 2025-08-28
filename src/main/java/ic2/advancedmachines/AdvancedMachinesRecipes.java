@@ -9,10 +9,18 @@ import ic2.api.Items;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class AdvancedMachinesRecipes {
 
     public static void init() {
+        OreDictionary.registerOre("lava", Item.bucketLava);
+        OreDictionary.registerOre("lava", Items.getItem("lavaCell"));
+        OreDictionary.registerOre("water", Item.bucketWater);
+        OreDictionary.registerOre("water", Items.getItem("waterCell"));
+        OreDictionary.registerOre("blockGlass", Block.glass);
+        OreDictionary.registerOre("blockGlass", Items.getItem("reinforcedGlass"));
+
         ScrapBoxUtils.init();
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(Items.getItem("waterCell"), Items.getItem("electrolyzedWaterCell"));
         AdvMachinesRecipeManager.addDrainElectrolyzerRecipe(BlocksItems.MAGNET_DEAD, BlocksItems.MAGNET_COMPONENT);

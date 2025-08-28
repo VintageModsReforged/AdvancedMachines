@@ -34,14 +34,14 @@ public class CustomSmallButton extends GuiButton {
      * @param yLoc       - y location of button on screen
      * @param width      - width of button
      * @param height     - height of button
-     * @param uLoc       - x location of start of texture in texture file
-     * @param vLoc       - y location of start of texture in texture file
-     * @param uHoverLoc  - x location of start of texture for mouse over in texture file
-     * @param vHoverLoc  - x location of start of texture for mouse over in texture file
+     * @param uLoc       - x location start of texture in the texture file
+     * @param vLoc       - y location start of texture in the texture file
+     * @param uHoverLoc  - x location start of texture for mouse over in the texture file
+     * @param vHoverLoc  - x location start of texture for mouse over in the texture file
      * @param text       - text to display on button
      * @param color      - color for the text
      * @param hoverColor - color for the text while hovering
-     * @param texture    - path to texture file
+     * @param texture    - path to the texture file
      */
     public CustomSmallButton(int id, int xLoc, int yLoc, int width, int height, int uLoc, int vLoc, int uHoverLoc, int vHoverLoc, String text, int color, int hoverColor, String texture) {
         super(id, xLoc, yLoc, width, height, text);

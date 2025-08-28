@@ -10,7 +10,8 @@ import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.Direction;
 import ic2.core.util.StackUtil;
-import mods.vintage.core.platform.lang.FormattedTranslator;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ItemAdvUpgrade extends Item implements IUpgradeItem {
+public class ItemAdvUpgrade extends Item implements IUpgradeItem, IItemBlockIDProvider {
 
     public String[] names = new String[] {
             "redstone.inverter",
@@ -32,7 +33,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
     };
 
     public ItemAdvUpgrade() {
-        super(AdvancedMachinesConfig.ADV_UPGRADE_ID);
+        super(AdvancedMachinesConfig.ADV_UPGRADE_ID.get());
         this.setTextureFile(Refs.ITEMS);
         this.setCreativeTab(AdvancedMachines.ADV_TAB);
         this.setHasSubtypes(true);
@@ -94,7 +95,7 @@ public class ItemAdvUpgrade extends Item implements IUpgradeItem {
                 default:
                     side = "output.all";
             }
-            list.add(FormattedTranslator.AQUA.format("tooltip.item.upgrade.ejector", FormattedTranslator.GOLD.format(side)));
+            list.add(Translator.AQUA.format("tooltip.item.upgrade.ejector", Translator.GOLD.format(side)));
         }
     }
 

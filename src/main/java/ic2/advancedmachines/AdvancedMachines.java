@@ -7,27 +7,24 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 import ic2.advancedmachines.blocks.AdvMachines;
+import ic2.advancedmachines.integration.nei.NEIModule;
 import ic2.advancedmachines.network.AdvNetworkHandler;
 import ic2.advancedmachines.network.AdvNetworkHandlerClient;
 import ic2.advancedmachines.proxy.CommonProxy;
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
-import mods.vintage.core.platform.lang.ILangProvider;
 import mods.vintage.core.platform.lang.LangManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 
-@Mod(modid = Refs.ID, name = Refs.NAME, dependencies = Refs.DEPS, useMetadata = true)
+@Mod(modid = Refs.ID, useMetadata = true)
 @NetworkMod(clientSideRequired = true,
         clientPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandlerClient.class),
         serverPacketHandlerSpec = @NetworkMod.SidedPacketHandler(channels = { Refs.ID }, packetHandler = AdvNetworkHandler.class))
-public class AdvancedMachines implements ILangProvider {
+public class AdvancedMachines {
 
     @SidedProxy(clientSide = Refs.PROXY_CLIENT, serverSide = Refs.PROXY_COMMON)
     public static CommonProxy proxy;
@@ -51,8 +48,7 @@ public class AdvancedMachines implements ILangProvider {
     @Mod.PreInit
     public void preInit(FMLPreInitializationEvent e) {
         proxy.preInit(e);
-        LangManager.THIS.registerLangProvider(this);
-        LangManager.THIS.loadCreativeTabName(Refs.ID, Refs.NAME);
+        LangManager.INSTANCE.loadCreativeTabName(Refs.ID, Refs.NAME);
     }
 
     @Mod.Init
@@ -63,19 +59,10 @@ public class AdvancedMachines implements ILangProvider {
     @Mod.PostInit
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
+        NEIModule.init();
         if (AdvancedMachinesConfig.SEASONAL_IC2 != IC2.seasonal) {
             LOGGER.info(String.format("Setting IC2.seasonal to %s, previously was %s.", AdvancedMachinesConfig.SEASONAL_IC2, IC2.seasonal));
             IC2.seasonal = AdvancedMachinesConfig.SEASONAL_IC2;
         }
-    }
-
-    @Override
-    public String getModid() {
-        return Refs.ID;
-    }
-
-    @Override
-    public List<String> getLocalizationList() {
-        return Arrays.asList(AdvancedMachinesConfig.LANGS);
     }
 }

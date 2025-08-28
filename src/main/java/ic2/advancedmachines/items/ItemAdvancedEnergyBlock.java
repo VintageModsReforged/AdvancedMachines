@@ -2,7 +2,7 @@ package ic2.advancedmachines.items;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.vintage.core.platform.lang.FormattedTranslator;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -37,13 +37,13 @@ public class ItemAdvancedEnergyBlock extends ItemBlock {
 
     @Override
     public String getItemDisplayName(ItemStack stack) {
-        FormattedTranslator format;
+        Translator format;
         int meta = stack.getItemDamage();
         if (meta == 0 || meta == 3 || meta == 5) {
-            format = FormattedTranslator.YELLOW;
+            format = Translator.YELLOW;
         } else if (meta == 1 || meta == 4) {
-            format = FormattedTranslator.LIGHT_PURPLE;
-        } else format = FormattedTranslator.AQUA;
+            format = Translator.LIGHT_PURPLE;
+        } else format = Translator.AQUA;
         return format.literal(super.getItemDisplayName(stack));
     }
 

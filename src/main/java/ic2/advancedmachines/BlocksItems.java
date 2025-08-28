@@ -48,16 +48,16 @@ public class BlocksItems {
         CIRCUIT_COMPLEX = new ItemStack(COMPONENT, 1, 3);
         IRIDIUM_CORE = new ItemStack(COMPONENT, 1, 4);
 
-        GLOWTRONIC_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.GLOWTRONIC_CRYSTAL_ID, "glowtronic_crystal", 3, 5000, 7500000).setIconIndex(2);
-        UNIVERSAL_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.UNIVERSAL_CRYSTAL_ID, "universal_crystal", 4, 10000, 17500000).setIconIndex(7);
-        PLASMA_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.PLASMA_CRYSTAL_ID, "plasma_crystal", 4, 25000, 50000000).setIconIndex(12);
+        GLOWTRONIC_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.GLOWTRONIC_CRYSTAL_ID.get(), "glowtronic_crystal", 3, 5000, 7500000).setIconIndex(2);
+        UNIVERSAL_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.UNIVERSAL_CRYSTAL_ID.get(), "universal_crystal", 4, 10000, 17500000).setIconIndex(7);
+        PLASMA_CRYSTAL = new ItemBattery(AdvancedMachinesConfig.PLASMA_CRYSTAL_ID.get(), "plasma_crystal", 4, 25000, 50000000).setIconIndex(12);
 
         GameRegistry.registerItem(GLOWTRONIC_CRYSTAL, "glowtronic_crystal");
         GameRegistry.registerItem(UNIVERSAL_CRYSTAL, "universal_crystal");
         GameRegistry.registerItem(PLASMA_CRYSTAL, "plasma_crystal");
 
-        ADVANCED_MACHINE_BLOCK = new BlockAdvMachine(AdvancedMachinesConfig.ADV_MACHINE_ID);
-        ADVANCED_ENERGY_BLOCK = new BlockAdvEnergyBlock(AdvancedMachinesConfig.ADV_ENERGY_BLOCK_ID);
+        ADVANCED_MACHINE_BLOCK = new BlockAdvMachine();
+        ADVANCED_ENERGY_BLOCK = new BlockAdvEnergyBlock();
 
         GameRegistry.registerBlock(ADVANCED_MACHINE_BLOCK, ItemAdvancedMachine.class, "blockAdvMachine");
         GameRegistry.registerBlock(ADVANCED_ENERGY_BLOCK, ItemAdvancedEnergyBlock.class, "blockAdvEnergyBlock");

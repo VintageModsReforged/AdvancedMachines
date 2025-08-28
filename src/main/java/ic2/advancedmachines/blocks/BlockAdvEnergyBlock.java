@@ -2,6 +2,7 @@ package ic2.advancedmachines.blocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ic2.advancedmachines.AdvancedMachinesConfig;
 import ic2.advancedmachines.blocks.tiles.energy.*;
 import ic2.advancedmachines.utils.Refs;
 import ic2.core.IC2;
@@ -32,8 +33,8 @@ public class BlockAdvEnergyBlock extends BlockAdvancedBlock {
     private final int textureIndexIN;
     private final int textureIndexOUT;
 
-    public BlockAdvEnergyBlock(int id) {
-        super(id);
+    public BlockAdvEnergyBlock() {
+        super(AdvancedMachinesConfig.ADV_ENERGY_BLOCK_ID.get());
 
         this.textureIndexIN = ADJUSTABLE;
         this.textureIndexOUT = ADJUSTABLE + 16;

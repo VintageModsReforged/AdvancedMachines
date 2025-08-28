@@ -4,13 +4,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ic2.advancedmachines.AdvancedMachines;
 import ic2.advancedmachines.BlocksItems;
-import ic2.advancedmachines.utils.AdvUtils;
 import ic2.advancedmachines.utils.Refs;
 import ic2.api.ElectricItem;
 import ic2.api.IElectricItem;
 import ic2.core.IC2;
 import ic2.core.util.StackUtil;
-import mods.vintage.core.platform.lang.FormattedTranslator;
+import mods.vintage.core.helpers.ElectricHelper;
+import mods.vintage.core.helpers.StackHelper;
+import mods.vintage.core.platform.config.IItemBlockIDProvider;
+import mods.vintage.core.platform.lang.Translator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,12 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
-import java.util.Locale;
 
-public class ItemBattery extends Item implements IElectricItem {
+public class ItemBattery extends Item implements IElectricItem, IItemBlockIDProvider {
 
     public int tier, maxCharge, transfer;
     public String name;
@@ -45,21 +44,19 @@ public class ItemBattery extends Item implements IElectricItem {
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean isDebug) {
-        DecimalFormat formatter = new DecimalFormat("###,###", new DecimalFormatSymbols(Locale.ROOT));
-        tooltip.add(FormattedTranslator.AQUA.format("tooltips.energy.storage.info", formatter.format(AdvUtils.getCharge(stack)), formatter.format(this.getMaxCharge())));
-        tooltip.add(FormattedTranslator.LIGHT_PURPLE.format("tooltips.energy.tier.info", this.getTier(), AdvUtils.getDisplayTier(this.getTier())));
+        tooltip.add(ElectricHelper.energyTooltip(ElectricHelper.getCharge(stack), this.getMaxCharge(), this.getTier()));
         super.addInformation(stack, player, tooltip, isDebug);
     }
 
     @Override
     public String getItemDisplayName(ItemStack stack) {
         Item battery = stack.getItem();
-        FormattedTranslator format;
+        Translator format;
         if (battery == BlocksItems.GLOWTRONIC_CRYSTAL) {
-            format = FormattedTranslator.YELLOW;
+            format = Translator.YELLOW;
         } else if (battery == BlocksItems.UNIVERSAL_CRYSTAL) {
-            format = FormattedTranslator.LIGHT_PURPLE;
-        } else format = FormattedTranslator.AQUA;
+            format = Translator.LIGHT_PURPLE;
+        } else format = Translator.AQUA;
         return format.literal(super.getItemDisplayName(stack));
     }
 
@@ -146,11 +143,11 @@ public class ItemBattery extends Item implements IElectricItem {
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(int id, CreativeTabs tabs, List itemList) {
-        AdvUtils.addChargeVariants(this, itemList);
+        ElectricHelper.addChargeVariants(this, itemList);
     }
 
     public boolean canProvideEnergy(ItemStack stack) {
-        return StackUtil.getOrCreateNbtData(stack).getBoolean("active");
+        return StackHelper.getOrCreateTag(stack).getBoolean("active");
     }
 
     @Override
