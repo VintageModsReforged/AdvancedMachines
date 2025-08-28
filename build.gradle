@@ -48,7 +48,7 @@ dependencies {
 		unmapClass(["bar", "bas"])
 	}
 
-	modImplementation files("libs/VintageCore-1.4.7-1.0.7-dev.jar")
+	modImplementation files("libs/VintageCore-1.4.7-2.0.0-dev.jar")
 	modImplementation files("libs/industrialcraft-2_1.115.207-lf.jar")
 	modImplementation files("libs/gregtechmod290h.zip")
 	modImplementation files("libs/craftguide.zip")
@@ -59,16 +59,20 @@ dependencies {
 	modImplementation("maven.modrinth:codechicken-core:0.8.1.6")
 }
 
-sourceSets {
-	main {
-		resources {
-			srcDirs 'src/main/java'
-		}
+def props = ['modName', 'modid', 'modVersion', 'modDescription', 'modAuthors', 'modDeps', 'minecraft', 'url']
+processResources {
+	filesMatching("mcmod.info") {
+		expand(project.properties.subMap(props))
 	}
 }
 
-jar {
-	exclude ("**/com/**")
+task sourcesJar(type: Jar) {
+	archiveClassifier.set("sources")
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives sourcesJar
 }
 
 
