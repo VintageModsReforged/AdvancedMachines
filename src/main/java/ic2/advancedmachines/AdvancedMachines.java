@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.logging.Logger;
 
-@Mod(modid = Refs.ID, name = Refs.NAME, dependencies = Refs.DEPS, useMetadata = true)
+@Mod(modid = Refs.ID, useMetadata = true)
 @NetworkMod(clientSideRequired = true)
 public class AdvancedMachines {
 
